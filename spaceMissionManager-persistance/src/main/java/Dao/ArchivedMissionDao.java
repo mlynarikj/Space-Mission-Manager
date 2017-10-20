@@ -1,6 +1,9 @@
 package Dao;
 
 import Entity.ArchivedMission;
+import Entity.Mission;
+
+import java.util.List;
 
 public interface ArchivedMissionDao {
 
@@ -10,13 +13,13 @@ public interface ArchivedMissionDao {
 	 */
 	void addArchivedMission(ArchivedMission archivedMission);
 
-	void findAllArchivedMissions();
+	List<Mission> findAllArchivedMissions();
 
 	/**
 	 * 
 	 * @param id
 	 */
-	void findArchivedMissionById(Long id);
+	Mission findArchivedMissionById(Long id);
 
 	/**
 	 * 

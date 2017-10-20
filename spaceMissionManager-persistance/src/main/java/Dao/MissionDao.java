@@ -5,6 +5,7 @@ import Entity.Spacecraft;
 import Entity.User;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface MissionDao {
 
@@ -49,13 +50,13 @@ public interface MissionDao {
 	 */
 	void archiveMission(Mission mission, String result, LocalDate endDate);
 
-	void findAllMissions();
+	List<Mission> findAllMissions();
 
 	/**
 	 * 
 	 * @param id
 	 */
-	void findMissionById(Long id);
+	Mission findMissionById(Long id);
 
 	/**
 	 * 

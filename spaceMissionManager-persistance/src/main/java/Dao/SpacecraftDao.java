@@ -2,6 +2,8 @@ package Dao;
 
 import Entity.Spacecraft;
 
+import java.util.List;
+
 public interface SpacecraftDao {
 
 	/**
@@ -16,19 +18,19 @@ public interface SpacecraftDao {
 	 */
 	void removeSpacecraft(Spacecraft spacecraft);
 
-	void findAllSpacecrafts();
+	List<Spacecraft> findAllSpacecrafts();
 
 	/**
 	 * 
 	 * @param type
 	 */
-	void findAllSpacecrafts(String type);
+	List<Spacecraft> findAllSpacecrafts(String type);
 
 	/**
 	 * 
 	 * @param id
 	 */
-	void findSpacecraftById(Long id);
+	Spacecraft findSpacecraftById(Long id);
 
 	/**
 	 * 

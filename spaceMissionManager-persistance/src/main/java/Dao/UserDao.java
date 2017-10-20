@@ -2,6 +2,8 @@ package Dao;
 
 import Entity.User;
 
+import java.util.List;
+
 public interface UserDao {
 
 	/**
@@ -16,15 +18,15 @@ public interface UserDao {
 	 */
 	void deleteUser(User user);
 
-	void findAllUsers();
+	List<User> findAllUsers();
 
-	void findAllAstronauts();
+	List<User> findAllAstronauts();
 
 	/**
 	 * 
 	 * @param id
 	 */
-	void findUserById(Long id);
+	User findUserById(Long id);
 
 	/**
 	 * 
@@ -32,7 +34,7 @@ public interface UserDao {
 	 */
 	void updateUser(User user);
 
-	void findAllAvailableAstronauts();
+	List<User> findAllAvailableAstronauts();
 
 	/**
 	 * 

@@ -2,6 +2,8 @@ package Dao;
 
 import Entity.CraftComponent;
 
+import java.util.List;
+
 public interface CraftComponentDao {
 
 	/**
@@ -10,13 +12,13 @@ public interface CraftComponentDao {
 	 */
 	void addComponent(CraftComponent craftComponent);
 
-	void findAllComponents();
+	List<CraftComponent> findAllComponents();
 
 	/**
 	 * 
 	 * @param id
 	 */
-	void findComponentById(Long id);
+	CraftComponent findComponentById(Long id);
 
 	/**
 	 * 

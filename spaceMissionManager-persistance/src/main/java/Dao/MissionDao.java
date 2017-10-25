@@ -7,6 +7,9 @@ import Entity.User;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author mlynarikj 
+ */
 public interface MissionDao {
 
 	/**

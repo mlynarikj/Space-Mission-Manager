@@ -8,6 +8,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/**
+ * @author mlynarikj
+ */
+
 @Repository
 public class MissionDaoImpl implements MissionDao {
 

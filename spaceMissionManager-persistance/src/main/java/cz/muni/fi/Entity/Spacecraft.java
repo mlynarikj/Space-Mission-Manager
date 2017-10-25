@@ -1,4 +1,4 @@
-package Entity;
+package cz.muni.fi.Entity;
 
 public class Spacecraft {
 

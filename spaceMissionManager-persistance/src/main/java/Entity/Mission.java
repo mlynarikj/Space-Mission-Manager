@@ -18,7 +18,7 @@ public class Mission {
 	private Long id;
 
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<User> astronauts = new ArrayList<User>();
 
 	private String destination;

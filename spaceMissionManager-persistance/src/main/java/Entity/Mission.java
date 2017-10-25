@@ -93,4 +93,20 @@ public class Mission {
 	public void setAstronauts(List<User> astronauts) {
 		this.astronauts = astronauts;
 	}
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Mission)) return false;
+
+		Mission mission = (Mission) o;
+
+		return getId() != null ? getId().equals(mission.getId()) : mission.getId() == null;
+	}
+
+	@Override
+	public int hashCode() {
+		return getId() != null ? getId().hashCode() : 0;
+	}
 }

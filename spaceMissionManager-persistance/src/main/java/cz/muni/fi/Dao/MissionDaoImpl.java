@@ -1,6 +1,6 @@
-package Dao;
+package cz.muni.fi.Dao;
 
-import Entity.Mission;
+import cz.muni.fi.Entity.Mission;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -20,11 +20,17 @@ public class MissionDaoImpl implements MissionDao {
 
 	@Override
 	public void createMission(Mission mission) {
+		if (mission == null){
+			throw new IllegalArgumentException("mission is null");
+		}
 		entityManager.persist(mission);
 	}
 
 	@Override
 	public void cancelMission(Mission mission) {
+		if (mission == null){
+			throw new IllegalArgumentException("mission is null");
+		}
 		entityManager.remove(entityManager.merge(mission));
 	}
 
@@ -35,6 +41,9 @@ public class MissionDaoImpl implements MissionDao {
 
 	@Override
 	public List<Mission> findAllMissions(Boolean active) {
+		if (active == null){
+			throw new IllegalArgumentException("active is null");
+		}
 		return entityManager.createQuery("select m from Mission m where active = :active", Mission.class)
 				.setParameter("active", active)
 				.getResultList();
@@ -53,6 +62,9 @@ public class MissionDaoImpl implements MissionDao {
 
 	@Override
 	public void updateMission(Mission mission) {
+		if (mission == null){
+			throw new IllegalArgumentException("mission is null");
+		}
 		entityManager.merge(mission);
 	}
 }

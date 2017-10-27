@@ -1,10 +1,7 @@
 package cz.muni.fi.Dao;
 
 import cz.muni.fi.Entity.Mission;
-import cz.muni.fi.Entity.Spacecraft;
-import cz.muni.fi.Entity.User;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**

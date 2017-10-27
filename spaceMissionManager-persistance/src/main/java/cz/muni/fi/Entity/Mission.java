@@ -1,6 +1,7 @@
 package cz.muni.fi.Entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ public class Mission {
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<User> astronauts = new ArrayList<User>();
 
+	@NotNull
+	@Column(nullable = false, unique = true)
+	private String name;
 	private String destination;
 	private ZonedDateTime eta;
 	private String missionDescription;
@@ -94,6 +98,13 @@ public class Mission {
 		this.astronauts = astronauts;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -102,11 +113,11 @@ public class Mission {
 
 		Mission mission = (Mission) o;
 
-		return getId() != null ? getId().equals(mission.getId()) : mission.getId() == null;
+		return getName() != null ? getName().equals(mission.getName()) : mission.getName() == null;
 	}
 
 	@Override
 	public int hashCode() {
-		return getId() != null ? getId().hashCode() : 0;
+		return getName() != null ? getName().hashCode() : 0;
 	}
 }

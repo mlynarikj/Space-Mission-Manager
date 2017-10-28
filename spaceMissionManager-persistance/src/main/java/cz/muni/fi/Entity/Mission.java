@@ -27,6 +27,7 @@ public class Mission {
 	@NotNull
 	@Column(nullable = false, unique = true)
 	private String name;
+
 	private String destination;
 	private ZonedDateTime eta;
 	private String missionDescription;
@@ -115,6 +116,22 @@ public class Mission {
 
 	public void setSpacecrafts(Set<Spacecraft> spacecrafts) {
 		this.spacecrafts = spacecrafts;
+	}
+
+	public void addAstronaut(User user){
+		astronauts.add(user);
+	}
+
+	public void removeAstronaut(User user){
+		astronauts.remove(user);
+	}
+
+	public void addSpacecraft(Spacecraft spacecraft){
+		spacecrafts.add(spacecraft);
+	}
+
+	public void removeSpacecraft(Spacecraft spacecraft){
+		spacecrafts.remove(spacecraft);
 	}
 
 	@Override

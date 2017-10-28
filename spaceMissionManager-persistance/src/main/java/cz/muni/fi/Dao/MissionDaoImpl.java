@@ -2,10 +2,12 @@ package cz.muni.fi.Dao;
 
 import cz.muni.fi.Entity.Mission;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -13,6 +15,7 @@ import java.util.List;
  */
 
 @Repository
+@Transactional
 public class MissionDaoImpl implements MissionDao {
 
 	@PersistenceContext
@@ -20,7 +23,7 @@ public class MissionDaoImpl implements MissionDao {
 
 	@Override
 	public void createMission(Mission mission) {
-		if (mission == null){
+		if (mission == null || ZonedDateTime.now().isAfter(mission.getEta())){
 			throw new IllegalArgumentException("mission is null");
 		}
 		entityManager.persist(mission);
@@ -59,7 +62,7 @@ public class MissionDaoImpl implements MissionDao {
 
 	@Override
 	public void updateMission(Mission mission) {
-		if (mission == null){
+		if (mission == null || ZonedDateTime.now().isAfter(mission.getEta())){
 			throw new IllegalArgumentException("mission is null");
 		}
 		entityManager.merge(mission);

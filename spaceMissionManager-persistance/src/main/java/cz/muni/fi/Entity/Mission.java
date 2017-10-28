@@ -5,7 +5,9 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author mlynarikj
@@ -20,7 +22,10 @@ public class Mission {
 
 
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<User> astronauts = new ArrayList<User>();
+	private Set<User> astronauts = new HashSet<>();
+
+	@OneToMany(fetch = FetchType.LAZY)
+	private Set<Spacecraft> spacecrafts = new HashSet<>();
 
 	@NotNull
 	@Column(nullable = false, unique = true)
@@ -28,6 +33,7 @@ public class Mission {
 	private String destination;
 	private ZonedDateTime eta;
 	private String missionDescription;
+
 
 	private boolean active;
 	private String result;
@@ -66,7 +72,7 @@ public class Mission {
 		this.missionDescription = missionDescription;
 	}
 
-	public boolean getActive() {
+	public boolean isActive() {
 		return active;
 	}
 
@@ -90,11 +96,11 @@ public class Mission {
 		this.endDate = endDate;
 	}
 
-	public List<User> getAstronauts() {
+	public Set<User> getAstronauts() {
 		return astronauts;
 	}
 
-	public void setAstronauts(List<User> astronauts) {
+	public void setAstronauts(Set<User> astronauts) {
 		this.astronauts = astronauts;
 	}
 
@@ -104,6 +110,14 @@ public class Mission {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<Spacecraft> getSpacecrafts() {
+		return spacecrafts;
+	}
+
+	public void setSpacecrafts(Set<Spacecraft> spacecrafts) {
+		this.spacecrafts = spacecrafts;
 	}
 
 	@Override

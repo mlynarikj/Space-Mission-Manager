@@ -4,10 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author mlynarikj
@@ -97,7 +94,7 @@ public class Mission {
 	}
 
 	public Set<User> getAstronauts() {
-		return astronauts;
+		return Collections.unmodifiableSet(astronauts);
 	}
 
 	public void setAstronauts(Set<User> astronauts) {
@@ -113,7 +110,7 @@ public class Mission {
 	}
 
 	public Set<Spacecraft> getSpacecrafts() {
-		return spacecrafts;
+		return Collections.unmodifiableSet(spacecrafts);
 	}
 
 	public void setSpacecrafts(Set<Spacecraft> spacecrafts) {

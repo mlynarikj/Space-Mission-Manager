@@ -1,74 +1,50 @@
 package cz.muni.fi.Dao;
 
 import cz.muni.fi.Entity.Mission;
-import cz.muni.fi.Entity.Spacecraft;
-import cz.muni.fi.Entity.User;
 
-import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author mlynarikj
+ */
 public interface MissionDao {
 
 	/**
-	 * 
-	 * @param mission
+	 *
+	 * @param mission mission to be saved in the database
 	 */
 	void createMission(Mission mission);
 
 	/**
-	 * 
-	 * @param mission
+	 *
+	 * @param mission mission to be deleted from the database
 	 */
 	void cancelMission(Mission mission);
 
 	/**
-	 * 
-	 * @param mission
-	 * @param spacecraft
+	 *
+	 * @return list of all missions in the database
 	 */
-	void addSpacecraftToMission(Mission mission, Spacecraft spacecraft);
-
-	/**
-	 * 
-	 * @param mission
-	 * @param user
-	 */
-	void addAstronautToMission(Mission mission, User user);
-
-	/**
-	 * 
-	 * @param mission
-	 * @param result
-	 */
-	void archiveMission(Mission mission, String result);
-
-	/**
-	 * 
-	 * @param mission
-	 * @param result
-	 * @param endDate
-	 */
-	void archiveMission(Mission mission, String result, LocalDate endDate);
-
 	List<Mission> findAllMissions();
 
 	/**
-	 * 
-	 * @param id
+	 *
+	 * @param active state of the mission
+	 * @return list of the missions
+	 */
+	List<Mission> findAllMissions(boolean active);
+
+	/**
+	 *
+	 * @param id id of desired mission
+	 * @return mission with selected id or null
 	 */
 	Mission findMissionById(Long id);
 
 	/**
-	 * 
-	 * @param mission
+	 *
+	 * @param mission mission to be updated
 	 */
 	void updateMission(Mission mission);
-
-	/**
-	 * 
-	 * @param mission
-	 * @param user
-	 */
-	void removeAstronautFromMission(Mission mission, User user);
 
 }

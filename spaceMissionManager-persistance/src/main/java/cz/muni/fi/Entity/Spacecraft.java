@@ -1,8 +1,6 @@
 package cz.muni.fi.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -10,14 +8,19 @@ public class Spacecraft {
 
 	//ATTRIBUTES
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String type; //just probes or astronauts...
 
+    @Column(nullable = false, unique = true)
 	private String name;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<CraftComponent> allComponents;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Mission mission;
 
 
 
@@ -41,16 +44,16 @@ public class Spacecraft {
 		return allComponents;
 	}
 
-//TODO uncomment when CraftComponent dependency is solved
-//	public int unfinishedComponentsCount(){
-//		int count = allComponents.size();
-//		for (CraftComponent c : allComponents){
-//			if(c.isReadyToUse()){
-//				count--;
-//			}
-//		}
-//		return count;
-//	}
+
+	public int unfinishedComponentsCount(){
+		int count = allComponents.size();
+		for (CraftComponent c : allComponents){
+			if(c.isReadyToUse()){
+				count--;
+			}
+		}
+		return count;
+	}
 
 
 	@Override
@@ -58,11 +61,11 @@ public class Spacecraft {
 		if (this == o) return true;
 		if (!(o instanceof Spacecraft)) return false;
 		Spacecraft spacecraft = (Spacecraft) o;
-		return getId() != null ? getId().equals(spacecraft.getId()) : spacecraft.getId() == null;
+		return getName() != null ? getName().equals(spacecraft.getName()) : spacecraft.getName() == null;
 	}
 
 	@Override
 	public int hashCode() {
-		return getId() != null ? getId().hashCode() : 0;
+		return getName() != null ? getName().hashCode() : 0;
 	}
 }

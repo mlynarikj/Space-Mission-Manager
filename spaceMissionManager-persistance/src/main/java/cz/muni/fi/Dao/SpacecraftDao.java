@@ -22,12 +22,6 @@ public interface SpacecraftDao {
 
 	/**
 	 * 
-	 * @param type
-	 */
-	List<Spacecraft> findAllSpacecrafts(String type);
-
-	/**
-	 * 
 	 * @param id
 	 */
 	Spacecraft findSpacecraftById(Long id);

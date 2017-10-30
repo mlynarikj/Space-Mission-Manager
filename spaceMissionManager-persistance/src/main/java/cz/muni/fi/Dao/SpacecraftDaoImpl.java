@@ -1,6 +1,7 @@
 package cz.muni.fi.Dao;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
@@ -57,7 +58,14 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
         if (id == null){
             throw new IllegalArgumentException("Id must not be null");
         }
-        return em.find(Spacecraft.class, id);
+        try {
+            return em.createQuery("select s from Spacecraft s fetch all properties where id = :id", Spacecraft.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        }
+        catch (NoResultException nre){
+            return null;
+        }
     }
 
     @Override
@@ -75,6 +83,7 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
             throw new IllegalArgumentException("Spacecraft name must not be null");
         }
         em.merge(spacecraft);
+        em.flush();
     }
 
 }

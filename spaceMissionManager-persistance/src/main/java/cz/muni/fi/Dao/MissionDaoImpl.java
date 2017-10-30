@@ -76,7 +76,7 @@ public class MissionDaoImpl implements MissionDao {
 			throw new IllegalArgumentException("id is null");
 		}
 		try {
-			return entityManager.createQuery("select m from Mission m where id = :id", Mission.class)
+			return entityManager.createQuery("select m from Mission m fetch all properties where id = :id", Mission.class)
 					.setParameter("id", id)
 					.getSingleResult();
 		} catch (NoResultException nre) {
@@ -108,5 +108,6 @@ public class MissionDaoImpl implements MissionDao {
 			throw new IllegalArgumentException("at least 1 spacecraft is required");
 		}
 		entityManager.merge(mission);
+		entityManager.flush();
 	}
 }

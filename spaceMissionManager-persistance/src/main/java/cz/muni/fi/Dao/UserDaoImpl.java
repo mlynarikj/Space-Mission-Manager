@@ -38,6 +38,7 @@ public class UserDaoImpl implements UserDao {
             throw new IllegalArgumentException("User id should not be null");
         }
         em.merge(user);
+        em.flush();
     }
 
     @Override
@@ -67,7 +68,7 @@ public class UserDaoImpl implements UserDao {
             throw new IllegalArgumentException("User id is null");
         }
         try {
-            return em.createQuery("select u from User u where u.id = :id", User.class)
+            return em.createQuery("select u from User u fetch all properties where u.id = :id", User.class)
                     .setParameter("id", id).getSingleResult();
         }
         catch (NoResultException ex){

@@ -2,7 +2,9 @@ package cz.muni.fi.Entity;
 
 import javax.persistence.*;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Spacecraft {
@@ -18,7 +20,7 @@ public class Spacecraft {
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<CraftComponent> components;
+	private Set<CraftComponent> components = new HashSet<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Mission mission;
@@ -42,16 +44,13 @@ public class Spacecraft {
 	}
 
 	public void addComponent(CraftComponent c){
+	    if(components.contains(c)) return;
 		components.add(c);
 		c.setSpacecraft(this);
 	}
 
-	public List<CraftComponent> getComponents() {
-		return Collections.unmodifiableList(components);
-	}
-
-	public void setComponents(List<CraftComponent> components) {
-		this.components = components;
+	public Set<CraftComponent> getComponents() {
+		return Collections.unmodifiableSet(components);
 	}
 
 	public Mission getMission() {
@@ -59,6 +58,7 @@ public class Spacecraft {
 	}
 
 	public void setMission(Mission mission) {
+	    if(this.mission != null && this.mission.equals(mission)) return;
 		this.mission = mission;
 		mission.addSpacecraft(this);
 	}

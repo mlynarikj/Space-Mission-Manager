@@ -123,7 +123,9 @@ public class User {
     }
 
     public void setMission(Mission mission) {
+        if(this.mission != null && this.mission.equals(mission)) return;
         this.mission = mission;
+        mission.addAstronaut(this);
     }
 
     @Override

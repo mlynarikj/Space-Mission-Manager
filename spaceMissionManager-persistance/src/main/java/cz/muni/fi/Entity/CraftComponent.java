@@ -58,7 +58,9 @@ public class CraftComponent {
 	}
 
 	public void setSpacecraft(Spacecraft spacecraft) {
+		if(this.spacecraft != null && this.spacecraft.equals(spacecraft)) return;
 		this.spacecraft = spacecraft;
+		spacecraft.addComponent(this);
 	}
 
 	@Override

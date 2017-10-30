@@ -98,10 +98,6 @@ public class Mission {
 		return Collections.unmodifiableSet(astronauts);
 	}
 
-	public void setAstronauts(Set<User> astronauts) {
-		this.astronauts = astronauts;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -114,12 +110,10 @@ public class Mission {
 		return Collections.unmodifiableSet(spacecrafts);
 	}
 
-	public void setSpacecrafts(Set<Spacecraft> spacecrafts) {
-		this.spacecrafts = spacecrafts;
-	}
-
 	public void addAstronaut(User user){
+	    if(astronauts.contains(user)) return;
 		astronauts.add(user);
+		user.setMission(this);
 	}
 
 	public void removeAstronaut(User user){
@@ -127,7 +121,9 @@ public class Mission {
 	}
 
 	public void addSpacecraft(Spacecraft spacecraft){
+	    if(spacecrafts.contains(spacecraft)) return;
 		spacecrafts.add(spacecraft);
+		spacecraft.setMission(this);
 	}
 
 	public void removeSpacecraft(Spacecraft spacecraft){

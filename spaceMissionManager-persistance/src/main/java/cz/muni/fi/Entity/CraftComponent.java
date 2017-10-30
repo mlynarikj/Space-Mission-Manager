@@ -16,6 +16,7 @@ public class CraftComponent {
 	@NotNull
 	private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
 	private Spacecraft spacecraft;
 
 	private ZonedDateTime readyDate;

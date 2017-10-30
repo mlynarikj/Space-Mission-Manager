@@ -10,13 +10,13 @@ public class CraftComponent {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column
-	@NotNull
 	private boolean readyToUse;
 
-	@Column
+	@Column(unique = true)
 	@NotNull
 	private String name;
+
+	private Spacecraft spacecraft;
 
 	private ZonedDateTime readyDate;
 
@@ -52,6 +52,13 @@ public class CraftComponent {
 		this.readyDate = readyDate;
 	}
 
+	public Spacecraft getSpacecraft() {
+		return spacecraft;
+	}
+
+	public void setSpacecraft(Spacecraft spacecraft) {
+		this.spacecraft = spacecraft;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -60,16 +67,11 @@ public class CraftComponent {
 
 		CraftComponent that = (CraftComponent) o;
 
-		if (isReadyToUse() != that.isReadyToUse()) return false;
-		if (!getName().equals(that.getName())) return false;
-		return getReadyDate() != null ? getReadyDate().equals(that.getReadyDate()) : that.getReadyDate() == null;
+		return getName().equals(that.getName());
 	}
 
 	@Override
 	public int hashCode() {
-		int result = (isReadyToUse() ? 1 : 0);
-		result = 31 * result + getName().hashCode();
-		result = 31 * result + (getReadyDate() != null ? getReadyDate().hashCode() : 0);
-		return result;
+		return getName().hashCode();
 	}
 }

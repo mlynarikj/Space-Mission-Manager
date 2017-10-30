@@ -43,6 +43,7 @@ public class Spacecraft {
 
 	public void addComponent(CraftComponent c){
 		components.add(c);
+		c.setSpacecraft(this);
 	}
 
 	public List<CraftComponent> getComponents() {
@@ -59,6 +60,7 @@ public class Spacecraft {
 
 	public void setMission(Mission mission) {
 		this.mission = mission;
+		mission.addSpacecraft(this);
 	}
 
 	public String getType() {

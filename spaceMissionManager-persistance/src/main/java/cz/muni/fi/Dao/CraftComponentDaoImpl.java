@@ -9,6 +9,11 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Created by jcizmar
+ *
+ * @author jcizmar
+ */
 @Repository
 @Transactional
 public class CraftComponentDaoImpl implements CraftComponentDao {

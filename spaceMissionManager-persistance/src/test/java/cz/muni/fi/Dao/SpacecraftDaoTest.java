@@ -17,7 +17,11 @@ import javax.persistence.PersistenceUnit;
 
 import static org.assertj.core.api.Assertions.*;
 
-
+/**
+ * Created by jcizmar
+ *
+ * @author jcizmar
+ */
 @ContextConfiguration(classes = ApplicationContext.class)
 public class SpacecraftDaoTest extends AbstractTestNGSpringContextTests {
     @Autowired

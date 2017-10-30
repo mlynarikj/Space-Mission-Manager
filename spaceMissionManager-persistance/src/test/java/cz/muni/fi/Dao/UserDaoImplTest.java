@@ -22,6 +22,10 @@ import java.util.Collections;
 import static org.testng.Assert.*;
 import static org.assertj.core.api.Assertions.*;
 
+/**
+ * @author mlynarikj
+ */
+
 @ContextConfiguration(classes = ApplicationContext.class)
 public class UserDaoImplTest extends AbstractTestNGSpringContextTests {
 

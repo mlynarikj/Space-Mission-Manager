@@ -29,6 +29,7 @@ public class UserDaoImpl implements UserDao {
             throw new IllegalArgumentException("User id is not null");
         }
         em.persist(user);
+        em.flush();
     }
 
     @Override
@@ -38,6 +39,7 @@ public class UserDaoImpl implements UserDao {
             throw new IllegalArgumentException("User id should not be null");
         }
         em.merge(user);
+        em.flush();
     }
 
     @Override

@@ -41,7 +41,7 @@ public class CraftComponentDaoImpl implements CraftComponentDao {
             throw new IllegalArgumentException("id is null");
         }
         try {
-            return entityManager.createQuery("select cc from CraftComponent cc join fetch cc.spacecraft where id = :id", CraftComponent.class)
+            return entityManager.createQuery("select cc from CraftComponent cc fetch all properties where id = :id", CraftComponent.class)
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (NoResultException nre) {

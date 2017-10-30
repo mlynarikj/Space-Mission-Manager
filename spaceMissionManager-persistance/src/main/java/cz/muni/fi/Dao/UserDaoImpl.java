@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -23,17 +24,18 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void addUser(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException(User.class.getName());
+        validateUser(user);
+        if(user.getId() != null){
+            throw new IllegalArgumentException("User id is not null");
         }
-
         em.persist(user);
     }
 
     @Override
     public void updateUser(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException(User.class.getName());
+        validateUser(user);
+        if(user.getId() == null){
+            throw new IllegalArgumentException("User id should not be null");
         }
         em.merge(user);
     }
@@ -54,7 +56,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAllAstronauts() {
-        return em.createQuery("select u from User u where u.isManager = false", User.class)
+        return em.createQuery("select u from User u where u.isManager = :bool", User.class)
+                .setParameter("bool", false)
                 .getResultList();
     }
 
@@ -74,8 +77,37 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAllAvailableAstronauts() {
-        return em.createQuery("select u from User u where u.mission is null and u.isManager = false", User.class)
+        return em.createQuery("select u from User u where u.mission is null and u.isManager = :bool", User.class)
+                .setParameter("bool", false)
                 .getResultList();
+    }
+
+    /**
+     * Validation of user
+     * @param user User to validate
+     */
+    private void validateUser(User user){
+        if (user == null) {
+            throw new IllegalArgumentException("User is null");
+        }
+        if(user.getBirthDate().isAfter(LocalDate.now())){
+            throw new IllegalArgumentException("User birthday should be in the past");
+        }
+        if(user.getName() == null){
+            throw new IllegalArgumentException("User name should not be null");
+        }
+        if(user.getBirthDate() == null){
+            throw new IllegalArgumentException("User birthday should not be null");
+        }
+        if(user.getEmail() == null){
+            throw new IllegalArgumentException("User email should not be null");
+        }
+        if(!user.getEmail().matches(".+@.+\\....?")){
+            throw new IllegalArgumentException("User email has wrong format");
+        }
+        if(user.getPassword() == null){
+            throw new IllegalArgumentException("User password should not be null");
+        }
     }
 
 }

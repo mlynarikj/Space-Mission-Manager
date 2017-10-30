@@ -1,6 +1,7 @@
 package cz.muni.fi.Entity;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -17,42 +18,57 @@ public class Spacecraft {
 	private String name;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<CraftComponent> allComponents;
+	private List<CraftComponent> components;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Mission mission;
 
 
-
 	//METHODS
+	public Long getId() {
+		return id;
+	}
 
-	//TODO managing components - add, remove...
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public List<CraftComponent> getAllComponents() {
-		return allComponents;
+	public void addComponent(CraftComponent c){
+		components.add(c);
+		c.setSpacecraft(this);
 	}
 
+	public List<CraftComponent> getComponents() {
+		return Collections.unmodifiableList(components);
+	}
 
-	public int unfinishedComponentsCount(){
-		int count = allComponents.size();
-		for (CraftComponent c : allComponents){
-			if(c.isReadyToUse()){
-				count--;
-			}
-		}
-		return count;
+	public void setComponents(List<CraftComponent> components) {
+		this.components = components;
+	}
+
+	public Mission getMission() {
+		return mission;
+	}
+
+	public void setMission(Mission mission) {
+		this.mission = mission;
+		mission.addSpacecraft(this);
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 

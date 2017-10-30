@@ -45,6 +45,7 @@ public class MissionDaoImpl implements MissionDao {
 			throw new IllegalArgumentException("at least 1 spacecraft is required");
 		}
 		entityManager.persist(mission);
+		entityManager.flush();
 	}
 
 	@Override
@@ -108,5 +109,6 @@ public class MissionDaoImpl implements MissionDao {
 			throw new IllegalArgumentException("at least 1 spacecraft is required");
 		}
 		entityManager.merge(mission);
+		entityManager.flush();
 	}
 }

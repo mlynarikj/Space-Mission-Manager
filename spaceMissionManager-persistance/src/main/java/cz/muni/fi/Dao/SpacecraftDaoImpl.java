@@ -34,6 +34,7 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
             throw new IllegalArgumentException("Spacecraft name must not be null");
         }
         em.persist(spacecraft);
+        em.flush();
     }
 
     @Override
@@ -75,6 +76,7 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
             throw new IllegalArgumentException("Spacecraft name must not be null");
         }
         em.merge(spacecraft);
+        em.flush();
     }
 
 }

@@ -4,6 +4,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
+/**
+ * Created by jcizmar
+ *
+ * @author jcizmar
+ */
 @Entity
 public class CraftComponent {
 	@Id

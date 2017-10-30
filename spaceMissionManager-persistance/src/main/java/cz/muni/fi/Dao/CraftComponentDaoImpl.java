@@ -28,6 +28,7 @@ public class CraftComponentDaoImpl implements CraftComponentDao {
             throw new IllegalArgumentException("id is not null");
         }
         this.entityManager.persist(craftComponent);
+        this.entityManager.flush();
     }
 
     @Override
@@ -61,6 +62,7 @@ public class CraftComponentDaoImpl implements CraftComponentDao {
             throw new IllegalArgumentException("id is null");
         }
         this.entityManager.merge(craftComponent);
+        this.entityManager.flush();
     }
 
     @Override

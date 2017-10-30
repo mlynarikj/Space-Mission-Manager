@@ -59,7 +59,7 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
             throw new IllegalArgumentException("Id must not be null");
         }
         try {
-            return em.createQuery("select s from Spacecraft s join fetch s.components join fetch s.mission where id = :id", Spacecraft.class)
+            return em.createQuery("select s from Spacecraft s fetch all properties where id = :id", Spacecraft.class)
                     .setParameter("id", id)
                     .getSingleResult();
         }

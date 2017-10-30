@@ -76,7 +76,7 @@ public class MissionDaoImpl implements MissionDao {
 			throw new IllegalArgumentException("id is null");
 		}
 		try {
-			return entityManager.createQuery("select m from Mission m join fetch m.astronauts join fetch  m.spacecrafts where id = :id", Mission.class)
+			return entityManager.createQuery("select m from Mission m fetch all properties where id = :id", Mission.class)
 					.setParameter("id", id)
 					.getSingleResult();
 		} catch (NoResultException nre) {

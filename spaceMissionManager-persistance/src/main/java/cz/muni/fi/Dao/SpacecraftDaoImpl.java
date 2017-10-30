@@ -2,6 +2,8 @@ package cz.muni.fi.Dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
 import cz.muni.fi.Entity.Spacecraft;
 
@@ -11,6 +13,7 @@ import java.util.List;
  * @author Vojtech Bruza
  */
 @Repository
+@Transactional
 public class SpacecraftDaoImpl implements SpacecraftDao {
 
     @PersistenceContext

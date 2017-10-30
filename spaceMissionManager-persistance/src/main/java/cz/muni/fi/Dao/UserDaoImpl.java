@@ -90,9 +90,6 @@ public class UserDaoImpl implements UserDao {
         if (user == null) {
             throw new IllegalArgumentException("User is null");
         }
-        if(user.getBirthDate().isAfter(LocalDate.now())){
-            throw new IllegalArgumentException("User birthday should be in the past");
-        }
         if(user.getName() == null){
             throw new IllegalArgumentException("User name should not be null");
         }
@@ -104,6 +101,9 @@ public class UserDaoImpl implements UserDao {
         }
         if(!user.getEmail().matches(".+@.+\\....?")){
             throw new IllegalArgumentException("User email has wrong format");
+        }
+        if(user.getBirthDate().isAfter(LocalDate.now())){
+            throw new IllegalArgumentException("User birthday should be in the past");
         }
         if(user.getPassword() == null){
             throw new IllegalArgumentException("User password should not be null");

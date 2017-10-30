@@ -94,11 +94,14 @@ public class CraftComponentDaoImplTest extends AbstractTestNGSpringContextTests 
     public void testFindAllComponents(){
         EntityManager em = entityManagerFactory.createEntityManager();
         assertThat(craftComponentDao.findAllComponents()).hasSize(0);
+        em.getTransaction().begin();
         em.persist(orbitalModule);
-        assertThat(craftComponentDao.findAllComponents()).hasSize(1);
         em.persist(heatShield);
+        em.getTransaction().commit();
         assertThat(craftComponentDao.findAllComponents()).hasSize(2);
+        em.getTransaction().begin();
         em.persist(retroRocket);
+        em.getTransaction().commit();
         assertThat(craftComponentDao.findAllComponents()).hasSize(3);
     }
 

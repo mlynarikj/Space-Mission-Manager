@@ -8,7 +8,7 @@ public interface CraftComponentDao {
 
 	/**
 	 * 
-	 * @param craftComponent
+	 * @param craftComponent componnent to add
 	 */
 	void addComponent(CraftComponent craftComponent);
 
@@ -16,19 +16,19 @@ public interface CraftComponentDao {
 
 	/**
 	 * 
-	 * @param id
+	 * @param id id of craft component
 	 */
 	CraftComponent findComponentById(Long id);
 
 	/**
 	 * 
-	 * @param craftComponent
+	 * @param craftComponent component to update
 	 */
 	void updateComponent(CraftComponent craftComponent);
 
 	/**
 	 * 
-	 * @param craftComponent
+	 * @param craftComponent component to remove
 	 */
 	void removeComponent(CraftComponent craftComponent);
 

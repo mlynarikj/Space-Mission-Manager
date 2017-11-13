@@ -37,6 +37,8 @@
 
     <modules>
         <module>spaceMissionManager-persistance</module>
+        <module>spaceMissionManager-api</module>
+        <module>spaceMissionManager-service</module>
     </modules>
 
 

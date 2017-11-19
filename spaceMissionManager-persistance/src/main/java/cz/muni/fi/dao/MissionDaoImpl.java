@@ -22,7 +22,7 @@ public class MissionDaoImpl implements MissionDao {
 	private EntityManager entityManager;
 
 	@Override
-	public void createMission(Mission mission) {
+	public Mission createMission(Mission mission) {
 		if (mission == null) {
 			throw new IllegalArgumentException("mission is null");
 		}
@@ -45,10 +45,11 @@ public class MissionDaoImpl implements MissionDao {
 			throw new IllegalArgumentException("at least 1 spacecraft is required");
 		}
 		entityManager.persist(mission);
+		return mission;
 	}
 
 	@Override
-	public void cancelMission(Mission mission) {
+	public Mission cancelMission(Mission mission) {
 		if (mission == null) {
 			throw new IllegalArgumentException("mission is null");
 		}
@@ -56,6 +57,7 @@ public class MissionDaoImpl implements MissionDao {
 			throw new IllegalArgumentException("id is null");
 		}
 		entityManager.remove(entityManager.merge(mission));
+		return mission;
 	}
 
 	@Override
@@ -85,7 +87,7 @@ public class MissionDaoImpl implements MissionDao {
 	}
 
 	@Override
-	public void updateMission(Mission mission) {
+	public Mission updateMission(Mission mission) {
 		if (mission == null) {
 			throw new IllegalArgumentException("mission is null");
 		}
@@ -109,5 +111,6 @@ public class MissionDaoImpl implements MissionDao {
 		}
 		entityManager.merge(mission);
 		entityManager.flush();
+		return mission;
 	}
 }

@@ -10,7 +10,7 @@ public interface CraftComponentDao {
 	 * 
 	 * @param craftComponent componnent to add
 	 */
-	void addComponent(CraftComponent craftComponent);
+	CraftComponent addComponent(CraftComponent craftComponent);
 
 	List<CraftComponent> findAllComponents();
 
@@ -24,12 +24,12 @@ public interface CraftComponentDao {
 	 * 
 	 * @param craftComponent component to update
 	 */
-	void updateComponent(CraftComponent craftComponent);
+	CraftComponent updateComponent(CraftComponent craftComponent);
 
 	/**
 	 * 
 	 * @param craftComponent component to remove
 	 */
-	void removeComponent(CraftComponent craftComponent);
+	CraftComponent removeComponent(CraftComponent craftComponent);
 
 }

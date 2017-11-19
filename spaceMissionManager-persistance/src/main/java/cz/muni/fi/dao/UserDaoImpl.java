@@ -23,30 +23,33 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public void addUser(User user) {
+    public User addUser(User user) {
         validateUser(user);
         if(user.getId() != null){
             throw new IllegalArgumentException("User id is not null");
         }
         em.persist(user);
+        return user;
     }
 
     @Override
-    public void updateUser(User user) {
+    public User updateUser(User user) {
         validateUser(user);
         if(user.getId() == null){
             throw new IllegalArgumentException("User id should not be null");
         }
         em.merge(user);
         em.flush();
+        return user;
     }
 
     @Override
-    public void deleteUser(User user) {
+    public User deleteUser(User user) {
         if (user == null){
             throw new IllegalArgumentException(User.class.getName());
         }
         em.remove(em.merge(user));
+        return user;
     }
 
     @Override

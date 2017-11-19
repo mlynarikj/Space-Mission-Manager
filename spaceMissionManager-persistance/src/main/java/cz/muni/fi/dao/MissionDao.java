@@ -13,13 +13,13 @@ public interface MissionDao {
 	 *
 	 * @param mission mission to be saved in the database
 	 */
-	void createMission(Mission mission);
+	Mission createMission(Mission mission);
 
 	/**
 	 *
 	 * @param mission mission to be deleted from the database
 	 */
-	void cancelMission(Mission mission);
+	Mission cancelMission(Mission mission);
 
 	/**
 	 *
@@ -45,6 +45,6 @@ public interface MissionDao {
 	 *
 	 * @param mission mission to be updated
 	 */
-	void updateMission(Mission mission);
+	Mission updateMission(Mission mission);
 
 }

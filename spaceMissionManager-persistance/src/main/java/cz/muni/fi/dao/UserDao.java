@@ -17,21 +17,21 @@ public interface UserDao {
      *
      * @param user instance of user
      */
-    void addUser(User user);
+    User addUser(User user);
 
     /**
      * Update user in database
      *
      * @param user Instance of user
      */
-    void updateUser(User user);
+    User updateUser(User user);
 
     /**
      * Delete user from database
      *
      * @param user instance of user
      */
-    void deleteUser(User user);
+    User deleteUser(User user);
 
     /**
      * Find all users

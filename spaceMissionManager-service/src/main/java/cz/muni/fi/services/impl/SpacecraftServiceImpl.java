@@ -4,6 +4,7 @@ import cz.muni.fi.dao.SpacecraftDao;
 import cz.muni.fi.entity.Spacecraft;
 import cz.muni.fi.services.SpacecraftService;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -16,6 +17,7 @@ import java.util.List;
  *
  * @author Vojtech Bruza
  */
+@Service
 public class SpacecraftServiceImpl implements SpacecraftService {
     @Inject
     SpacecraftDao spacecraftDao;

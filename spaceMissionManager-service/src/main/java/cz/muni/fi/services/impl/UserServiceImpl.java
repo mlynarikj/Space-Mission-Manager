@@ -1,5 +1,6 @@
 package cz.muni.fi.services.impl;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import cz.muni.fi.dao.UserDao;
 import cz.muni.fi.entity.User;
 import cz.muni.fi.services.UserService;
@@ -21,6 +22,27 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Inject
     UserDao userDao;
+
+    //Confirm/reject mission - User has assigned mission and hasn't accepted it
+    // yet(acceptedMission - false, explanation = "") -
+    // accept - acceptedMission = true;
+    // reject - explanation = assign astronauts explanation, remove astronaut from mission's list
+    public void acceptMission(Long userid){
+        User user = userDao.findUserById(userid);
+        if(user.missionStatusPending()){
+            user.setAcceptedMission(true);
+        }
+    }
+
+    public void rejectMission(Long userid, String explanation) throws IllegalArgumentException{
+        if(explanation.isEmpty()){
+            throw new IllegalArgumentException("Explanation must not be empty");
+        }
+        User user = userDao.findUserById(userid);
+        if(user.missionStatusPending()){
+            user.setExplanation(explanation);
+        }
+    }
 
     @Override
     public void addUser(User user) throws DataAccessException {

@@ -1,6 +1,5 @@
 package cz.muni.fi.services.impl;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import cz.muni.fi.dao.UserDao;
 import cz.muni.fi.entity.User;
 import cz.muni.fi.services.UserService;

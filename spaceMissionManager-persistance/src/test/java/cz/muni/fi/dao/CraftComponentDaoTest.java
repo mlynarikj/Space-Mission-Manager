@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.*;
  */
 
 @ContextConfiguration(classes = ApplicationContext.class)
-public class CraftComponentDaoImplTest extends AbstractTestNGSpringContextTests {
+public class CraftComponentDaoTest extends AbstractTestNGSpringContextTests {
     @Autowired
     CraftComponentDao craftComponentDao;
 
@@ -35,8 +35,7 @@ public class CraftComponentDaoImplTest extends AbstractTestNGSpringContextTests 
 
     @BeforeMethod
 	public void setUp() {
-        LocalDateTime ldt = LocalDateTime.of(2018, Month.AUGUST, 22, 14, 30);
-
+        LocalDateTime ldt = LocalDateTime.now().plusMonths(3);
         orbitalModule = new CraftComponent();
         orbitalModule.setName("Orbital Module");
         orbitalModule.setReadyDate(ldt.atZone(ZoneId.of("GMT+2")));

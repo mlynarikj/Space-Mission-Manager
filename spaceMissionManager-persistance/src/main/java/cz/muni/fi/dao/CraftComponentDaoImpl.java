@@ -22,7 +22,7 @@ public class CraftComponentDaoImpl implements CraftComponentDao {
     private EntityManager entityManager;
 
     @Override
-    public void addComponent(CraftComponent craftComponent) {
+    public CraftComponent addComponent(CraftComponent craftComponent) {
         if(craftComponent == null){
             throw new IllegalArgumentException("craftComponent is null");
         }
@@ -33,6 +33,7 @@ public class CraftComponentDaoImpl implements CraftComponentDao {
             throw new IllegalArgumentException("id is not null");
         }
         this.entityManager.persist(craftComponent);
+        return craftComponent;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class CraftComponentDaoImpl implements CraftComponentDao {
     }
 
     @Override
-    public void updateComponent(CraftComponent craftComponent) {
+    public CraftComponent updateComponent(CraftComponent craftComponent) {
         if(craftComponent == null){
             throw new IllegalArgumentException("craftComponent is null");
         }
@@ -67,10 +68,11 @@ public class CraftComponentDaoImpl implements CraftComponentDao {
         }
         this.entityManager.merge(craftComponent);
         this.entityManager.flush();
+        return craftComponent;
     }
 
     @Override
-    public void removeComponent(CraftComponent craftComponent) {
+    public CraftComponent removeComponent(CraftComponent craftComponent) {
         if(craftComponent == null){
             throw new IllegalArgumentException("craftComponent is null");
         }
@@ -78,5 +80,6 @@ public class CraftComponentDaoImpl implements CraftComponentDao {
             throw new IllegalArgumentException("id is null");
         }
         entityManager.remove(this.entityManager.merge(craftComponent));
+        return craftComponent;
     }
 }

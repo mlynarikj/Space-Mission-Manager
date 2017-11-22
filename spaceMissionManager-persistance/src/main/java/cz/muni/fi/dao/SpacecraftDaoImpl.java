@@ -21,7 +21,7 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
     private EntityManager em;
 
     @Override
-    public void addSpacecraft(Spacecraft spacecraft) {
+    public Spacecraft addSpacecraft(Spacecraft spacecraft) {
         if (spacecraft == null){
             throw new IllegalArgumentException("Spacecraft should not be null");
         }
@@ -35,10 +35,11 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
             throw new IllegalArgumentException("Spacecraft name must not be null");
         }
         em.persist(spacecraft);
+        return spacecraft;
     }
 
     @Override
-    public void removeSpacecraft(Spacecraft spacecraft) {
+    public Spacecraft removeSpacecraft(Spacecraft spacecraft) {
         if (spacecraft == null){
             throw new IllegalArgumentException("Spacecraft should not be null");
         }
@@ -46,6 +47,7 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
             throw new IllegalArgumentException("Spacecraft id must not be null");
         }
         em.remove(findSpacecraftById((spacecraft.getId())));
+        return spacecraft;
     }
 
     @Override
@@ -69,7 +71,7 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
     }
 
     @Override
-    public void updateSpacecraft(Spacecraft spacecraft) {
+    public Spacecraft updateSpacecraft(Spacecraft spacecraft) {
         if (spacecraft == null){
             throw new IllegalArgumentException("Spacecraft should not be null");
         }
@@ -84,6 +86,7 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
         }
         em.merge(spacecraft);
         em.flush();
+        return spacecraft;
     }
 
 }

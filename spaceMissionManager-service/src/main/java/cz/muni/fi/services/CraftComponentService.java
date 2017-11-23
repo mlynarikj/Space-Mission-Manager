@@ -8,7 +8,7 @@ import java.util.List;
 public interface CraftComponentService {
 	/**
 	 *
-	 * @param craftComponent
+	 * @param craftComponent Component to add
 	 */
 	void addComponent(CraftComponent craftComponent) throws DataAccessException;
 
@@ -16,19 +16,19 @@ public interface CraftComponentService {
 
 	/**
 	 *
-	 * @param id
+	 * @param id id of component to find
 	 */
 	CraftComponent findComponentById(Long id) throws DataAccessException;
 
 	/**
 	 *
-	 * @param craftComponent
+	 * @param craftComponent craft component to update
 	 */
 	void updateComponent(CraftComponent craftComponent) throws DataAccessException;
 
 	/**
 	 *
-	 * @param craftComponent
+	 * @param craftComponent component to remove
 	 */
 	void removeComponent(CraftComponent craftComponent) throws DataAccessException;
 

@@ -7,7 +7,7 @@ import java.util.List;
 public interface CraftComponentFacade {
 	/**
 	 *
-	 * @param craftComponent
+	 * @param craftComponent component
 	 */
 	void addComponent(CraftComponentDTO craftComponent);
 
@@ -15,19 +15,19 @@ public interface CraftComponentFacade {
 
 	/**
 	 *
-	 * @param id
+	 * @param id id off component to find
 	 */
 	CraftComponentDTO findComponentById(Long id);
 
 	/**
 	 *
-	 * @param craftComponent
+	 * @param craftComponent component to update
 	 */
 	void updateComponent(CraftComponentDTO craftComponent);
 
 	/**
 	 *
-	 * @param craftComponent
+	 * @param craftComponent component to remove
 	 */
 	void removeComponent(CraftComponentDTO craftComponent);
 }

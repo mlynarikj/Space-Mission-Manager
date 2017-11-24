@@ -45,36 +45,76 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) throws DataAccessException {
-        userDao.addUser(user);
+        if(user == null){
+          throw new IllegalArgumentException("User must not be null.");
+        }
+        try {
+            userDao.addUser(user);
+        } catch (Exception e) {
+            throw new ServiceDataAccessException("Could not add user.", e);
+        }
     }
 
     @Override
     public void updateUser(User user) throws DataAccessException {
-        userDao.updateUser(user);
+        if(user == null){
+            throw new IllegalArgumentException("User must not be null.");
+        }
+        try {
+            userDao.updateUser(user);
+        } catch (Exception e) {
+            throw new ServiceDataAccessException("Could not update user.", e);
+        }
     }
 
     @Override
     public void deleteUser(User user) throws DataAccessException {
-        userDao.deleteUser(user);
+        if(user == null){
+            throw new IllegalArgumentException("User must not be null.");
+        }
+        try {
+            userDao.deleteUser(user);
+        } catch (Exception e) {
+            throw new ServiceDataAccessException("Could not delete user.", e);
+        }
     }
 
     @Override
     public List<User> findAllUsers() throws DataAccessException {
-        return Collections.unmodifiableList(userDao.findAllUsers());
+        try {
+            return Collections.unmodifiableList(userDao.findAllUsers());
+        } catch (Exception e) {
+            throw new ServiceDataAccessException("Could not find users.", e);
+        }
     }
 
     @Override
     public List<User> findAllAstronauts() throws DataAccessException {
-        return Collections.unmodifiableList(userDao.findAllAstronauts());
+        try {
+            return Collections.unmodifiableList(userDao.findAllAstronauts());
+        } catch (Exception e) {
+            throw new ServiceDataAccessException("Could not find astronauts.", e);
+        }
     }
 
     @Override
     public User findUserById(Long id) throws DataAccessException {
-        return userDao.findUserById(id);
+        if(id == null){
+            throw new IllegalArgumentException("Id must not be null.");
+        }
+        try {
+            return userDao.findUserById(id);
+        } catch (Exception e) {
+            throw new ServiceDataAccessException("Could not find user.", e);
+        }
     }
 
     @Override
     public List<User> findAllAvailableAstronauts() throws DataAccessException {
-        return Collections.unmodifiableList(userDao.findAllAvailableAstronauts());
+        try {
+            return Collections.unmodifiableList(userDao.findAllAvailableAstronauts());
+        } catch (Exception e) {
+            throw new ServiceDataAccessException("Could not find astronauts.", e);
+        }
     }
 }

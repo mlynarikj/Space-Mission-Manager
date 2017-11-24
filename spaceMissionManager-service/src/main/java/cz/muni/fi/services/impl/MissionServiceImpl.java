@@ -22,16 +22,14 @@ import java.util.List;
 public class MissionServiceImpl implements MissionService {
     @Inject
     MissionDao missionDao;
-    //TODO javadoc
-    //TODO modify interfaces to offer business functions
 
-//Archive mission - add endDate and move all the information to the result string resetting all the other attributes
-    public void archive(Long missionId, LocalDate date){
-        if(date.isAfter(LocalDate.now())){
+    @Override
+    public void archive(Long missionId, LocalDate endDate){
+        if(endDate.isAfter(LocalDate.now())){
             throw new IllegalArgumentException("Mission end date must be in the past");
         }
         Mission mission = missionDao.findMissionById(missionId);
-        mission.setEndDate(date);
+        mission.setEndDate(endDate);
         mission.setActive(false);
         mission.setResult("Mission{" +
                         "astronauts=" + mission.getAstronauts() +

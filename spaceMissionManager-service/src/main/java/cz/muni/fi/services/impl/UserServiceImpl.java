@@ -22,18 +22,16 @@ public class UserServiceImpl implements UserService {
     @Inject
     UserDao userDao;
 
-    //Confirm/reject mission - User has assigned mission and hasn't accepted it
-    // yet(acceptedMission - false, explanation = "") -
-    // accept - acceptedMission = true;
-    // reject - explanation = assign astronauts explanation, remove astronaut from mission's list
-    public void acceptMission(Long userid){
+    @Override
+    public void acceptAssignedMission(Long userid){
         User user = userDao.findUserById(userid);
         if(user.missionStatusPending()){
             user.setAcceptedMission(true);
         }
     }
 
-    public void rejectMission(Long userid, String explanation) throws IllegalArgumentException{
+    @Override
+    public void rejectAssignedMission(Long userid, String explanation) throws IllegalArgumentException{
         if(explanation.isEmpty()){
             throw new IllegalArgumentException("Explanation must not be empty");
         }

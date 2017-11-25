@@ -23,21 +23,39 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
 
     @Override
-    public void acceptAssignedMission(Long userid){
-        User user = userDao.findUserById(userid);
+    public void acceptAssignedMission(User user){
         if(user.missionStatusPending()){
             user.setAcceptedMission(true);
+        } else {
+            throw new IllegalArgumentException("This user does not have pending mission status.");
+        }
+        try {
+            userDao.updateUser(user);
+        } catch (Throwable e) {
+            throw new ServiceDataAccessException("Could not update user.", e);
         }
     }
 
     @Override
-    public void rejectAssignedMission(Long userid, String explanation) throws IllegalArgumentException{
-        if(explanation.isEmpty()){
-            throw new IllegalArgumentException("Explanation must not be empty");
+    public void rejectAssignedMission(User user, String explanation) throws IllegalArgumentException{
+        if(user == null){
+            throw new IllegalArgumentException("User must not be null.");
         }
-        User user = userDao.findUserById(userid);
+        if(explanation == null){
+            throw new IllegalArgumentException("Explanation must not be null.");
+        }
+        if(explanation.isEmpty()){
+            throw new IllegalArgumentException("Explanation must not be empty.");
+        }
         if(user.missionStatusPending()){
             user.setExplanation(explanation);
+        } else {
+            throw new IllegalArgumentException("This user does not have pending mission status.");
+        }
+        try {
+            userDao.updateUser(user);
+        } catch (Throwable e) {
+            throw new ServiceDataAccessException("Could not update user.", e);
         }
     }
 
@@ -48,7 +66,7 @@ public class UserServiceImpl implements UserService {
         }
         try {
             userDao.addUser(user);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not add user.", e);
         }
     }
@@ -60,7 +78,7 @@ public class UserServiceImpl implements UserService {
         }
         try {
             userDao.updateUser(user);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not update user.", e);
         }
     }
@@ -72,7 +90,7 @@ public class UserServiceImpl implements UserService {
         }
         try {
             userDao.deleteUser(user);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not delete user.", e);
         }
     }
@@ -81,7 +99,7 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllUsers() throws DataAccessException {
         try {
             return Collections.unmodifiableList(userDao.findAllUsers());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not find users.", e);
         }
     }
@@ -90,7 +108,7 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllAstronauts() throws DataAccessException {
         try {
             return Collections.unmodifiableList(userDao.findAllAstronauts());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not find astronauts.", e);
         }
     }
@@ -102,7 +120,7 @@ public class UserServiceImpl implements UserService {
         }
         try {
             return userDao.findUserById(id);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not find user.", e);
         }
     }
@@ -111,7 +129,7 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllAvailableAstronauts() throws DataAccessException {
         try {
             return Collections.unmodifiableList(userDao.findAllAvailableAstronauts());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not find astronauts.", e);
         }
     }

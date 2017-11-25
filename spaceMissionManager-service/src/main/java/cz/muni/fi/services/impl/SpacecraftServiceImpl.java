@@ -29,7 +29,7 @@ public class SpacecraftServiceImpl implements SpacecraftService {
         }
         try {
             spacecraftDao.addSpacecraft(spacecraft);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not add spacecraft.", e);
         }
     }
@@ -41,7 +41,7 @@ public class SpacecraftServiceImpl implements SpacecraftService {
         }
         try {
             spacecraftDao.removeSpacecraft(spacecraft);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not remove spacecraft.", e);
         }
     }
@@ -50,7 +50,7 @@ public class SpacecraftServiceImpl implements SpacecraftService {
     public List<Spacecraft> findAllSpacecrafts() throws DataAccessException {
         try {
             return Collections.unmodifiableList(spacecraftDao.findAllSpacecrafts());
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not find spacecrafts.", e);
         }
     }
@@ -62,7 +62,7 @@ public class SpacecraftServiceImpl implements SpacecraftService {
         }
         try {
             return spacecraftDao.findSpacecraftById(id);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not find spacecraft.", e);
         }
     }
@@ -74,7 +74,7 @@ public class SpacecraftServiceImpl implements SpacecraftService {
         }
         try {
             spacecraftDao.updateSpacecraft(spacecraft);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Could not update spacecraft.", e);
         }
     }

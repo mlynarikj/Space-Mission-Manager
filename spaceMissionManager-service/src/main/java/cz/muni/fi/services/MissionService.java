@@ -10,10 +10,10 @@ public interface MissionService {
 	/**
 	 * Archives given mission.
 	 * Sets the mission's end date and result string - saving attributes of the mission object.
-	 * @param missionId id of mission to archive
+	 * @param mission mission to archive
 	 * @param endDate must be in the past, not in the future
 	 */
-	void archive(Long missionId, LocalDate endDate);
+	void archive(Mission mission, LocalDate endDate);
 
 	/**
 	 *

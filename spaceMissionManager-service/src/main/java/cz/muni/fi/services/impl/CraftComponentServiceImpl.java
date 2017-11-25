@@ -29,7 +29,7 @@ public class CraftComponentServiceImpl implements CraftComponentService {
         }
         try {
             craftComponentDao.addComponent(craftComponent);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Error when adding component.", e);
         }
     }
@@ -38,7 +38,7 @@ public class CraftComponentServiceImpl implements CraftComponentService {
     public List<CraftComponent> findAllComponents() throws DataAccessException {
         try {
             return Collections.unmodifiableList(craftComponentDao.findAllComponents());
-        }  catch (Exception e) {
+        }  catch (Throwable e) {
             throw new ServiceDataAccessException("Could not find all components.", e);
         }
     }
@@ -50,7 +50,7 @@ public class CraftComponentServiceImpl implements CraftComponentService {
         }
         try{
             return craftComponentDao.findComponentById(id);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             throw new ServiceDataAccessException("Error when finding component.", e);
         }
     }
@@ -62,7 +62,7 @@ public class CraftComponentServiceImpl implements CraftComponentService {
         }
         try {
             craftComponentDao.updateComponent(craftComponent);
-        }  catch (Exception e) {
+        }  catch (Throwable e) {
             throw new ServiceDataAccessException("Error when updating component.", e);
         }
     }
@@ -74,7 +74,7 @@ public class CraftComponentServiceImpl implements CraftComponentService {
         }
         try {
             craftComponentDao.removeComponent(craftComponent);
-        }  catch (Exception e) {
+        }  catch (Throwable e) {
             throw new ServiceDataAccessException("Error when removing component.", e);
         }
     }

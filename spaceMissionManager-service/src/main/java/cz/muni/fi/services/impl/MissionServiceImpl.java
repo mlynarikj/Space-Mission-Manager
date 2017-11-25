@@ -114,19 +114,20 @@ public class MissionServiceImpl implements MissionService {
         if (mission.getId() == null){
             throw new IllegalArgumentException("Mission ID is null, could not update.");
         }
-        boolean missionActive;
-        try {
-            missionActive = mission.isActive() && missionDao.findMissionById(mission.getId()).isActive();
-        } catch (Throwable e){
+
+        Mission foundMission = missionDao.findMissionById(mission.getId());
+        if(foundMission == null) {
             throw new ServiceDataAccessException("Could not find mission.");
         }
+
+        boolean missionActive = mission.isActive() && foundMission.isActive();
+
         if(missionActive) {
             try {
                 missionDao.updateMission(mission);
             } catch (Throwable e) {
                 throw new ServiceDataAccessException("Could not update mission.", e);
             }
-        }
-        else throw new IllegalArgumentException("Cannot modify already archived mission");
+        } else throw new IllegalArgumentException("Cannot modify already archived mission");
     }
 }

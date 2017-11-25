@@ -111,6 +111,9 @@ public class MissionServiceImpl implements MissionService {
         if (mission == null){
             throw new IllegalArgumentException("Mission must not be null.");
         }
+        if (mission.getId() == null){
+            throw new IllegalArgumentException("Mission ID is null, could not update.");
+        }
         boolean missionActive;
         try {
             missionActive = mission.isActive() && missionDao.findMissionById(mission.getId()).isActive();

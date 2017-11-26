@@ -51,7 +51,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         when(userDao.addUser(any(User.class))).then(invoke -> {
             User user = invoke.getArgumentAt(0, User.class);
-
+            if(user == null) throw new IllegalArgumentException("Null user");
             if (user.getId() != null) {
                 throw new IllegalArgumentException("User already exist");
             }
@@ -170,6 +170,10 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         assertThat(users.values()).hasSize(sizeBefore + 1)
                 .contains(user);
     }
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void addNullUser() {
+        userService.addUser(null);
+    }
 
     @Test(expectedExceptions = DataAccessException.class)
     public void addExistingUser(){
@@ -186,7 +190,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         User u = users.get(3L);
         m.addAstronaut(u);
         missionDao.createMission(m);
-
+        throw new NotImplementedException();
 //        userService.acceptAssignedMission(u);
 //        assertThat(u.hasAcceptedMission()).isTrue();
 //        assertThat(u.getExplanation()).isEmpty();

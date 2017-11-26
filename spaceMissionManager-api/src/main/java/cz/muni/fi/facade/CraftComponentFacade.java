@@ -1,5 +1,6 @@
 package cz.muni.fi.facade;
 
+import cz.muni.fi.dto.CraftComponentCreateDTO;
 import cz.muni.fi.dto.CraftComponentDTO;
 
 import java.util.List;
@@ -8,8 +9,9 @@ public interface CraftComponentFacade {
 	/**
 	 *
 	 * @param craftComponent
+	 * @return Id of created component
 	 */
-	void addComponent(CraftComponentDTO craftComponent);
+	Long addComponent(CraftComponentCreateDTO craftComponent);
 
 	List<CraftComponentDTO> findAllComponents();
 

@@ -1,5 +1,6 @@
 package cz.muni.fi.facade;
 
+import cz.muni.fi.dto.UserCreateDTO;
 import cz.muni.fi.dto.UserDTO;
 
 import java.util.List;
@@ -9,8 +10,9 @@ public interface UserFacade {
 	 * Persist user into database
 	 *
 	 * @param user instance of user
+	 * @return id of created user
 	 */
-	void addUser(UserDTO user);
+	Long addUser(UserCreateDTO user);
 
 	/**
 	 * Update user in database

@@ -185,13 +185,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void acceptMission(){
-        Mission m = TestUtils.createMission("mission1");
-        User u = users.get(3L);
-        m.addAstronaut(u);
-        missionDao.createMission(m);
-
-        assertThat(u.hasAcceptedMission()).isFalse();
-        assertThat(u.missionStatusPending()).isTrue();
+        User u = prepareAstronautWithMission();
 
         userService.acceptAssignedMission(u);
         assertThat(u.missionStatusPending()).isFalse();
@@ -220,14 +214,33 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void rejectMission(){
-        //TODO how?
-        throw new NotImplementedException();
+        User u = prepareAstronautWithMission();
+        userService.rejectAssignedMission(u,"Because cake is a lie");
+        assertThat(u.missionStatusPending()).isFalse();
+        assertThat(u.hasAcceptedMission()).isFalse();
+        assertThat(u.getExplanation()).isNotNull().isNotEmpty().isEqualTo("Because cake is a lie");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void rejectMissionNullUser(){
-        throw new NotImplementedException();
-//        userService.rejectAssignedMission(null);
+        userService.rejectAssignedMission(null,"");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void rejectMissionNullExplanation(){
+        User u = prepareAstronautWithMission();
+        userService.rejectAssignedMission(u,null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void rejectMissionEmptyExplanation(){
+        User u = prepareAstronautWithMission();
+        userService.rejectAssignedMission(u,"");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void rejectNotAssignedMission(){
+        userService.rejectAssignedMission(users.get(4L),"I have no mission assigned, but still...");
     }
 
     @Test
@@ -314,6 +327,17 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         }
     }
 
+
+    private User prepareAstronautWithMission(){
+        Mission m = TestUtils.createMission("mission1");
+        User u = users.get(3L);
+        m.addAstronaut(u);
+        missionDao.createMission(m);
+
+        assertThat(u.hasAcceptedMission()).isFalse();
+        assertThat(u.missionStatusPending()).isTrue();
+        return u;
+    }
 
 
     private boolean checkUserNames(String name){

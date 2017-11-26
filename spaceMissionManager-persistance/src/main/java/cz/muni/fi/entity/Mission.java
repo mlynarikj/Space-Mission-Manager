@@ -113,7 +113,7 @@ public class Mission {
 	public void addAstronaut(User user){
 	    if(astronauts.contains(user)) return;
 		astronauts.add(user);
-		user.setMission(this);
+		if(user != null) user.setMission(this);
 	}
 
 	public void removeAstronaut(User user){

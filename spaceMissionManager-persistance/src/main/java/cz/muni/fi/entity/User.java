@@ -129,7 +129,7 @@ public class User {
     }
 
     public boolean missionStatusPending(){
-        return !hasAcceptedMission() && getExplanation().isEmpty();
+        return !hasAcceptedMission() && ((getExplanation() == null) || getExplanation().isEmpty());
     }
 
     @Override

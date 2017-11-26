@@ -80,6 +80,6 @@ public class CraftComponent {
 
 	@Override
 	public int hashCode() {
-		return getName().hashCode();
+		return getName() != null ? getName().hashCode() : 0;
 	}
 }

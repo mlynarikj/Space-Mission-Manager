@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 public class SpacecraftServiceImpl implements SpacecraftService {
     @Inject
-    SpacecraftDao spacecraftDao;
+    private SpacecraftDao spacecraftDao;
 
     @Override
     public void addSpacecraft(Spacecraft spacecraft) throws DataAccessException {

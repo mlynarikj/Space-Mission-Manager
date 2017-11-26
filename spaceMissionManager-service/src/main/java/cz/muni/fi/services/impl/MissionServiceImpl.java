@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class MissionServiceImpl implements MissionService {
     @Inject
-    MissionDao missionDao;
+    private MissionDao missionDao;
 
     @Override
     public void archive(Mission mission, LocalDate endDate){

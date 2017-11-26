@@ -39,7 +39,7 @@ public class User {
     private int experienceLevel;
 
 
-    private boolean rejectedMission;
+    private boolean acceptedMission;
 
     private String explanation;
 
@@ -102,12 +102,12 @@ public class User {
         this.experienceLevel = experienceLevel;
     }
 
-    public boolean isRejectedMission() {
-        return rejectedMission;
+    public boolean hasAcceptedMission() {
+        return acceptedMission;
     }
 
-    public void setRejectedMission(boolean rejectedMission) {
-        this.rejectedMission = rejectedMission;
+    public void setAcceptedMission(boolean acceptedMission) {
+        this.acceptedMission = acceptedMission;
     }
 
     public String getExplanation() {
@@ -125,7 +125,11 @@ public class User {
     public void setMission(Mission mission) {
         if(this.mission != null && this.mission.equals(mission)) return;
         this.mission = mission;
-        mission.addAstronaut(this);
+        if (mission != null) mission.addAstronaut(this);
+    }
+
+    public boolean missionStatusPending(){
+        return mission != null && !hasAcceptedMission() && ((getExplanation() == null) || getExplanation().isEmpty());
     }
 
     @Override

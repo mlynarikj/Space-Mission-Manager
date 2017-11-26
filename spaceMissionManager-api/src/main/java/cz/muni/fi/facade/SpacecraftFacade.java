@@ -1,5 +1,6 @@
 package cz.muni.fi.facade;
 
+import cz.muni.fi.dto.SpacecraftCreateDTO;
 import cz.muni.fi.dto.SpacecraftDTO;
 
 import java.util.List;
@@ -9,8 +10,9 @@ public interface SpacecraftFacade {
 	/**
 	 * Create new entity in the database
 	 * @param spacecraft entity to be persisted
+	 * @return id of created spacecraft
 	 */
-	void addSpacecraft(SpacecraftDTO spacecraft);
+	Long addSpacecraft(SpacecraftCreateDTO spacecraft);
 
 	/**
 	 * Remove entity from the database

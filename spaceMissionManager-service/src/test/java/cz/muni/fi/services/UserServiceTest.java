@@ -185,21 +185,37 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void acceptMission(){
-        //TODO how?
         Mission m = TestUtils.createMission("mission1");
         User u = users.get(3L);
         m.addAstronaut(u);
         missionDao.createMission(m);
-        throw new NotImplementedException();
-//        userService.acceptAssignedMission(u);
-//        assertThat(u.hasAcceptedMission()).isTrue();
-//        assertThat(u.getExplanation()).isEmpty();
+
+        assertThat(u.hasAcceptedMission()).isFalse();
+        assertThat(u.missionStatusPending()).isTrue();
+
+        userService.acceptAssignedMission(u);
+        assertThat(u.missionStatusPending()).isFalse();
+        assertThat(u.hasAcceptedMission()).isTrue();
+        assertThat(u.getExplanation()).isNullOrEmpty();
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void acceptMissionNullUser(){
-        throw new NotImplementedException();
-//        userService.acceptAssignedMission(null);
+        userService.acceptAssignedMission(null);
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
+    public void acceptMissionNonExistingUser(){
+        User u = TestUtils.createUser("DoesnoTexist");
+        Mission m = TestUtils.createMission("mission1");
+        m.addAstronaut(u);
+        missionDao.createMission(m);
+        userService.acceptAssignedMission(u);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void acceptNotAssignedMission(){
+        userService.acceptAssignedMission(users.get(4L));
     }
 
     @Test

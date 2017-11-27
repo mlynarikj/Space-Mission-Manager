@@ -2,15 +2,18 @@ package cz.muni.fi.facades;
 
 import cz.muni.fi.dto.MissionCreateDTO;
 import cz.muni.fi.dto.MissionDTO;
-import cz.muni.fi.dto.UserDTO;
 import cz.muni.fi.entity.Mission;
 import cz.muni.fi.facade.MissionFacade;
 import cz.muni.fi.services.BeanMappingService;
 import cz.muni.fi.services.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Service
+@Transactional
 public class MissionFacadeImpl implements MissionFacade {
 
     @Autowired

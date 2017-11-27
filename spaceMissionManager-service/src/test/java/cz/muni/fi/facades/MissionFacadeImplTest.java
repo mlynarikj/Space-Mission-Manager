@@ -16,10 +16,9 @@ import org.testng.annotations.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.ZonedDateTime;
 import java.util.Collections;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DirtiesContext
 @ContextConfiguration(classes = ServiceConfiguration.class)
@@ -61,22 +60,15 @@ public class MissionFacadeImplTest extends AbstractTestNGSpringContextTests {
 	}
 
 	private SpacecraftDTO getSpacecraft(String name){
-		CraftComponentCreateDTO craftComponentCreateDTO = new CraftComponentCreateDTO();
-		craftComponentCreateDTO.setName(name);
-		craftComponentCreateDTO.setReadyDate(ZonedDateTime.now().plusDays(20));
+		CraftComponentCreateDTO craftComponentCreateDTO = TestUtils.getCraftComponentCreateDTO(name);
 		Long componentId = craftComponentFacade.addComponent(craftComponentCreateDTO);
-		SpacecraftCreateDTO spacecraftCreateDTO = new SpacecraftCreateDTO();
-		spacecraftCreateDTO.setName(name);
+		SpacecraftCreateDTO spacecraftCreateDTO = TestUtils.getSpacecraftCreateDTO(name);
 		spacecraftCreateDTO.setComponents(Collections.singleton(craftComponentFacade.findComponentById(componentId)));
 		return spacecraftFacade.findSpacecraftById(spacecraftFacade.addSpacecraft(spacecraftCreateDTO));
 	}
 
 	private MissionCreateDTO getMissionCreateDTO(String name){
-		MissionCreateDTO missionCreateDTO = new MissionCreateDTO();
-		missionCreateDTO.setName(name);
-		missionCreateDTO.setDestination(name);
-		missionCreateDTO.setEta(ZonedDateTime.now().plusDays(100));
-		missionCreateDTO.setMissionDescription(name);
+		MissionCreateDTO missionCreateDTO = TestUtils.getMissionCreateDTO(name);
 		missionCreateDTO.setSpacecrafts(Collections.singleton(getSpacecraft(name)));
 		return missionCreateDTO;
 	}

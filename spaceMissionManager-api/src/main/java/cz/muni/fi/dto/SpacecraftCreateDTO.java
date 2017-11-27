@@ -18,7 +18,6 @@ public class SpacecraftCreateDTO {
 	@Size(min = 1)
 	private Set<CraftComponentDTO> components = new HashSet<>();
 
-	@NotNull
 	private MissionDTO mission;
 
 

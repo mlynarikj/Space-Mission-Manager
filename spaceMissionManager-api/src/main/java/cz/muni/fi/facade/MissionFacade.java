@@ -1,5 +1,6 @@
 package cz.muni.fi.facade;
 
+import cz.muni.fi.dto.MissionCreateDTO;
 import cz.muni.fi.dto.MissionDTO;
 
 import java.util.List;
@@ -9,8 +10,9 @@ public interface MissionFacade {
 	/**
 	 *
 	 * @param mission mission to be saved in the database
+	 * @return id of created mission
 	 */
-	void createMission(MissionDTO mission);
+	Long createMission(MissionCreateDTO mission);
 
 	/**
 	 *

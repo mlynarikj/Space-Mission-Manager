@@ -144,4 +144,18 @@ public class Mission {
 	public int hashCode() {
 		return getName() != null ? getName().hashCode() : 0;
 	}
+
+	@Override
+	public String toString() {
+		return "Mission{" +
+				", astronauts=" + astronauts +
+				", spacecrafts=" + spacecrafts +
+				", name='" + name + '\'' +
+				", destination='" + destination + '\'' +
+				", eta=" + eta +
+				", missionDescription='" + missionDescription + '\'' +
+				", active=" + active +
+				", endDate=" + endDate +
+				'}';
+	}
 }

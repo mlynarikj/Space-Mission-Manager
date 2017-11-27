@@ -19,7 +19,7 @@ public class UserDTO {
 	private int experienceLevel;
 
 
-	private boolean rejectedMission;
+	private boolean acceptedMission;
 
 	private String explanation;
 
@@ -81,12 +81,12 @@ public class UserDTO {
 		this.experienceLevel = experienceLevel;
 	}
 
-	public boolean isRejectedMission() {
-		return rejectedMission;
+	public boolean getAcceptedMission() {
+		return acceptedMission;
 	}
 
-	public void setRejectedMission(boolean rejectedMission) {
-		this.rejectedMission = rejectedMission;
+	public void setAcceptedMission(boolean acceptedMission) {
+		this.acceptedMission = acceptedMission;
 	}
 
 	public String getExplanation() {

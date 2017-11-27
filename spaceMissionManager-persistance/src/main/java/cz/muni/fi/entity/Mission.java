@@ -34,6 +34,8 @@ public class Mission {
 
 
 	private boolean active;
+
+	@Column(length = 8192)
 	private String result;
 	private LocalDate endDate;
 

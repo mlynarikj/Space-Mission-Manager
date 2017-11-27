@@ -7,9 +7,13 @@ import cz.muni.fi.facade.SpacecraftFacade;
 import cz.muni.fi.services.BeanMappingService;
 import cz.muni.fi.services.SpacecraftService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Service
+@Transactional
 public class SpacecraftFacadeImpl implements SpacecraftFacade {
     @Autowired
     BeanMappingService beanMappingService;

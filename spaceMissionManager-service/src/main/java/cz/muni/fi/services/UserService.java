@@ -24,7 +24,7 @@ public interface UserService {
 	public void rejectAssignedMission(User user, String explanation) throws IllegalArgumentException;
 
 	/**
-	 * Persist user into database
+	 * Persist user in database
 	 *
 	 * @param user instance of user
 	 */

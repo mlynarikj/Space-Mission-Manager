@@ -146,4 +146,15 @@ public class User {
     public int hashCode() {
         return getEmail() != null ? getEmail().hashCode() : 0;
     }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                ", name='" + name + '\'' +
+                ", birthDate=" + birthDate +
+                ", email='" + email + '\'' +
+                ", experienceLevel=" + experienceLevel +
+                '}';
+    }
 }

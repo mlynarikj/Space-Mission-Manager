@@ -15,7 +15,6 @@ public class CraftComponentCreateDTO {
 
 	private boolean readyToUse;
 
-	@NotNull
 	private SpacecraftDTO spacecraft;
 
 	@Future

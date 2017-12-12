@@ -45,7 +45,7 @@
         <module>spaceMissionManager-api</module>
         <module>spaceMissionManager-service</module>
         <module>spaceMissionManager-rest</module>
-        <module>spaceMissionManager-mvc</module>
+        <module>spaceMissionManager-angular</module>
         <module>spaceMissionManager-samples</module>
     </modules>
 

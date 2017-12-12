@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>space-mission-manager-mvc</artifactId>
+    <artifactId>space-mission-manager-angular</artifactId>
     <packaging>war</packaging>
 
     <dependencies>

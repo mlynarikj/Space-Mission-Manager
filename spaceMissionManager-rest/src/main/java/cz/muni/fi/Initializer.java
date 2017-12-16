@@ -1,8 +1,8 @@
 package cz.muni.fi;
 
+import cz.muni.fi.config.WebSecurityConfig;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
@@ -11,7 +11,7 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[]{RootWebContext.class};
+		return new Class[]{RootWebContext.class, WebSecurityConfig.class};
 	}
 
 	@Override
@@ -31,12 +31,13 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 		encodingFilter.setForceEncoding(true);
 
 
-		return new Filter[]{encodingFilter, new ShallowEtagHeaderFilter()};
+		return new Filter[]{encodingFilter};
 	}
 
 	@Override
 	public void onStartup(javax.servlet.ServletContext servletContext) throws javax.servlet.ServletException {
 		super.onStartup(servletContext);
+
 		servletContext.addListener(RequestContextListener.class);
 	}
 

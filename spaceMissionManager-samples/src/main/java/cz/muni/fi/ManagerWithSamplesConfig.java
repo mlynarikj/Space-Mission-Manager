@@ -18,7 +18,7 @@ public class ManagerWithSamplesConfig {
 	final static Logger log = LoggerFactory.getLogger(ManagerWithSamplesConfig.class);
 
 	@Autowired
-	SampleDataLoadingFacade sampleDataLoadingFacade;
+	private SampleDataLoadingFacade sampleDataLoadingFacade;
 
 	@PostConstruct
 	public void dataLoading() throws IOException {

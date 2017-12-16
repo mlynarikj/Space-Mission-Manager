@@ -100,6 +100,12 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 //		craftComponent.setReadyDate(ZonedDateTime.now().plusDays(5));
 		craftComponentService.addComponent(craftComponent);
 
+		craftComponent = new CraftComponent();
+		craftComponent.setName("TestDelete");
+		craftComponent.setReadyToUse(true);
+//		craftComponent.setReadyDate(ZonedDateTime.now().plusDays(5));
+		craftComponentService.addComponent(craftComponent);
+
 	}
 
 	private void loadSpacecrafts() {

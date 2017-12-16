@@ -3,6 +3,7 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
 
     const API_URL = "http://localhost:8080/pa165/rest/";
     const LOGIN_PATH = "login";
+    const CC_PATH = "craftComponents";
     const USERS_PATH = "users";
     const MISSIONS_PATH = "missions";
     const ASTRONAUTS_PATH = USERS_PATH + "/astronauts";
@@ -87,6 +88,29 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
 
     service.loadAvailableSpacecrafts = function() {
         return $http.get(API_URL+SPACECRAFTS_PATH+"/available");
+    };
+
+    service.loadComponents = function () {
+	    return $http.get(API_URL+CC_PATH);
+    };
+
+    service.createComponent = function (cc) {
+    	console.log("creating cc");
+	    return $http.post(API_URL+CC_PATH, cc);
+    };
+
+    service.updateComponent = function (cc) {
+	    console.log("updating cc"+cc);
+	    return $http.put(API_URL+CC_PATH, cc);
+    };
+
+    service.deleteComponent = function (id) {
+	    console.log("deleting cc");
+	    return $http.delete(API_URL+CC_PATH+"/"+id);
+    };
+
+    service.getComponent = function (id) {
+	    return $http.get(API_URL+CC_PATH+"/"+id);
     };
 
     return service;

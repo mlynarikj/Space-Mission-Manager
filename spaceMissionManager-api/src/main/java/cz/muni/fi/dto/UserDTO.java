@@ -1,5 +1,11 @@
 package cz.muni.fi.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import cz.muni.fi.config.LocalDateDeserializer;
+import cz.muni.fi.config.LocalDateSerializer;
+
 import java.time.LocalDate;
 
 public class UserDTO {
@@ -8,6 +14,8 @@ public class UserDTO {
 
 	private String name;
 
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate birthDate;
 
 	private String email;

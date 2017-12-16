@@ -4,7 +4,6 @@ package cz.muni.fi;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import cz.muni.fi.config.WebSecurityConfig;
 import org.springframework.context.annotation.*;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -19,7 +18,7 @@ import java.util.Locale;
 
 @EnableWebMvc
 @Configuration
-@Import({WebSecurityConfig.class, ManagerWithSamplesConfig.class})
+@Import({ManagerWithSamplesConfig.class})
 @ComponentScan(basePackages = {"cz.muni.fi.controllers"})
 public class RootWebContext extends WebMvcConfigurerAdapter {
 

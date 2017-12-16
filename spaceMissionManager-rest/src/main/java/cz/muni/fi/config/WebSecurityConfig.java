@@ -15,8 +15,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 @Import(ServiceConfiguration.class)
+//@ComponentScan(basePackages = {"cz.muni.fi.controllers"})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -35,8 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.anyRequest()
 				.fullyAuthenticated()
-		.and()
-		.exceptionHandling().accessDeniedPage("/AccessDenied");
+		.and();
+		//.exceptionHandling().accessDeniedPage("/AccessDenied");
 		http.httpBasic();
 		http.csrf().disable();
 //				.antMatchers("/", "/home").permitAll()
@@ -54,6 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("MANAGER");
 		for (UserDTO p : userFacade.findAllUsers()) {
 			auth.inMemoryAuthentication()
 					.withUser(p.getEmail())

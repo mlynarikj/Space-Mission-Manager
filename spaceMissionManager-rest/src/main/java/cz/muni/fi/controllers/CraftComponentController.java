@@ -8,12 +8,12 @@ import cz.muni.fi.exceptions.ResourceAlreadyExistsException;
 import cz.muni.fi.facade.CraftComponentFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +25,12 @@ public class CraftComponentController {
 	private final static Logger logger = Logger.getLogger(CraftComponentController.class.getName());
 
 
-	@Autowired
 	private CraftComponentFacade craftComponentFacade;
+
+	@Autowired
+	public CraftComponentController(CraftComponentFacade craftComponentFacade) {
+		this.craftComponentFacade = craftComponentFacade;
+	}
 
 
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -41,9 +45,9 @@ public class CraftComponentController {
 		}
 	}
 
-	@Secured("MANAGER")
+	@RolesAllowed("ROLE_MANAGER")
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public final List<CraftComponentDTO> findAllComponents(){
+	public List<CraftComponentDTO> findAllComponents(){
 		logger.log(Level.INFO, "[REST] finding all components...");
 		return craftComponentFacade.findAllComponents();
 	}

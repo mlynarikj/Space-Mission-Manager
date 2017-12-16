@@ -7,6 +7,12 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Created by jsmadis
+ *
+ * @author jsmadis
+ */
+
 public class LocalDateDeserializer extends StdDeserializer<LocalDate> {
 
     protected LocalDateDeserializer() {

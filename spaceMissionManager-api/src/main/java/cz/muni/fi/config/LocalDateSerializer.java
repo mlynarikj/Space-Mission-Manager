@@ -8,6 +8,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Created by jsmadis
+ *
+ * @author jsmadis
+ */
+
 public class LocalDateSerializer extends StdSerializer<LocalDate> {
 
     public LocalDateSerializer() {

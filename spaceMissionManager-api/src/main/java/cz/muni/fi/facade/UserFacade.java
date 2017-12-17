@@ -2,6 +2,7 @@ package cz.muni.fi.facade;
 
 import cz.muni.fi.dto.UserCreateDTO;
 import cz.muni.fi.dto.UserDTO;
+import cz.muni.fi.dto.UserUpdatePwdDTO;
 
 import java.util.List;
 
@@ -73,5 +74,38 @@ public interface UserFacade {
 	 * @return List of available astronauts
 	 */
 	List<UserDTO> findAllAvailableAstronauts();
+
+	/**
+	 * Find user by email
+	 * @param email email
+	 * @return userDTO
+	 */
+
+	UserDTO findUserByEmail(String email);
+
+	/**
+	 * Authenticates email and password
+	 * @param email email
+	 * @param unencryptedPassword password
+	 * @return userDTO
+	 */
+
+	boolean authenticate(String email, String unencryptedPassword);
+
+	/**
+	 * Updates passoword
+	 * @param user UserUpdatePwdDTO
+	 * @return UserDTO
+	 */
+
+	UserDTO updatePassword(UserUpdatePwdDTO user);
+
+	/**
+	 * Checks if given user is Manager
+	 * @param user UserDTO
+	 * @return true if successful, false otherwise
+	 */
+
+	boolean isManager(UserDTO user);
 
 }

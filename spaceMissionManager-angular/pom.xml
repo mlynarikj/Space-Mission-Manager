@@ -92,6 +92,30 @@
                     <path>/pa165</path>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.6.v20141205</version>
+                <configuration>
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
+                    <webApp>
+                        <contextPath>/pa165</contextPath>
+                    </webApp>
+                    <contextHandlers>
+                        <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
+                            <war>${project.basedir}</war>
+                            <contextPath>/pa165</contextPath>
+                        </contextHandler>
+                        <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
+                            <war>${project.parent.basedir}/spaceMissionManager-rest</war>
+                            <contextPath>/pa165/rest</contextPath>
+                        </contextHandler>
+                    </contextHandlers>
+                    <stopPort>9999</stopPort>
+                    <stopKey>STOP</stopKey>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

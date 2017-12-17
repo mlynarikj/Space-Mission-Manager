@@ -6,6 +6,7 @@ import cz.muni.fi.dto.UserLoginDTO;
 import cz.muni.fi.dto.UserUpdatePwdDTO;
 import cz.muni.fi.exceptions.ResourceNotFoundException;
 import cz.muni.fi.facade.UserFacade;
+import cz.muni.fi.services.impl.ServiceDataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,38 +36,46 @@ public class AuthController {
 
     /**
      * Authenticates user
+     *
      * @param user UserLoginDTO
      * @return UserDTO
      */
 
     @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
-    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO authenticate(@RequestBody UserLoginDTO user, HttpServletResponse response) {
         logger.debug("[REST] authenticate()");
 
-        if(user == null){
+        if (user == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
-
-        if(userFacade.authenticate(user.getEmail(), user.getPassword())){
-            return userFacade.findUserByEmail(user.getEmail());
+        try {
+            if (userFacade.authenticate(user.getEmail(), user.getPassword())) {
+                return userFacade.findUserByEmail(user.getEmail());
+            }
+        } catch (ServiceDataAccessException e) {
+            System.out.println("zde");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
+        System.out.println("zde2");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         return null;
     }
 
     /**
      * Updates password of user
+     *
      * @param user UserUpdatePwdDTO
      * @return updated UserDTO
      */
 
     @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
     @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO updatePassword(@RequestBody UserUpdatePwdDTO user){
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO updatePassword(@RequestBody UserUpdatePwdDTO user) {
         logger.debug("[REST] update password");
 
-        if(user == null){
+        if (user == null) {
             throw new ResourceNotFoundException();
         }
 

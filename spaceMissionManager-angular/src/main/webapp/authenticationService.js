@@ -1,40 +1,43 @@
 'use strict';
 
 spaceMissionApp.factory('AuthenticationService',
-        ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-            function (Base64, $http, $cookieStore, $rootScope, $timeout) {
-                var service = {};
+    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
+        function (Base64, $http, $cookieStore, $rootScope, $timeout) {
+            var service = {};
 
-                service.Login = function (username, password) {
-                    var authdata = Base64.encode(username + ':' + password);
-                    $http.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-                    $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
-                    return $http.post('rest/auth', {email: username, password: password});
+            service.Login = function (username, password) {
+                //TODO: toto je hack, musi se tam posilat toto:
+                //var authdata = Base64.encode(username + ':' + password);
+                var authdata = Base64.encode('ADMIN' + ':' + 'ADMIN');
+                $http.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+                $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+                return $http.post('rest/auth', {email: username, password: password});
+            };
+
+            service.SetCredentials = function (username, password) {
+                var authdata = Base64.encode(username + ':' + password);
+
+                $rootScope.globals = {
+                    currentUser: {
+                        username: username,
+                        authdata: authdata
+                    }
                 };
 
-                service.SetCredentials = function (username, password) {
-                    var authdata = Base64.encode(username + ':' + password);
+                $http.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+                $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+                $cookieStore.put('globals', $rootScope.globals);
+            };
 
-                    $rootScope.globals = {
-                        currentUser: {
-                            username: username,
-                            authdata: authdata
-                        }
-                    };
+            service.ClearCredentials = function () {
+                $rootScope.globals = {};
+                $cookieStore.remove('globals');
+                $rootScope.globals.currentUser = null;
+                $http.defaults.headers.common.Authorization = 'Basic ';
+            };
 
-                    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-                    $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
-                    $cookieStore.put('globals', $rootScope.globals);
-                };
-
-                service.ClearCredentials = function () {
-                    $rootScope.globals = {};
-                    $cookieStore.remove('globals');
-                    $http.defaults.headers.common.Authorization = 'Basic ';
-                };
-
-                return service;
-            }])
+            return service;
+        }])
 
     .factory('Base64', function () {
         /* jshint ignore:start */

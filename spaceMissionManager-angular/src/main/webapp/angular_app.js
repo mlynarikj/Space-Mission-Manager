@@ -31,7 +31,13 @@ spaceMissionApp.config(['$routeProvider',
 /*
  * alert closing functions defined in root scope to be available in every template
  */
-spaceMissionApp.run(function ($rootScope) {
+spaceMissionApp.run(function ($rootScope, AuthenticationService) {
+    var storedUserInfo = localStorage.getItem('user');
+    if(storedUserInfo){
+        var user = JSON.parse(storedUserInfo);
+        AuthenticationService.SetCredentials(user.email, user.rawPassowrd);
+    }
+
     $rootScope.hideSuccessAlert = function () {
         $rootScope.successAlert = undefined;
     };

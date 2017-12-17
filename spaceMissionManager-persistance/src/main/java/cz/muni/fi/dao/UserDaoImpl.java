@@ -86,6 +86,23 @@ public class UserDaoImpl implements UserDao {
                 .getResultList();
     }
 
+    @Override
+    public User findUserByEmail(String email) {
+        if (email == null){
+            throw new IllegalArgumentException("User email is null");
+        }
+        if(!email.matches(".+@.+\\....?")){
+            throw new IllegalArgumentException("Email has wrong format");
+        }
+        try {
+            return em.createQuery("select u from User u fetch all properties where u.email = :email", User.class)
+                    .setParameter("email", email).getSingleResult();
+        }
+        catch (NoResultException ex){
+            return null;
+        }
+    }
+
     /**
      * Validation of user
      * @param user User to validate

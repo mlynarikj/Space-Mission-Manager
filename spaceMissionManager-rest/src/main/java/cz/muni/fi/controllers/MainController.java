@@ -26,6 +26,7 @@ public class MainController {
 		//resourcesMap.put("orders_uri", ApiUris.ROOT_URI_ORDERS);
 		resourcesMap.put("users_uri", ApiUris.ROOT_URI_USERS);
 		resourcesMap.put("components_uri", ApiUris.ROOT_URI_CRAFTCOMPONENTS);
+		resourcesMap.put("auth_uri", ApiUris.ROOT_URI_AUTH);
 
 		return Collections.unmodifiableMap(resourcesMap);
 

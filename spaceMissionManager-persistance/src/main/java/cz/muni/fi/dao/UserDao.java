@@ -62,4 +62,12 @@ public interface UserDao {
      * @return List of available astronauts
      */
     List<User> findAllAvailableAstronauts();
+
+    /**
+     * Find user by email
+     * @param email email
+     * @return user
+     */
+
+    User findUserByEmail(String email);
 }

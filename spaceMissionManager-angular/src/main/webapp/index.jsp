@@ -12,8 +12,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-cookies.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/angular_app.js"></script>
+    <script src="${pageContext.request.contextPath}/authenticationService.js"></script>
     <script src="${pageContext.request.contextPath}/service.js"></script>
     <script src="${pageContext.request.contextPath}/controllers/LoginCtrl.js"></script>
     <script src="${pageContext.request.contextPath}/controllers/ComponentsCtrl.js"></script>
@@ -24,7 +26,7 @@
 
 
 </head>
-<body>
+<body ng-app="spaceMissionApp">
 <!-- navigation bar -->
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
@@ -43,8 +45,12 @@
                 <li><a href="#!/spacecrafts">Spacecrafts</a></li>
                 <li><a href="#!/missions">Missions</a></li>
                 <li><a href="#!/components">Craft components</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
 
+                <li ng-if="globals.currentUser"><a href="#"><span class="glyphicon glyphicon-user"></span> {{globals.currentUser.username}}</a></li>
 
+                <li ng-if="!globals.currentUser"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -52,7 +58,7 @@
 
 <div class="container">
 
-    <div ng-app="spaceMissionApp"><!-- AngularJS takes care of this element -->
+    <div>
 
         <!-- Bootstrap-styled alerts, visible when $rootScope.xxxAlert is defined -->
         <div ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">

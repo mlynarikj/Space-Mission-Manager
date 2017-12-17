@@ -2,7 +2,7 @@
 
 /* Defines application and its dependencies */
 
-var spaceMissionApp = angular.module('spaceMissionApp', ['ngRoute', 'controllers']);
+var spaceMissionApp = angular.module('spaceMissionApp', ['ngRoute', 'controllers', 'ngCookies']);
 var controllers = angular.module('controllers', []);
 
 /* Configures URL fragment routing, e.g. #/product/1  */
@@ -31,7 +31,13 @@ spaceMissionApp.config(['$routeProvider',
 /*
  * alert closing functions defined in root scope to be available in every template
  */
-spaceMissionApp.run(function ($rootScope) {
+spaceMissionApp.run(function ($rootScope, AuthenticationService) {
+    var storedUserInfo = localStorage.getItem('user');
+    if(storedUserInfo){
+        var user = JSON.parse(storedUserInfo);
+        AuthenticationService.SetCredentials(user.email, user.rawPassowrd);
+    }
+
     $rootScope.hideSuccessAlert = function () {
         $rootScope.successAlert = undefined;
     };

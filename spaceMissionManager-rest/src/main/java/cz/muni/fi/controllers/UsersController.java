@@ -38,6 +38,7 @@ public class UsersController {
 
     /**
      * Returns all users
+     *
      * @return Collection of UserDTOs
      */
 
@@ -51,6 +52,7 @@ public class UsersController {
 
     /**
      * Returns user by ID
+     *
      * @param id id of user
      * @return UserDTO
      */
@@ -68,6 +70,7 @@ public class UsersController {
 
     /**
      * Creates and returns user
+     *
      * @param user UserCreateDTO
      * @return UserDTO
      */
@@ -90,6 +93,7 @@ public class UsersController {
 
     /**
      * Deletes user and returns all remaining users
+     *
      * @param id
      * @return
      */
@@ -109,6 +113,7 @@ public class UsersController {
 
     /**
      * Returns all astronauts
+     *
      * @return collection of UserDTOs
      */
 
@@ -123,6 +128,7 @@ public class UsersController {
 
     /**
      * Returns all available astronauts
+     *
      * @return collection of UserDTOs
      */
 
@@ -137,6 +143,7 @@ public class UsersController {
 
     /**
      * Updates and returns user
+     *
      * @param user UserDTO
      * @return UserDTO
      */
@@ -157,6 +164,7 @@ public class UsersController {
 
     /**
      * Accepts mission for user
+     *
      * @param id id of user
      * @return UserDTO
      */
@@ -178,7 +186,8 @@ public class UsersController {
 
     /**
      * Rejects mission for user
-     * @param id id of user
+     *
+     * @param id          id of user
      * @param explanation explanation of user
      * @return UserDTO
      */
@@ -197,5 +206,39 @@ public class UsersController {
         return user;
     }
 
+    /**
+     * Returns if user is manager
+     * @param user user
+     * @return true if successful, false otherwise
+     */
+
+    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RequestMapping(value = "/manager", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean isManager(@RequestBody UserDTO user) {
+        logger.debug("[REST] is manager");
+        if (user == null) {
+            throw new ResourceNotFoundException();
+        }
+        return userFacade.isManager(user);
+    }
+
+    /**
+     * Finds user by email
+     * @param email email
+     * @return userDTO
+     */
+
+    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RequestMapping(value = "/email", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO findByEmail(@RequestBody String email){
+        logger.debug("[REST] find by email");
+        UserDTO user = userFacade.findUserByEmail(email);
+        if(user == null){
+            throw new ResourceNotFoundException();
+        }
+        return user;
+    }
 
 }

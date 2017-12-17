@@ -102,13 +102,13 @@
                     <webApp>
                         <contextPath>/pa165</contextPath>
                     </webApp>
-                    <contextHandlers>
+                    <contextHandlers><!--
                         <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
                             <war>${project.basedir}</war>
                             <contextPath>/pa165</contextPath>
-                        </contextHandler>
+                        </contextHandler>-->
                         <contextHandler implementation="org.eclipse.jetty.maven.plugin.JettyWebAppContext">
-                            <war>${project.parent.basedir}/spaceMissionManager-rest</war>
+                            <war>${project.parent.basedir}/spaceMissionManager-rest/target/space-mission-manager-rest-1.0-SNAPSHOT.war</war>
                             <contextPath>/pa165/rest</contextPath>
                         </contextHandler>
                     </contextHandlers>

@@ -1,5 +1,6 @@
 package cz.muni.fi.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import cz.muni.fi.config.ZonedDateTimeDeserializer;
@@ -14,6 +15,7 @@ public class CraftComponentDTO {
 
 	private String name;
 
+	@JsonBackReference
 	private SpacecraftDTO spacecraft;
 
 	@JsonDeserialize(using = ZonedDateTimeDeserializer.class)

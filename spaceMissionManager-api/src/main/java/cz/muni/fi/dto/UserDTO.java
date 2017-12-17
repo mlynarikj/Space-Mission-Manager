@@ -1,5 +1,6 @@
 package cz.muni.fi.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -31,6 +32,7 @@ public class UserDTO {
 
 	private String explanation;
 
+	@JsonBackReference
 	private MissionDTO mission;
 
 	public Long getId() {

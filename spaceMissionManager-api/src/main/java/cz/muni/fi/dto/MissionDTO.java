@@ -1,5 +1,6 @@
 package cz.muni.fi.dto;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import cz.muni.fi.config.LocalDateDeserializer;
@@ -17,8 +18,10 @@ public class MissionDTO {
 
 	private Long id;
 
+	@JsonManagedReference
 	private Set<UserDTO> astronauts = new HashSet<>();
 
+	@JsonManagedReference
 	private Set<SpacecraftDTO> spacecrafts = new HashSet<>();
 
 	private String name;

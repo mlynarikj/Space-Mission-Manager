@@ -2,7 +2,7 @@
 
 /* Defines application and its dependencies */
 
-var spaceMissionApp = angular.module('spaceMissionApp', ['ngRoute', 'controllers']);
+var spaceMissionApp = angular.module('spaceMissionApp', ['ngRoute', 'controllers', 'ngCookies']);
 var controllers = angular.module('controllers', []);
 
 /* Configures URL fragment routing, e.g. #/product/1  */

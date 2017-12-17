@@ -5,12 +5,11 @@ spaceMissionApp.factory('AuthenticationService',
             function (Base64, $http, $cookieStore, $rootScope, $timeout) {
                 var service = {};
 
-                service.Login = function (username, password, callback) {
-
-                    $http.post('/rest/auth', { username: username, password: password })
-                        .success(function (response) {
-                            callback(response);
-                        });
+                service.Login = function (username, password) {
+                    var authdata = Base64.encode(username + ':' + password);
+                    $http.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+                    $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+                    return $http.post('rest/auth', {email: username, password: password});
                 };
 
                 service.SetCredentials = function (username, password) {
@@ -23,6 +22,7 @@ spaceMissionApp.factory('AuthenticationService',
                         }
                     };
 
+                    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
                     $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
                     $cookieStore.put('globals', $rootScope.globals);
                 };

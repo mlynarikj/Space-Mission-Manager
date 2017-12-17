@@ -1,7 +1,15 @@
-controllers.controller('LoginCtrl', function ($scope, $spaceHttp) {
+controllers.controller('LoginCtrl', function ($scope, $spaceHttp, AuthenticationService) {
     console.log('calling  /login');
     $scope.credentials = {};
+
     $scope.login = function () {
-        $spaceHttp.login($scope.credentials.name, $scope.credentials.password);
+        AuthenticationService.Login($scope.credentials.name, $scope.credentials.password).then(
+            function (response) {
+                console.log(response.data);
+            },
+            function (error) {
+                console.log(error.data);
+            }
+        )
     };
 });

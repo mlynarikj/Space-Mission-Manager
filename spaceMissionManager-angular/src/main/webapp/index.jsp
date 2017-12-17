@@ -12,8 +12,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-cookies.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/angular_app.js"></script>
+    <script src="${pageContext.request.contextPath}/authenticationService.js"></script>
     <script src="${pageContext.request.contextPath}/service.js"></script>
     <script src="${pageContext.request.contextPath}/controllers/LoginCtrl.js"></script>
     <script src="${pageContext.request.contextPath}/controllers/ComponentsCtrl.js"></script>

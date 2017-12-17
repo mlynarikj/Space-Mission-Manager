@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by jsmadis
@@ -40,11 +41,11 @@ public class AuthController {
 
     @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO authenticate(@RequestBody UserLoginDTO user) {
+    public UserDTO authenticate(@RequestBody UserLoginDTO user, HttpServletResponse response) {
         logger.debug("[REST] authenticate()");
 
         if(user == null){
-            throw new ResourceNotFoundException();
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
         if(userFacade.authenticate(user.getEmail(), user.getPassword())){

@@ -1,18 +1,18 @@
 <div ng-if="!create">
     <h1>Missions</h1>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
         <tr>
-            <th>mission id</th>
-            <th>name</th>
-            <th>is active</th>
-            <th>astronauts</th>
-            <th>spacecrafts</th>
-            <th>destination</th>
-            <th>eta</th>
-            <th>description</th>
-            <th>end date</th>
+            <th>Mission ID</th>
+            <th>Name</th>
+            <th>Active</th>
+            <th>Astronauts</th>
+            <th>Spacecrafts</th>
+            <th>Destination</th>
+            <th>ETA</th>
+            <th>Description</th>
+            <th>End Date</th>
         </tr>
         </thead>
         <tbody>
@@ -20,16 +20,25 @@
             <td>{{mission.id}}</td>
             <td>{{mission.name}}</td>
             <td>{{mission.active ? 'Yes' : 'No'}}</td>
-            <td>{{}}</td>
-            <td>{{}}</td>
+            <td>{{mission.astronauts.length}}</td>
+            <td>{{mission.spacecrafts.length}}</td>
             <td>{{mission.destination}}</td>
             <td>{{mission.eta}}</td>
             <td>{{mission.missionDescription}}</td>
             <td>{{mission.endDate}}</td>
             <td>
-                <button class="btn btn-primary" ng-click="editMission(mission.id)"><span
-                        class="glyphicon glyphicon-edit"></span>
+                <button class="btn btn-primary" ng-click="editMission(mission.id)">
+                    <span class="glyphicon glyphicon-edit"></span>
                 </button>
+            </td>
+            <td ng-if="mission.astronauts || mission.spacecrafts">
+                <button class="btn btn-danger disabled" data-toggle="tooltip" data-placement="left"
+                        title="This mission can't be deleted. It still has some users and spacecrafts assigned."><span
+                        class="glyphicon glyphicon-remove"></span></button>
+            </td>
+            <td ng-if="!mission.astronauts && !mission.spacecrafts">
+                <button ng-click="deleteMission(mission.id)" class="btn btn-danger"><span
+                        class="glyphicon glyphicon-remove"></span></button>
             </td>
         </tr>
         </tbody>
@@ -43,7 +52,7 @@
 
 
 <div ng-if="create || edit">
-    <h1>Edit mission</h1>
+    <h1>{{create ? 'Create' : 'Edit'}} mission {{editedMission.name}}</h1>
     <form name="form" novalidate class="form-horizontal">
         <!--TODO validations, limit max input characters...-->
 
@@ -103,7 +112,7 @@
             <label for="astronauts" class="col-sm-2 control-label">Astronauts</label>
             <div class="col-sm-10">
                 <select id="astronauts" ng-model="selectedAstronauts" multiple>
-                    <option ng-repeat="astronaut in astronauts" value="{{astronaut}}">{{astronaut.name}}</option>
+                    <option ng-repeat="astronaut in astronauts" value="{{astronaut.id}}">{{astronaut.name}}</option>
                 </select>
             </div>
         </div>

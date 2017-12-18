@@ -7,15 +7,15 @@ controllers.controller('MissionsCtrl', function ($scope, $spaceHttp, $rootScope,
 
     console.log('calling  /missions');
     $spaceHttp.loadMissions().then(function (response) {
-        console.log("Missions " + response);
+        console.log(response);
         $scope.missions = response.data;
     });
     $spaceHttp.loadAstronauts().then(function (response) {
-        console.log("Astronauts " + response);
+        console.log(response);
         $scope.astronauts = response.data;
     });
     $spaceHttp.loadSpacecrafts().then(function (response) {
-        console.log("Spacecrafts " + response);
+        console.log(response);
         $scope.spacecrafts = response.data;
     });
 

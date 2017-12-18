@@ -1,13 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" trimDirectiveWhitespaces="true" session="false" %>
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Space Mission Manager</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"  crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.min.js"></script>
@@ -24,14 +26,14 @@
     <script src="${pageContext.request.contextPath}/controllers/UsersCtrl.js"></script>
 
 
-
 </head>
 <body ng-app="spaceMissionApp">
 <!-- navigation bar -->
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -48,9 +50,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
-                <li ng-if="globals.currentUser"><a href="#"><span class="glyphicon glyphicon-user"></span> {{globals.currentUser.username}}</a></li>
+                <li ng-if="globals.currentUser"><a href="#"><span class="glyphicon glyphicon-user"></span>
+                    {{globals.currentUser.username}}</a></li>
 
-                <li ng-if="!globals.currentUser"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li ng-if="!globals.currentUser"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                </li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -62,16 +66,43 @@
 
         <!-- Bootstrap-styled alerts, visible when $rootScope.xxxAlert is defined -->
         <div ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">
-            <button type="button" class="close" aria-label="Close" ng-click="hideWarningAlert()"> <span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" aria-label="Close" ng-click="hideWarningAlert()"><span
+                    aria-hidden="true">&times;</span></button>
             <strong>Warning!</strong> <span>{{warningAlert}}</span>
         </div>
         <div ng-show="errorAlert" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" aria-label="Close" ng-click="hideErrorAlert()"> <span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" aria-label="Close" ng-click="hideErrorAlert()"><span aria-hidden="true">&times;</span>
+            </button>
             <strong>Error!</strong> <span>{{errorAlert}}</span>
         </div>
         <div ng-show="successAlert" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" aria-label="Close" ng-click="hideSuccessAlert()"> <span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" aria-label="Close" ng-click="hideSuccessAlert()"><span
+                    aria-hidden="true">&times;</span></button>
             <strong>Success !</strong> <span>{{successAlert}}</span>
+        </div>
+
+
+        <div ng-if="user.mission && !user.acceptedMission" class="alert alert-success" role="alert">
+            <strong>New Mission!</strong> <span>You have new mission request! Do you want to accept it?
+            <br>Name: {{user.mission.name}}
+            <br>Destination: {{user.mission.destination}}
+            <br>Description: {{user.mission.missionDescription}}
+        </span><br><br>
+            <div ng-if="!decline.declined">
+                <button class="btn btn-success" ng-click="acceptMission()">Accept</button>
+                <button class="btn btn-danger" ng-click="decline.declined = true">Decline</button>
+            </div>
+            <div ng-if="decline.declined">
+                <form>
+                    <div class="form-group">
+                        <label for="explanation">Message</label>
+                        <input type="text" minlength="10" class="form-control" id="explanation" ng-model="decline.message" placeholder="Enter message">
+                    </div>
+                    <button type="submit" class="btn btn-success" ng-click="declineMission()">Send declinaion</button>
+                    <button type="submit" ng-click="decline.declined = false" class="btn btn-danger">Cancel</button>
+
+                </form>
+            </div>
         </div>
 
         <!-- the place where HTML templates are replaced by AngularJS routing -->

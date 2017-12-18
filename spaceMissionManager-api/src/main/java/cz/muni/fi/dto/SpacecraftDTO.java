@@ -1,6 +1,9 @@
 package cz.muni.fi.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,8 +16,10 @@ public class SpacecraftDTO {
 
 	private String name;
 
+	@JsonManagedReference
 	private Set<CraftComponentDTO> components = new HashSet<>();
 
+	@JsonBackReference
 	private MissionDTO mission;
 
 

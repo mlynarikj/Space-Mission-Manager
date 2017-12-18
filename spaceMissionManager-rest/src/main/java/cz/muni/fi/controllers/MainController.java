@@ -22,11 +22,10 @@ public class MainController {
 
 		Map<String,String> resourcesMap = new HashMap<>();
 
-		//resourcesMap.put("products_uri", ApiUris.ROOT_URI_PRODUCTS);
-		//resourcesMap.put("orders_uri", ApiUris.ROOT_URI_ORDERS);
 		resourcesMap.put("users_uri", ApiUris.ROOT_URI_USERS);
 		resourcesMap.put("components_uri", ApiUris.ROOT_URI_CRAFTCOMPONENTS);
 		resourcesMap.put("auth_uri", ApiUris.ROOT_URI_AUTH);
+		resourcesMap.put("missions_uri", ApiUris.ROOT_URI_MISSIONS);
 
 		return Collections.unmodifiableMap(resourcesMap);
 

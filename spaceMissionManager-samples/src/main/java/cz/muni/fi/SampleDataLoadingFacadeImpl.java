@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
@@ -22,7 +21,6 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @Component
-@Transactional
 public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
 	final static Logger log = LoggerFactory.getLogger(SampleDataLoadingFacadeImpl.class);

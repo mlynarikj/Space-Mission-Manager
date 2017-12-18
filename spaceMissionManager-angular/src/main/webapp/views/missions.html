@@ -134,7 +134,8 @@
         <!-- show disabled button if form is not valid -->
         <button ng-if="edit" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitEdit()">Submit mission
         </button>
-        <button ng-if="create" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitCreate()">Create mission
+        <!--TODO ng-disabled="!form.$valid"-->
+        <button ng-if="create"  class="btn btn-primary" type="button" ng-click="submitCreate()">Create mission
         </button>
         <button class="btn btn-danger" type="button" ng-click="cancelEdit()">Cancel
         </button>

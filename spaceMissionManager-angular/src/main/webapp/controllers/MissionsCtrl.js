@@ -21,13 +21,35 @@ controllers.controller('MissionsCtrl', function ($scope, $spaceHttp, $rootScope,
 
     $scope.createNewMission = function () {
         $scope.editedMission =  {
-            'active': true
+            'active': true,
+            'astronauts': [],
+            'spacecrafts': []
         };
         $scope.create = true;
     };
 
     $scope.submitCreate = function () {
         var data = angular.copy($scope.editedMission);
+        var selectedAstronauts = $('#astronauts').val();
+        var selectedSpacecrafts = $('#spacecrafts').val();
+        $scope.astronauts.forEach(function(astronaut){
+            selectedAstronauts.forEach(function(index){
+                if(index == astronaut.id){
+                    console.log(astronaut);
+                    data.astronauts.push(astronaut);
+                }
+            });
+        });
+        $scope.spacecrafts.forEach(function(spacecraft){
+            selectedSpacecrafts.forEach(function(index){
+                if(index == spacecraft.id){
+                    console.log(spacecraft);
+                    data.spacecrafts.push(spacecraft);
+                }
+            });
+        });
+        data.eta = data.eta.toISOString().substring(0, 10);
+        console.log(data);
         $spaceHttp.createMission(data).then(function (res) {
             $spaceHttp.loadMissions().then(function (response) {
                 $scope.missions = response.data;

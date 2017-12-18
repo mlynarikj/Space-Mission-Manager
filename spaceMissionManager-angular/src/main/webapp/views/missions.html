@@ -25,7 +25,7 @@
             <td>{{mission.destination}}</td>
             <td>{{mission.eta}}</td>
             <td>{{mission.missionDescription}}</td>
-            <td>{{mission.endDate}}</td>
+            <td>{{mission.endDate ? mission.readyDate : "UNKNOWN"}}</td>
             <td>
                 <button class="btn btn-primary" ng-click="editMission(mission.id)">
                     <span class="glyphicon glyphicon-edit"></span>
@@ -54,11 +54,7 @@
 <div ng-if="create || edit">
     <h1>{{create ? 'Create' : 'Edit'}} mission {{editedMission.name}}</h1>
     <form name="form" novalidate class="form-horizontal">
-        <!--TODO validations, limit max input characters...-->
 
-        <!--@NotNull-->
-        <!--@Size(min = 3, max = 50)-->
-        <!--private String name;-->
         <div class="form-group" ng-class="{'has-error': !(form.name.$valid)}">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
@@ -68,9 +64,6 @@
             </div>
         </div>
 
-        <!--@NotNull-->
-        <!--@Size(min = 3, max = 255)-->
-        <!--private String destination;-->
         <div class="form-group" ng-class="{'has-error': !(form.destination.$valid)}">
             <label for="destination" class="col-sm-2 control-label">Destination</label>
             <div class="col-sm-10">
@@ -80,9 +73,6 @@
             </div>
         </div>
 
-        <!--@NotNull-->
-        <!--@Size(min = 3, max = 255)-->
-        <!--private String missionDescription;-->
         <div class="form-group" ng-class="{'has-error': !(form.missionDescription.$valid)}">
             <label for="missionDescription" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
@@ -92,23 +82,15 @@
             </div>
         </div>
 
-        <!--@NotNull-->
-        <!--@Future-->
-        <!--@JsonDeserialize(using = ZonedDateTimeDeserializer.class)-->
-        <!--@JsonSerialize(using = ZonedDateTimeSerializer.class)-->
-        <!--private ZonedDateTime eta;-->
         <div class="form-group" ng-class="{'has-error': !(form.eta.$valid)}">
             <label for="eta" class="col-sm-2 control-label">ETA</label>
             <div class="col-sm-10">
-                <input id="eta" type="date" name="eta" class="form-control" ng-model="editedMission.eta" required/>
+                <input id="eta" name="eta" min="{{date}}" type="datetime-local" class="form-control" ng-model="editedMission.eta"/>
                 <p class="help-block" ng-show="form.eta.$error.required">required</p>
-                <!--<p class="help-block" ng-show="form.eta.$error.date">is not date</p>-->
+                <p class="help-block" ng-show="form.eta.$error.date">is not date</p>
             </div>
         </div>
 
-        <!--@NotNull-->
-        <!--private Set<UserDTO> astronauts = new HashSet<>();-->
-        <!--TODO input select astronauts-->
         <div class="form-group">
             <label for="astronauts" class="col-sm-2 control-label">Astronauts</label>
             <div class="col-sm-10">
@@ -118,10 +100,6 @@
             </div>
         </div>
 
-        <!--@Size(min = 1)-->
-        <!--@NotNull-->
-        <!--private Set<SpacecraftDTO> spacecrafts = new HashSet<>();-->
-        <!--TODO input select spacecrafts-->
         <div class="form-group">
             <label for="spacecrafts" class="col-sm-2 control-label">Spacecrafts</label>
             <div class="col-sm-10">
@@ -131,7 +109,6 @@
             </div>
         </div>
 
-        <!-- show disabled button if form is not valid -->
         <button ng-if="edit" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitEdit()">Submit mission
         </button>
         <!--TODO ng-disabled="!form.$valid"-->

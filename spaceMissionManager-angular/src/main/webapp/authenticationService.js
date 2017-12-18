@@ -18,6 +18,7 @@ spaceMissionApp.factory('AuthenticationService',
                 //TODO: toto je hack, musi se tam posilat toto:
                 //var authdata = Base64.encode(username + ':' + password);
                 var authdata = Base64.encode('ADMIN' + ':' + 'ADMIN');
+
                 $rootScope.globals = {
                     currentUser: {
                         username: username,

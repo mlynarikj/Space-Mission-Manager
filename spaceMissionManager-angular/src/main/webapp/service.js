@@ -14,5 +14,23 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
         return $http.get(API_URL+USERS_PATH);
     };
 
+    service.deleteUser = function (id) {
+        return $http.delete(API_URL+USERS_PATH+'/'+id);
+    };
+
+
+    service.getUser = function (id) {
+        return $http.get(API_URL+USERS_PATH+'/'+id);
+    };
+
+    service.updateUser = function (data){
+        return $http.put(API_URL+USERS_PATH, data);
+    };
+
+
+    service.createUser = function (data){
+        return $http.post(API_URL+USERS_PATH, data);
+    };
+
     return service;
 }]);

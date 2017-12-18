@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * Created by jcizmar
@@ -34,6 +35,7 @@ public class SpacecraftController {
 
     /**
      * Returns all spacecrafts
+     *
      * @return SpacecraftDTO Collection of Spacecrafts
      */
 
@@ -46,6 +48,7 @@ public class SpacecraftController {
 
     /**
      * Returns spacecrat by id
+     *
      * @param id id of spacecraft
      * @return SpacecraftDTO
      */
@@ -62,6 +65,7 @@ public class SpacecraftController {
 
     /**
      * Creates and returns spacecraft
+     *
      * @param spacecraft Spacecraft to create
      * @return SpacecraftDTO created spacecraft
      */
@@ -84,6 +88,7 @@ public class SpacecraftController {
 
     /**
      * Deletes spacecraft and returns all remaining spacecrafts
+     *
      * @param id id of spacecraft to delete
      * @return Collection<SpacecraftDTO> all remaining spacecrafts
      */
@@ -103,6 +108,7 @@ public class SpacecraftController {
 
     /**
      * Updates and returns spacecraft
+     *
      * @param spacecraft spacecraft to update
      * @return SpacecraftDTO updated spacecraft
      */
@@ -118,5 +124,22 @@ public class SpacecraftController {
             logger.warn(e.getMessage());
             throw new ResourceAlreadyExistsException();
         }
+    }
+
+    /**
+     * Returns all available spacecrafts
+     *
+     * @return SpacecraftDTO Collection of Spacecrafts
+     */
+
+    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RequestMapping(value = "/available", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Collection<SpacecraftDTO> getAvailableSpacecrafts() {
+        logger.debug("[REST] getAllAvailableSpacecrafts()");
+        return spacecraftFacade
+                .findAllSpacecrafts()
+                .stream()
+                .filter(s -> s.getMission() == null)
+                .collect(Collectors.toList());
     }
 }

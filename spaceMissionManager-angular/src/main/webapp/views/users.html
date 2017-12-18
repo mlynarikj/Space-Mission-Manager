@@ -1,1 +1,22 @@
 <h1>Users</h1>
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Experience level</th>
+        <th>Accepted Mission</th>
+        <th>Manager</th>
+        <th></th>
+        <th></th>
+
+    </tr>
+    <tr ng-repeat="user in users">
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.experienceLevel}}</td>
+        <td>{{user.acceptedMission}}</td>
+        <td>{{user.manager ? 'Yes' : 'No'}}</td>
+        <td><button class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></button></td>
+        <td><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
+    </tr>
+</table>

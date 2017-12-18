@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
@@ -85,6 +86,18 @@ public class MissionController {
         }
         missionFacade.cancelMission(mission);
         return missionFacade.findAllMissions();
+    }
+
+    @RolesAllowed({"ROLE_MANAGER"})
+    @RequestMapping(value = "/{id}/archive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public MissionDTO archiveMission(@PathVariable("id") long id) {
+        logger.log(Level.INFO, "[REST] Archiving mission "+id+"...");
+        MissionDTO mission = missionFacade.findMissionById(id);
+        if (mission == null){
+            throw new ResourceNotFoundException();
+        }
+        missionFacade.archive(mission, LocalDate.now());
+        return missionFacade.findMissionById(id);
     }
 
 }

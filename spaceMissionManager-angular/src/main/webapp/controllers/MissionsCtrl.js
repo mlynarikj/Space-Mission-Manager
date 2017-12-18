@@ -64,16 +64,23 @@ controllers.controller('MissionsCtrl', function ($scope, $spaceHttp, $rootScope,
 
     $scope.deleteMission = function (id) {
         $spaceHttp.deleteMission(id).then(function (response) {
+            $rootScope.successAlert = 'Mission ' + id + ' was deleted';
+            $rootScope.errorAlert = '';
             $scope.missions = response.data;
-        }, function (error) {
-            console.error(error);
-        });
+        }, function error(response) {
+            //display error
+            console.log(response);
+            $rootScope.errorAlert = 'Cannot delete mission!';
+            $rootScope.successAlert = '';
+            $route.reload();
+            })
     };
 
     $scope.editMission = function (id) {
         $spaceHttp.getMission(id).then(function (response) {
             $scope.editedMission = response.data;
-            $scope.editedMission.eta = new Date(response.data.eta);
+            $scope.editedMission.eta = $scope.editedMission.eta === null || $scope.editedMission.eta === undefined
+                ? null : new Date($scope.editedMission.eta.substring(0, 16));
             $scope.edit = true;
         }, function (error) {
             console.error(error);
@@ -83,13 +90,16 @@ controllers.controller('MissionsCtrl', function ($scope, $spaceHttp, $rootScope,
     $scope.cancelEdit = function () {
         $scope.create = false;
         $scope.edit = false;
-    }
+    };
 
     $scope.submitEdit = function () {
         var data = angular.copy($scope.editedMission);
-        data.eta = data.eta.toISOString().substring(0, 10);
+        if (!(data.eta === null || data.eta === undefined)){
+            data.eta.setHours(data.eta.getHours()+1);
+            data.eta = data.eta.toISOString();
+        }
         $spaceHttp.updateMission(data).then(function (res) {
-            $spaceHttp.getAllMissions().then(function (response) {
+            $spaceHttp.loadMissions().then(function (response) {
                 $scope.missions = response.data;
                 $scope.edit = false;
             }, function (error) {

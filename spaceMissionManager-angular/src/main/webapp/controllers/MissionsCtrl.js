@@ -21,14 +21,7 @@ controllers.controller('MissionsCtrl', function ($scope, $spaceHttp, $rootScope,
 
     $scope.createNewMission = function () {
         $scope.editedMission =  {
-            'name': '',
-            'destination': '',
-            'active': true,
-            'astronauts': [],
-            'spacecrafts': [],
-            'eta': '',
-            'missionDescription': '',
-            'endDate': ''
+            'active': true
         };
         $scope.create = true;
     };

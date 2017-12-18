@@ -5,7 +5,7 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
     const LOGIN_PATH = "login";
     const USERS_PATH = "users";
     const MISSIONS_PATH = "missions";
-    const ASTRONAUTS_PATH = "astronauts";
+    const ASTRONAUTS_PATH = USERS_PATH + "/astronauts";
     const SPACECRAFTS_PATH = "spacecrafts";
 
 

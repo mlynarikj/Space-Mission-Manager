@@ -1,1 +1,121 @@
-<h1>Missions</h1>
+<div ng-if="!create">
+    <h1>Missions</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>mission id</th>
+            <th>name</th>
+            <th>is active</th>
+            <th>astronauts</th>
+            <th>spacecrafts</th>
+            <th>destination</th>
+            <th>eta</th>
+            <th>description</th>
+            <th>end date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="mission in missions track by $index">
+            <td>{{mission.id}}</td>
+            <td>{{mission.name}}</td>
+            <td>{{mission.active ? 'Yes' : 'No'}}</td>
+            <td>{{}}</td>
+            <td>{{}}</td>
+            <td>{{mission.destination}}</td>
+            <td>{{mission.eta}}</td>
+            <td>{{mission.missionDescription}}</td>
+            <td>{{mission.endDate}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" ng-click="createMission()"><span class="glyphicon glyphicon-plus"></span>
+    </button>
+</div>
+
+
+
+
+
+<div ng-if="create">
+    <h1>Create new mission</h1>
+    <form name="form"  novalidate class="form-horizontal">
+        <!--TODO validations, limit max input characters...-->
+
+
+        <!--@NotNull-->
+        <!--@Size(min = 3, max = 50)-->
+        <!--private String name;-->
+        <div class="form-group" ng-class="{'has-error': !(form.name.$valid)}">
+            <label for="name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+                <input placeholder="name" id="name" type="text" ng-minlength="3" name="name" class="form-control" ng-model="mission.name" required/>
+                <p class="help-block" ng-show="form.name.$error.required">name is required</p>
+                <p class="help-block" ng-show="form.name.$error.minlength">name must be at least 3 characters</p>
+            </div>
+        </div>
+
+
+        <!--@NotNull-->
+        <!--@Size(min = 3, max = 255)-->
+        <!--private String destination;-->
+        <div class="form-group">
+            <label for="destination" class="col-sm-2 control-label">Destination</label>
+            <div class="col-sm-10">
+                <input placeholder="destination" id="destination" type="text" name="name" class="form-control" ng-model="mission.destination"/>
+                <!--<p class="help-block" ng-show="form.destination.$error.required">destination is required</p>-->
+                <!--<p class="help-block" ng-show="form.destination.$error.minlength">destination must be at least 3 characters</p>-->
+            </div>
+        </div>
+
+
+        <!--@NotNull-->
+        <!--@Size(min = 3, max = 255)-->
+        <!--private String missionDescription;-->
+        <div class="form-group" >
+            <label for="missionDescription" class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-10">
+                <input placeholder="mission missionDescription" id="missionDescription" type="text" name="name" class="form-control" ng-model="mission.missionDescription"/>
+            </div>
+        </div>
+
+        <!--@NotNull-->
+        <!--@Future-->
+        <!--@JsonDeserialize(using = ZonedDateTimeDeserializer.class)-->
+        <!--@JsonSerialize(using = ZonedDateTimeSerializer.class)-->
+        <!--private ZonedDateTime eta;-->
+        <div class="form-group">
+            <label for="eta" class="col-sm-2 control-label">ETA</label>
+            <div class="col-sm-10">
+                <input placeholder="eta" id="eta" name="color" type="datetime-local" class="form-control" ng-model="mission.eta"/>
+            </div>
+        </div>
+
+        <!--@NotNull-->
+        <!--private Set<UserDTO> astronauts = new HashSet<>();-->
+        <!--TODO input select astronauts-->
+        <div class="form-group">
+            <label for="eta" class="col-sm-2 control-label">Astronauts</label>
+            <div class="col-sm-10">
+                <select ng-model="selectedAstronaut" ng-options="astronaut for astronaut in astronauts">
+                </select>
+            </div>
+        </div>
+
+        <!--@Size(min = 1)-->
+        <!--@NotNull-->
+        <!--private Set<SpacecraftDTO> spacecrafts = new HashSet<>();-->
+        <!--TODO input select spacecrafts-->
+        <div class="form-group">
+            <label for="eta" class="col-sm-2 control-label">Spacecrafts</label>
+            <div class="col-sm-10">
+                <select ng-model="selectedMission" ng-options="mission for mission in missions">
+                </select>
+            </div>
+        </div>
+
+        <!-- show disabled button if form is not valid -->
+        <button ng-if="create" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitCreate()">Create mission
+        </button>
+    </form>
+</div>

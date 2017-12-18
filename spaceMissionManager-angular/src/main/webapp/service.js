@@ -40,6 +40,10 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
         return $http.get(API_URL+ASTRONAUTS_PATH);
     };
 
+    service.loadAvailableAstronauts = function () {
+        return $http.get(API_URL+ASTRONAUTS_PATH+"/available");
+    };
+
     service.acceptMission = function (id) {
         return $http.get(API_URL+USERS_PATH+'/'+id+'/acceptMission');
     };
@@ -55,6 +59,13 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
 
     service.loadMissions = function () {
         return $http.get(API_URL+MISSIONS_PATH);
+    };
+
+    service.loadActiveMissions = function () {
+        return $http.get(API_URL+MISSIONS_PATH+"?active=true");
+    };
+    service.loadInactiveMissions = function () {
+        return $http.get(API_URL+MISSIONS_PATH+"?active=false");
     };
 
     service.deleteMission = function (id) {
@@ -74,6 +85,9 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
         return $http.get(API_URL+SPACECRAFTS_PATH);
     };
 
+    service.loadAvailableSpacecrafts = function() {
+        return $http.get(API_URL+SPACECRAFTS_PATH+"/available");
+    };
 
     return service;
 }]);

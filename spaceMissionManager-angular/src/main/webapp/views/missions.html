@@ -26,10 +26,15 @@
             <td>{{mission.eta}}</td>
             <td>{{mission.missionDescription}}</td>
             <td>{{mission.endDate}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="editMission(mission.id)"><span
+                        class="glyphicon glyphicon-edit"></span>
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>
-    <button class="btn btn-primary" ng-click="createMission()"><span class="glyphicon glyphicon-plus"></span>
+    <button class="btn btn-primary" ng-click="createNewMission()"><span class="glyphicon glyphicon-plus"></span>
     </button>
 </div>
 
@@ -37,11 +42,10 @@
 
 
 
-<div ng-if="create">
-    <h1>Create new mission</h1>
-    <form name="form"  novalidate class="form-horizontal">
+<div ng-if="create || edit">
+    <h1>Edit mission</h1>
+    <form name="form" novalidate class="form-horizontal">
         <!--TODO validations, limit max input characters...-->
-
 
         <!--@NotNull-->
         <!--@Size(min = 3, max = 50)-->
@@ -49,33 +53,33 @@
         <div class="form-group" ng-class="{'has-error': !(form.name.$valid)}">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-                <input placeholder="name" id="name" type="text" ng-minlength="3" name="name" class="form-control" ng-model="mission.name" required/>
-                <p class="help-block" ng-show="form.name.$error.required">name is required</p>
-                <p class="help-block" ng-show="form.name.$error.minlength">name must be at least 3 characters</p>
+                <input placeholder="name" id="name" type="text" ng-minlength="3" name="name" class="form-control" ng-model="editedMission.name" required/>
+                <p class="help-block" ng-show="form.name.$error.required">required</p>
+                <p class="help-block" ng-show="form.name.$error.minlength">must be at least 3 characters</p>
             </div>
         </div>
-
 
         <!--@NotNull-->
         <!--@Size(min = 3, max = 255)-->
         <!--private String destination;-->
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error': !(form.destination.$valid)}">
             <label for="destination" class="col-sm-2 control-label">Destination</label>
             <div class="col-sm-10">
-                <input placeholder="destination" id="destination" type="text" name="name" class="form-control" ng-model="mission.destination"/>
-                <!--<p class="help-block" ng-show="form.destination.$error.required">destination is required</p>-->
-                <!--<p class="help-block" ng-show="form.destination.$error.minlength">destination must be at least 3 characters</p>-->
+                <input placeholder="destination" id="destination" type="text" name="name" class="form-control" ng-model="editedMission.destination"/>
+                <p class="help-block" ng-show="form.destination.$error.required">required</p>
+                <p class="help-block" ng-show="form.destination.$error.minlength">must be at least 3 characters</p>
             </div>
         </div>
-
 
         <!--@NotNull-->
         <!--@Size(min = 3, max = 255)-->
         <!--private String missionDescription;-->
-        <div class="form-group" >
+        <div class="form-group" ng-class="{'has-error': !(form.missionDescription.$valid)}">
             <label for="missionDescription" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-                <input placeholder="mission missionDescription" id="missionDescription" type="text" name="name" class="form-control" ng-model="mission.missionDescription"/>
+                <input placeholder="mission missionDescription" id="missionDescription" type="text" name="name" class="form-control" ng-model="editedMission.missionDescription"/>
+                <p class="help-block" ng-show="form.missionDescription.$error.required">required</p>
+                <p class="help-block" ng-show="form.missionDescription.$error.minlength">must be at least 3 characters</p>
             </div>
         </div>
 
@@ -87,7 +91,8 @@
         <div class="form-group">
             <label for="eta" class="col-sm-2 control-label">ETA</label>
             <div class="col-sm-10">
-                <input placeholder="eta" id="eta" name="color" type="datetime-local" class="form-control" ng-model="mission.eta"/>
+                <input id="eta" type="date" name="eta" class="form-control" ng-model="editedMission.eta" required/>
+                <!--<p class="help-block" ng-show="form.eta.$error.date">is not date</p>-->
             </div>
         </div>
 
@@ -95,9 +100,10 @@
         <!--private Set<UserDTO> astronauts = new HashSet<>();-->
         <!--TODO input select astronauts-->
         <div class="form-group">
-            <label for="eta" class="col-sm-2 control-label">Astronauts</label>
+            <label for="astronauts" class="col-sm-2 control-label">Astronauts</label>
             <div class="col-sm-10">
-                <select ng-model="selectedAstronaut" ng-options="astronaut for astronaut in astronauts">
+                <select id="astronauts" ng-model="selectedAstronauts" multiple>
+                    <option ng-repeat="astronaut in astronauts" value="{{astronaut}}">{{astronaut.name}}</option>
                 </select>
             </div>
         </div>
@@ -107,15 +113,19 @@
         <!--private Set<SpacecraftDTO> spacecrafts = new HashSet<>();-->
         <!--TODO input select spacecrafts-->
         <div class="form-group">
-            <label for="eta" class="col-sm-2 control-label">Spacecrafts</label>
+            <label for="spacecrafts" class="col-sm-2 control-label">Spacecrafts</label>
             <div class="col-sm-10">
-                <select ng-model="selectedMission" ng-options="mission for mission in missions">
+                <select id="spacecrafts" ng-model="selectedSpacecrafts" multiple ng-options="mission for mission in missions">
                 </select>
             </div>
         </div>
 
         <!-- show disabled button if form is not valid -->
+        <button ng-if="edit" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitEdit()">Submit mission
+        </button>
         <button ng-if="create" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitCreate()">Create mission
+        </button>
+        <button class="btn btn-danger" type="button" ng-click="cancelEdit()">Cancel
         </button>
     </form>
 </div>

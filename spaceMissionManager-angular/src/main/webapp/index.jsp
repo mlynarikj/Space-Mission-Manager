@@ -51,7 +51,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li ng-if="globals.currentUser"><a href="#"><span class="glyphicon glyphicon-user"></span>
-                    {{globals.currentUser.username}}</a></li>
+                    {{globals.currentUser.email}}</a></li>
 
                 <li ng-if="!globals.currentUser"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>

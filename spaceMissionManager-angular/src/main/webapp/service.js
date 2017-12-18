@@ -113,5 +113,34 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
 	    return $http.get(API_URL+CC_PATH+"/"+id);
     };
 
+    service.getAllSpacecrafts = function () {
+        return $http.get(API_URL+SPACECRAFTS_PATH);
+    };
+
+    service.getSpacecraft = function (id) {
+        return $http.get(API_URL+SPACECRAFTS_PATH+'/'+id);
+    };
+
+    service.createSpacecraft = function (data){
+        return $http.post(API_URL+SPACECRAFTS_PATH, data);
+    };
+
+    service.deleteSpacecraft = function (id) {
+        return $http.delete(API_URL+SPACECRAFTS_PATH+'/'+id);
+    };
+
+    service.updateSpacecraft = function (data) {
+        return $http.put(API_URL+SPACECRAFTS_PATH,data);
+    };
+
+    service.getAllAvailableSpacecrafts = function () {
+        return $http.get(API_URL+SPACECRAFTS_PATH+'/available')
+    };
+
+    service.getAllAvailableCraftComponents = function () {
+        return $http.get(API_URL+CC_PATH+'/available')
+    };
+
+
     return service;
 }]);

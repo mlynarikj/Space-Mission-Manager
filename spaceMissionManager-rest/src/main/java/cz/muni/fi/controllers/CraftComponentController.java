@@ -4,14 +4,17 @@ package cz.muni.fi.controllers;
 import cz.muni.fi.ApiUris;
 import cz.muni.fi.dto.CraftComponentCreateDTO;
 import cz.muni.fi.dto.CraftComponentDTO;
+import cz.muni.fi.dto.SpacecraftDTO;
 import cz.muni.fi.exceptions.ResourceAlreadyExistsException;
 import cz.muni.fi.exceptions.ResourceNotFoundException;
 import cz.muni.fi.facade.CraftComponentFacade;
+import cz.muni.fi.facade.SpacecraftFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +28,9 @@ public class CraftComponentController {
 
 
 	private CraftComponentFacade craftComponentFacade;
+
+	@Autowired
+	private SpacecraftFacade spacecraftFacade;
 
 	@Autowired
 	public CraftComponentController(CraftComponentFacade craftComponentFacade) {
@@ -97,7 +103,20 @@ public class CraftComponentController {
 	@RequestMapping(value = "/available", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<CraftComponentDTO> findAllAvailableComponents() {
 		logger.log(Level.INFO, "[REST] finding all available components...");
-		return craftComponentFacade.findAllComponents().stream().filter(p -> p.getSpacecraft() == null).collect(Collectors.toList());
+		List<SpacecraftDTO> spacecraftDTOs = spacecraftFacade.findAllSpacecrafts();
+		List<CraftComponentDTO> cc = new ArrayList<>();
+		for (SpacecraftDTO sc :spacecraftDTOs) {
+			cc.addAll(sc.getComponents());
+		}
+		List<CraftComponentDTO> result = new ArrayList<>();
+		for (CraftComponentDTO c : craftComponentFacade.findAllComponents()) {
+			if(!cc.contains(c)){
+				result.add(c);
+			}
+		}
+
+		return result;
+
 	}
 
 

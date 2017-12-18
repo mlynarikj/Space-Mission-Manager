@@ -1,4 +1,4 @@
-'use strict';
+    'use strict';
 
 /* Defines application and its dependencies */
 

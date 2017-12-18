@@ -5,23 +5,23 @@ spaceMissionApp.factory('AuthenticationService',
         function (Base64, $http, $cookieStore, $rootScope, $timeout) {
             var service = {};
 
-            service.Login = function (username, password) {
+            service.Login = function (email, password) {
                 //TODO: toto je hack, musi se tam posilat toto:
-                //var authdata = Base64.encode(username + ':' + password);
+                //var authdata = Base64.encode(email + ':' + password);
                 var authdata = Base64.encode('ADMIN' + ':' + 'ADMIN');
                 $http.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
                 $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
-                return $http.post('rest/auth', {email: username, password: password});
+                return $http.post('rest/auth', {email: email, password: password});
             };
 
-            service.SetCredentials = function (username, password) {
+            service.SetCredentials = function (email, password) {
                 //TODO: toto je hack, musi se tam posilat toto:
-                //var authdata = Base64.encode(username + ':' + password);
+                //var authdata = Base64.encode(email + ':' + password);
                 var authdata = Base64.encode('ADMIN' + ':' + 'ADMIN');
 
                 $rootScope.globals = {
                     currentUser: {
-                        username: username,
+                        email: email,
                         authdata: authdata
                     }
                 };

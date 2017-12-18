@@ -85,9 +85,8 @@
         <div class="form-group" ng-class="{'has-error': !(form.eta.$valid)}">
             <label for="eta" class="col-sm-2 control-label">ETA</label>
             <div class="col-sm-10">
-                <input id="eta" name="eta" min="{{date}}" type="datetime-local" class="form-control" ng-model="editedMission.eta"/>
+                <input id="eta" name="eta" min="{{date}}" type="datetime-local" class="form-control" ng-model="editedMission.eta" required/>
                 <p class="help-block" ng-show="form.eta.$error.required">required</p>
-                <p class="help-block" ng-show="form.eta.$error.date">is not date</p>
             </div>
         </div>
 

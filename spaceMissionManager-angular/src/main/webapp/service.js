@@ -32,5 +32,13 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
         return $http.post(API_URL+USERS_PATH, data);
     };
 
+    service.acceptMission = function (id) {
+        return $http.get(API_URL+USERS_PATH+'/'+id+'/acceptMission');
+    };
+
+    service.declineMission = function (id, message) {
+        return $http.post(API_URL+USERS_PATH+'/'+id+'/rejectMission', message);
+    };
+
     return service;
 }]);

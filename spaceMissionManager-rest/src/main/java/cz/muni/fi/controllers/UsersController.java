@@ -170,8 +170,8 @@ public class UsersController {
      */
 
     @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
-    @RequestMapping(value = "/{id}/acceptMission", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{id}/acceptMission", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO acceptMission(@PathVariable Long id) {
         logger.debug("[REST] acceptMission()");
 
@@ -181,6 +181,7 @@ public class UsersController {
         }
 
         userFacade.acceptAssignedMission(user);
+        user = userFacade.findUserById(id);
         return user;
     }
 
@@ -203,6 +204,7 @@ public class UsersController {
             throw new ResourceNotFoundException();
         }
         userFacade.rejectAssignedMission(user, explanation);
+        user = userFacade.findUserById(id);
         return user;
     }
 

@@ -62,7 +62,7 @@
         <div class="form-group" ng-class="{'has-error': !(form.name.$valid)}">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-                <input placeholder="name" id="name" type="text" ng-minlength="3" name="name" class="form-control" ng-model="editedMission.name" required/>
+                <input placeholder="name" id="name" type="text" ng-minlength="3" name="name" class="form-control" ng-model="editedMission.name" required minlength="3" maxlength="50"/>
                 <p class="help-block" ng-show="form.name.$error.required">required</p>
                 <p class="help-block" ng-show="form.name.$error.minlength">must be at least 3 characters</p>
             </div>
@@ -74,7 +74,7 @@
         <div class="form-group" ng-class="{'has-error': !(form.destination.$valid)}">
             <label for="destination" class="col-sm-2 control-label">Destination</label>
             <div class="col-sm-10">
-                <input placeholder="destination" id="destination" type="text" name="name" class="form-control" ng-model="editedMission.destination"/>
+                <input placeholder="destination" id="destination" type="text" name="name" class="form-control" ng-model="editedMission.destination" minlength="3" maxlength="255"/>
                 <p class="help-block" ng-show="form.destination.$error.required">required</p>
                 <p class="help-block" ng-show="form.destination.$error.minlength">must be at least 3 characters</p>
             </div>
@@ -86,7 +86,7 @@
         <div class="form-group" ng-class="{'has-error': !(form.missionDescription.$valid)}">
             <label for="missionDescription" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-                <input placeholder="mission missionDescription" id="missionDescription" type="text" name="name" class="form-control" ng-model="editedMission.missionDescription"/>
+                <input placeholder="mission missionDescription" id="missionDescription" type="text" name="name" class="form-control" ng-model="editedMission.missionDescription" minlength="3" maxlength="255"/>
                 <p class="help-block" ng-show="form.missionDescription.$error.required">required</p>
                 <p class="help-block" ng-show="form.missionDescription.$error.minlength">must be at least 3 characters</p>
             </div>
@@ -108,26 +108,26 @@
         <!--@NotNull-->
         <!--private Set<UserDTO> astronauts = new HashSet<>();-->
         <!--TODO input select astronauts-->
-        <div class="form-group">
-            <label for="astronauts" class="col-sm-2 control-label">Astronauts</label>
-            <div class="col-sm-10">
-                <select id="astronauts" ng-model="selectedAstronauts" multiple>
-                    <option ng-repeat="astronaut in astronauts" value="{{astronaut.id}}">{{astronaut.name}}</option>
-                </select>
-            </div>
-        </div>
+        <!--<div class="form-group">-->
+            <!--<label for="astronauts" class="col-sm-2 control-label">Astronauts</label>-->
+            <!--<div class="col-sm-10">-->
+                <!--<select id="astronauts" ng-model="selectedAstronauts" multiple>-->
+                    <!--<option ng-repeat="astronaut in astronauts" value="{{astronaut.id}}">{{astronaut.name}}</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <!--@Size(min = 1)-->
         <!--@NotNull-->
         <!--private Set<SpacecraftDTO> spacecrafts = new HashSet<>();-->
         <!--TODO input select spacecrafts-->
-        <div class="form-group">
-            <label for="spacecrafts" class="col-sm-2 control-label">Spacecrafts</label>
-            <div class="col-sm-10">
-                <select id="spacecrafts" ng-model="selectedSpacecrafts" multiple ng-options="mission for mission in missions">
-                </select>
-            </div>
-        </div>
+        <!--<div class="form-group">-->
+            <!--<label for="spacecrafts" class="col-sm-2 control-label">Spacecrafts</label>-->
+            <!--<div class="col-sm-10">-->
+                <!--<select id="spacecrafts" ng-model="selectedSpacecrafts" multiple ng-options="mission for mission in missions">-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <!-- show disabled button if form is not valid -->
         <button ng-if="edit" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitEdit()">Submit mission

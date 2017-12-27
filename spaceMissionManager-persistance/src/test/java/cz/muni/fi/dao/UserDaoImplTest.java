@@ -79,6 +79,8 @@ public class UserDaoImplTest extends AbstractTestNGSpringContextTests {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
 		entityManager.createQuery("delete from User ").executeUpdate();
+		entityManager.createQuery("delete from CraftComponent ").executeUpdate();
+		entityManager.createQuery("delete from Spacecraft ").executeUpdate();
 		entityManager.createQuery("delete from Mission ").executeUpdate();
 		entityManager.getTransaction().commit();
 		entityManager.close();

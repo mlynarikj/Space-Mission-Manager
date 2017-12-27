@@ -18,10 +18,11 @@ public class Spacecraft {
     @Column(nullable = false, unique = true)
 	private String name;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "spacecraft")
 	private Set<CraftComponent> components = new HashSet<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "mission_id")
 	private Mission mission;
 
 
@@ -48,6 +49,11 @@ public class Spacecraft {
 		c.setSpacecraft(this);
 	}
 
+	public void removeComponent(CraftComponent c){
+		components.remove(c);
+		c.setSpacecraft(null);
+	}
+
 	public Set<CraftComponent> getComponents() {
 		return Collections.unmodifiableSet(components);
 	}
@@ -57,9 +63,7 @@ public class Spacecraft {
 	}
 
 	public void setMission(Mission mission) {
-	    if(this.mission != null && this.mission.equals(mission)) return;
 		this.mission = mission;
-		mission.addSpacecraft(this);
 	}
 
 	public String getType() {

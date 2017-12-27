@@ -18,10 +18,10 @@ public class Mission {
 	private Long id;
 
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "mission")
 	private Set<User> astronauts = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "mission")
 	private Set<Spacecraft> spacecrafts = new HashSet<>();
 
 	@NotNull
@@ -115,11 +115,12 @@ public class Mission {
 	public void addAstronaut(User user){
 	    if(astronauts.contains(user)) return;
 		astronauts.add(user);
-		if(user != null) user.setMission(this);
+		user.setMission(this);
 	}
 
 	public void removeAstronaut(User user){
 		astronauts.remove(user);
+		user.setMission(null);
 	}
 
 	public void addSpacecraft(Spacecraft spacecraft){
@@ -130,6 +131,7 @@ public class Mission {
 
 	public void removeSpacecraft(Spacecraft spacecraft){
 		spacecrafts.remove(spacecraft);
+		spacecraft.setMission(null);
 	}
 
 	@Override

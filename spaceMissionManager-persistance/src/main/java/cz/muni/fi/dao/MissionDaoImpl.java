@@ -45,6 +45,14 @@ public class MissionDaoImpl implements MissionDao {
 			throw new IllegalArgumentException("at least 1 spacecraft is required");
 		}
 		entityManager.persist(mission);
+		mission.getSpacecrafts().forEach(spacecraft -> {
+			spacecraft.setMission(mission);
+			entityManager.merge(spacecraft);
+		});
+		mission.getAstronauts().forEach(user -> {
+			user.setMission(mission);
+			entityManager.merge(user);
+		});
 		return mission;
 	}
 
@@ -56,7 +64,17 @@ public class MissionDaoImpl implements MissionDao {
 		if (mission.getId() == null){
 			throw new IllegalArgumentException("id is null");
 		}
-		entityManager.remove(entityManager.merge(mission));
+		Mission del = findMissionById(mission.getId());
+		del.getAstronauts().forEach(p->{
+			del.removeAstronaut(p);
+			entityManager.merge(p);
+		});
+		del.getSpacecrafts().forEach(p->{
+			del.removeSpacecraft(p);
+			entityManager.merge(p);
+		});
+		entityManager.remove(del);
+
 		return mission;
 	}
 

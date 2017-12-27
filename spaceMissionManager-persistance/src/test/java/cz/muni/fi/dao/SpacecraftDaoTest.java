@@ -64,8 +64,8 @@ public class SpacecraftDaoTest extends AbstractTestNGSpringContextTests {
     public void tearDown() throws Exception {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        entityManager.createQuery("delete from Spacecraft").executeUpdate();
-        entityManager.createQuery("delete from CraftComponent").executeUpdate();
+	    entityManager.createQuery("delete from CraftComponent").executeUpdate();
+	    entityManager.createQuery("delete from Spacecraft").executeUpdate();
         entityManager.getTransaction().commit();
         entityManager.close();
     }

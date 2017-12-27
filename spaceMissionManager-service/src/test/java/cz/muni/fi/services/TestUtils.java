@@ -60,7 +60,8 @@ public class TestUtils {
      */
     static User createUser(String name, Mission mission) {
         User user = createUser(name);
-        user.setMission(mission);
+        mission.addAstronaut(user);
+//        user.setMission(mission);
         return user;
     }
 
@@ -74,7 +75,8 @@ public class TestUtils {
      */
     static CraftComponent createCraftComponent(String name, Spacecraft spacecraft) {
         CraftComponent craftComponent = createCraftComponent(name);
-        craftComponent.setSpacecraft(spacecraft);
+        spacecraft.addComponent(craftComponent);
+//        craftComponent.setSpacecraft(spacecraft);
         return craftComponent;
     }
 
@@ -88,7 +90,8 @@ public class TestUtils {
      */
     static Spacecraft createSpacecraft(String name, Mission mission) {
         Spacecraft spacecraft = createSpacecraft(name);
-        spacecraft.setMission(mission);
+        mission.addSpacecraft(spacecraft);
+//        spacecraft.setMission(mission);
         return spacecraft;
     }
 }

@@ -22,6 +22,7 @@ public class CraftComponent {
 	private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "spacecraft_id")
 	private Spacecraft spacecraft;
 
 	private ZonedDateTime readyDate;
@@ -63,9 +64,7 @@ public class CraftComponent {
 	}
 
 	public void setSpacecraft(Spacecraft spacecraft) {
-		if(this.spacecraft != null && this.spacecraft.equals(spacecraft)) return;
 		this.spacecraft = spacecraft;
-		spacecraft.addComponent(this);
 	}
 
 	@Override

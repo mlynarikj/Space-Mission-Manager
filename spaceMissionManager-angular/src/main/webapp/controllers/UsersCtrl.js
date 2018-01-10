@@ -4,7 +4,10 @@ controllers.controller('UsersCtrl', function ($scope, $spaceHttp, $rootScope, $l
         $location.path('login');
         return;
     }
-
+    var myDate = new Date();
+    var date = new Date(myDate);
+    date.setYear(myDate.getFullYear()-18);
+    $scope.date = date.toISOString().substring(0,10);
 
     console.log('calling  /users');
     $spaceHttp.getAllUsers().then(function (response) {

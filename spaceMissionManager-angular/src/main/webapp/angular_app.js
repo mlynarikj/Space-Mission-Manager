@@ -12,7 +12,6 @@ spaceMissionApp.config(['$routeProvider',
         when('/login', {templateUrl: 'views/login.html', controller: 'LoginCtrl'}).
         when('/users', {templateUrl: 'views/users.html', controller: 'UsersCtrl'}).
         when('/components', {templateUrl: 'views/components.html', controller: 'ComponentsCtrl'}).
-	    when('/newComponent', {templateUrl: 'views/newComponent.html', controler: 'NewComponentCtrl'}).
         when('/missions', {templateUrl: 'views/missions.html', controller: 'MissionsCtrl'}).
         when('/spacecrafts', {templateUrl: 'views/spacecrafts.html', controller: 'SpacecraftsCtrl'}).
 

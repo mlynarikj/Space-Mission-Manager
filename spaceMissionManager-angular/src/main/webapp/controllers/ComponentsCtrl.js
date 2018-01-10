@@ -60,6 +60,9 @@ controllers.controller('ComponentsCtrl', function ($scope, $spaceHttp, $rootScop
 
 	$scope.save = function () {
 		var data = angular.copy($scope.cc);
+		if (data.readyToUse){
+			data.readyDate = null;
+		}
 		if (!(data.readyDate === null || data.readyDate === undefined)){
 			data.readyDate.setHours(data.readyDate.getHours()+1);
 			data.readyDate = data.readyDate.toISOString();

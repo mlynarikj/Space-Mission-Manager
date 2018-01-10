@@ -37,7 +37,7 @@
     <h2 ng-if="edit">Edit spacecraft {{spacecraft.name}}</h2>
     <h2 ng-if="create">Create spacecraft</h2>
 
-    <form name="form" novalidate class="form-horizontal">
+    <form name="form" novalidate class="form-horizontal" (submit)="edit?submitEdit():submitCreate()">
         <div class="form-group" ng-class="{'has-error': !(form.name.$valid)}">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
@@ -73,9 +73,9 @@
 
 
         <!-- show disabled button if form is not valid -->
-        <button ng-if="edit" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitEdit()">Edit spacecraft
+        <button ng-if="edit" ng-disabled="!form.$valid" class="btn btn-primary" type="submit" ng-click="submitEdit()">Edit spacecraft
         </button>
-        <button ng-if="create" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitCreate()">Create spacecraft
+        <button ng-if="create" ng-disabled="!form.$valid" class="btn btn-primary" type="submit" ng-click="submitCreate()">Create spacecraft
         </button>
         <button class="btn btn-danger" type="button" ng-click="cancelEdit()">Cancel
         </button>

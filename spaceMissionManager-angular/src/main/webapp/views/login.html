@@ -1,7 +1,7 @@
 <div ng-if="badCredentials == true" class="alert alert-danger">
     Bad credentials!
 </div>
-<form ng-if="!globals.currentUser">
+<form ng-if="!globals.currentUser" (submit)="login()">
     <div class="form-group">
         <label for="name">User name</label>
         <input type="name" ng-model="credentials.name" class="form-control" id="name" placeholder="User Name">
@@ -10,7 +10,7 @@
         <label for="password">Password</label>
         <input type="password" ng-model="credentials.password" class="form-control" id="password" placeholder="Password">
     </div>
-    <button type="button" class="btn btn-default" ng-click="login()">Login</button>
+    <button type="submit" class="btn btn-default" ng-click="login()">Login</button>
 </form>
 
 <div ng-if="globals.currentUser" class="alert alert-success">

@@ -40,7 +40,7 @@
 
 <div ng-if="edit || create">
     <h2>Edit user {{editedUser.name}}</h2>
-    <form name="form" novalidate class="form-horizontal">
+    <form name="form" novalidate class="form-horizontal" (submit)="edit?submitEdit():submitCreate()">
         <div class="form-group" ng-class="{'has-error': !(form.name.$valid)}">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
@@ -55,7 +55,7 @@
             <label for="name" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
                 <input placeholder="name" id="email" type="email" name="email" class="form-control"
-                       ng-model="editedUser.email" required/>
+                       ng-model="editedUser.email" pattern=".+@.+\....?" required/>
                 <p class="help-block" ng-show="form.email.$error.required">email is required</p>
                 <p class="help-block" ng-show="form.email.$error.email">Not valid e-mail</p>
             </div>
@@ -76,7 +76,7 @@
             <label for="experienceLevel" class="col-sm-2 control-label">Experience Level</label>
             <div class="col-sm-10">
                 <input placeholder="name" id="experienceLevel" type="number" name="experienceLevel" class="form-control"
-                       ng-model="editedUser.experienceLevel" required/>
+                       ng-model="editedUser.experienceLevel" min="1" required/>
                 <p class="help-block" ng-show="form.experienceLevel.$error.number">Is not number</p>
             </div>
         </div>
@@ -94,16 +94,16 @@
             <label for="birthDate" class="col-sm-2 control-label">Birth date</label>
 
             <div class="col-sm-10">
-                <input id="birthDate" type="date" name="birthDate" class="form-control"
+                <input id="birthDate" type="date" name="birthDate" max="{{date}}" class="form-control"
                        ng-model="editedUser.birthDate" required/>
                 <p class="help-block" ng-show="form.birthDate.$error.date">Is not date</p>
             </div>
         </div>
 
         <!-- show disabled button if form is not valid -->
-        <button ng-if="edit" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitEdit()">Edit user
+        <button ng-if="edit" ng-disabled="!form.$valid" class="btn btn-primary" type="submit" ng-click="submitEdit()">Edit user
         </button>
-        <button ng-if="create" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitCreate()">Create user
+        <button ng-if="create" ng-disabled="!form.$valid" class="btn btn-primary" type="submit" ng-click="submitCreate()">Create user
         </button>
         <button class="btn btn-danger" type="button" ng-click="cancelEdit()">Cancel
         </button>

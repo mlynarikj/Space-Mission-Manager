@@ -39,12 +39,7 @@
                     <span class="glyphicon glyphicon-edit"></span>
                 </button>
             </td>
-            <td ng-if="mission.astronauts || mission.spacecrafts">
-                <button class="btn btn-danger disabled" data-toggle="tooltip" data-placement="left"
-                        title="This mission can't be deleted. It still has some users and spacecrafts assigned."><span
-                        class="glyphicon glyphicon-remove"></span></button>
-            </td>
-            <td ng-if="!mission.astronauts && !mission.spacecrafts">
+            <td>
                 <button ng-click="deleteMission(mission.id)" class="btn btn-danger"><span
                         class="glyphicon glyphicon-remove"></span></button>
             </td>
@@ -124,8 +119,9 @@
 
         <button ng-if="edit" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitEdit()">Submit mission
         </button>
-        <!--TODO ng-disabled="!form.$valid"-->
-        <button ng-if="create"  class="btn btn-primary" type="button" ng-click="submitCreate()">Create mission
+        <button ng-if="create" ng-disabled="!form.$valid" class="btn btn-primary" type="button" ng-click="submitCreate()">Create mission
         </button>
         <button class="btn btn-danger" type="button" ng-click="cancelEdit()">Cancel
         </button>
+    </form>
+</div>

@@ -7,7 +7,7 @@ controllers.controller('LoginCtrl', function ($scope, $spaceHttp, Authentication
         AuthenticationService.Login($scope.credentials.name, $scope.credentials.password).then(
             function (response) {
                 //TODO: toto je hack, musi se to opravit, aby se tam dal mail
-                AuthenticationService.SetCredentials('ADMIN', 'ADMIN');
+                AuthenticationService.SetCredentials($scope.credentials.name, $scope.credentials.password);
                 var user = response.data;
                 user.rawPassowrd = $scope.credentials.password;
                 localStorage.setItem('user', JSON.stringify(response.data));

@@ -12,6 +12,7 @@ import cz.muni.fi.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -34,6 +35,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 	@Autowired
 	private SpacecraftService spacecraftService;
 
+	@Autowired
+	private PasswordEncoder encoder;
+
 
 	@Override
 	public void loadData() throws IOException {
@@ -50,7 +54,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 		user.setName("ADMIN");
 		user.setBirthDate(LocalDate.now().minusYears(20));
 		user.setEmail("admin@admin.com");
-		user.setPassword("password");
+		user.setPassword(encoder.encode("password"));
 		user.setManager(true);
 		userService.addUser(user);
 
@@ -58,7 +62,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 		gagarin.setName("Gagarin");
 		gagarin.setBirthDate(LocalDate.of(1934, Month.MARCH, 9));
 		gagarin.setEmail("gagarin@gmail.com");
-		gagarin.setPassword("gagarin");
+		gagarin.setPassword(encoder.encode("gagarin"));
 		gagarin.setManager(false);
 		gagarin.setExperienceLevel(10);
 		userService.addUser(gagarin);
@@ -67,7 +71,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 		gagarin.setName("Han Solo");
 		gagarin.setBirthDate(LocalDate.of(1978, Month.MARCH, 9));
 		gagarin.setEmail("solo@gmail.com");
-		gagarin.setPassword("SOLO1");
+		gagarin.setPassword(encoder.encode("SOLO1"));
 		gagarin.setManager(false);
 		gagarin.setExperienceLevel(35);
 		userService.addUser(gagarin);

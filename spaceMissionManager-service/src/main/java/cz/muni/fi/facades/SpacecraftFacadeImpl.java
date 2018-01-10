@@ -41,7 +41,8 @@ public class SpacecraftFacadeImpl implements SpacecraftFacade {
 
     @Override
     public SpacecraftDTO findSpacecraftById(Long id) {
-        return beanMappingService.mapTo(spacecraftService.findSpacecraftById(id), SpacecraftDTO.class);
+        Spacecraft spacecraft = spacecraftService.findSpacecraftById(id);
+        return spacecraft == null ? null : beanMappingService.mapTo(spacecraftService.findSpacecraftById(id), SpacecraftDTO.class);
     }
 
     @Override

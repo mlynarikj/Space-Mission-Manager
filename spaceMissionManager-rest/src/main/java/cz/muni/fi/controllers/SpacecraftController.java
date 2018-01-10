@@ -39,7 +39,7 @@ public class SpacecraftController {
      * @return SpacecraftDTO Collection of Spacecrafts
      */
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<SpacecraftDTO> getUsers() {
         logger.debug("[REST] getSpacecraft()");
@@ -52,7 +52,7 @@ public class SpacecraftController {
      * @param id id of spacecraft
      * @return SpacecraftDTO
      */
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public SpacecraftDTO getUser(@PathVariable("id") long id) {
         logger.debug("[REST] getSpacecraft() id=" + id);
@@ -70,7 +70,7 @@ public class SpacecraftController {
      * @return SpacecraftDTO created spacecraft
      */
 
-    @RolesAllowed("ROLE_MANAGER")
+    @RolesAllowed("MANAGER")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public SpacecraftDTO crateSpacecraft(@RequestBody SpacecraftCreateDTO spacecraft) {
@@ -93,7 +93,7 @@ public class SpacecraftController {
      * @return Collection<SpacecraftDTO> all remaining spacecrafts
      */
 
-    @RolesAllowed("ROLE_MANAGER")
+    @RolesAllowed("MANAGER")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Collection<SpacecraftDTO> deleteSpacecraft(@PathVariable Long id) {
         logger.debug("[REST] deleteSpacecraft()");
@@ -112,7 +112,7 @@ public class SpacecraftController {
      * @param spacecraft spacecraft to update
      * @return SpacecraftDTO updated spacecraft
      */
-    @RolesAllowed("ROLE_MANAGER")
+    @RolesAllowed("MANAGER")
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public SpacecraftDTO updateSpacecraft(@RequestBody SpacecraftDTO spacecraft) {
         logger.debug("[REST] updateSpacecraft()");
@@ -132,7 +132,7 @@ public class SpacecraftController {
      * @return SpacecraftDTO Collection of Spacecrafts
      */
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "/available", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<SpacecraftDTO> getAvailableSpacecrafts() {
         logger.debug("[REST] getAllAvailableSpacecrafts()");

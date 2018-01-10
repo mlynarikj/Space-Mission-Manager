@@ -13,6 +13,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Implementation of the {@link UserService}. This class is part of the
@@ -26,6 +27,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Inject
     private UserDao userDao;
+
+    private Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
 
     @Override
     public void acceptAssignedMission(User user){
@@ -73,9 +76,9 @@ public class UserServiceImpl implements UserService {
         if(user == null){
             throw new IllegalArgumentException("User is null");
         }
-        String unencryptedPassword = user.getPassword();
+//        String unencryptedPassword = user.getPassword();
         try{
-            user.setPassword(createHash(unencryptedPassword));
+//            user.setPassword(createHash(unencryptedPassword));
             return userDao.addUser(user);
         }catch (Throwable t) {
             throw new ServiceDataAccessException("Can not create user: " + user.getEmail(), t);
@@ -197,8 +200,8 @@ public class UserServiceImpl implements UserService {
         }
 
         User u = findUserById(user.getId());
-
-        return validatePassword(password, u.getPassword());
+        return u.getPassword().equals(password);
+//        return validatePassword(password, u.getPassword());
     }
 
 

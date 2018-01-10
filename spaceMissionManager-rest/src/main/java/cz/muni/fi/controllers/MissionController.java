@@ -30,7 +30,7 @@ public class MissionController {
         this.missionFacade = missionFacade;
     }
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<MissionDTO> findAllMissions(@RequestParam(value="active", required=false) Boolean active) {
         logger.log(Level.INFO, "[REST] Finding all missions...");
@@ -40,7 +40,7 @@ public class MissionController {
         return missionFacade.findAllMissions(active);
     }
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public MissionDTO findMissionById(@PathVariable("id") Long id){
         logger.log(Level.INFO, "[REST] Finding mission "+id+"...");
@@ -51,7 +51,7 @@ public class MissionController {
         return missionDTO;
     }
 
-    @RolesAllowed("ROLE_MANAGER")
+    @RolesAllowed("MANAGER")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public MissionDTO createMission(@RequestBody MissionCreateDTO missionCreateDTO) {
         logger.log(Level.INFO, "[REST] Creating new mission...");
@@ -63,7 +63,7 @@ public class MissionController {
         }
     }
 
-    @RolesAllowed({"ROLE_MANAGER"})
+    @RolesAllowed({"MANAGER"})
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public MissionDTO updateMission(@RequestBody MissionDTO missionDTO){
         logger.log(Level.INFO, "[REST] Updating mission "+missionDTO.getId()+"...");
@@ -76,7 +76,7 @@ public class MissionController {
         }
     }
 
-    @RolesAllowed({"ROLE_MANAGER"})
+    @RolesAllowed({"MANAGER"})
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MissionDTO> removeMission(@PathVariable("id") long id) {
         logger.log(Level.INFO, "[REST] Canceling mission "+id+"...");
@@ -88,7 +88,7 @@ public class MissionController {
         return missionFacade.findAllMissions();
     }
 
-    @RolesAllowed({"ROLE_MANAGER"})
+    @RolesAllowed({"MANAGER"})
     @RequestMapping(value = "/{id}/archive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public MissionDTO archiveMission(@PathVariable("id") long id) {
         logger.log(Level.INFO, "[REST] Archiving mission "+id+"...");

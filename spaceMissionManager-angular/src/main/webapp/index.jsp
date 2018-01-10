@@ -44,8 +44,8 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="#!/users">Users</a></li>
-                <li><a href="#!/spacecrafts">Spacecrafts</a></li>
                 <li><a href="#!/missions">Missions</a></li>
+                <li><a href="#!/spacecrafts">Spacecrafts</a></li>
                 <li><a href="#!/components">Craft components</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

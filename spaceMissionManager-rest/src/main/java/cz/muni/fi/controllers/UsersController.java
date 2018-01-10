@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,13 +37,16 @@ public class UsersController {
     @Autowired
     private UserFacade userFacade;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     /**
      * Returns all users
      *
      * @return Collection of UserDTOs
      */
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<UserDTO> getUsers() {
         logger.debug("[REST] getUsers()");
@@ -57,7 +61,7 @@ public class UsersController {
      * @return UserDTO
      */
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO getUser(@PathVariable("id") long id) {
         logger.debug("[REST] getUser() id=" + id);
@@ -75,7 +79,7 @@ public class UsersController {
      * @return UserDTO
      */
 
-    @RolesAllowed("ROLE_MANAGER")
+    @RolesAllowed("MANAGER")
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO createUser(@RequestBody UserCreateDTO user) {
@@ -83,6 +87,7 @@ public class UsersController {
         logger.debug("[REST] createUser()");
 
         try {
+            user.setPassword(encoder.encode(user.getPassword()));
             Long id = userFacade.addUser(user);
             return userFacade.findUserById(id);
         } catch (Exception e) {
@@ -98,7 +103,7 @@ public class UsersController {
      * @return
      */
 
-    @RolesAllowed("ROLE_MANAGER")
+    @RolesAllowed("MANAGER")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Collection<UserDTO> deleteUser(@PathVariable Long id) {
         logger.debug("[REST] deleteUser()");
@@ -117,7 +122,7 @@ public class UsersController {
      * @return collection of UserDTOs
      */
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "/astronauts", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<UserDTO> getAstronauts() {
@@ -132,7 +137,7 @@ public class UsersController {
      * @return collection of UserDTOs
      */
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "/astronauts/available", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Collection<UserDTO> getAvailableAstronauts() {
@@ -148,12 +153,13 @@ public class UsersController {
      * @return UserDTO
      */
 
-    @RolesAllowed("ROLE_MANAGER")
+    @RolesAllowed("MANAGER")
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO updateUser(@RequestBody UserDTO user) {
         logger.debug("[REST] updateUser()");
 
         try {
+            user.setPassword(encoder.encode(user.getPassword()));
             userFacade.updateUser(user);
             return user;
         } catch (Exception e) {
@@ -169,7 +175,7 @@ public class UsersController {
      * @return UserDTO
      */
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "/{id}/acceptMission", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO acceptMission(@PathVariable Long id) {
@@ -193,7 +199,7 @@ public class UsersController {
      * @return UserDTO
      */
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "{id}/rejectMission", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO rejectMission(@PathVariable Long id, @RequestBody String explanation) {
@@ -214,7 +220,7 @@ public class UsersController {
      * @return true if successful, false otherwise
      */
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "/manager", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean isManager(@RequestBody UserDTO user) {
@@ -231,7 +237,7 @@ public class UsersController {
      * @return userDTO
      */
 
-    @RolesAllowed({"ROLE_MANAGER", "ROLE_USER"})
+    @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "/email", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDTO findByEmail(@RequestBody String email){

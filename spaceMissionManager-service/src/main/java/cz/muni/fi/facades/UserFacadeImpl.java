@@ -16,11 +16,11 @@ import java.util.List;
 @Service
 @Transactional
 public class UserFacadeImpl implements UserFacade {
-    @Autowired
-    BeanMappingService beanMappingService;
+	@Autowired
+	BeanMappingService beanMappingService;
 
-    @Autowired
-    UserService userService;
+	@Autowired
+	UserService userService;
 
 	@Override
 	public void acceptAssignedMission(UserDTO user) {
@@ -33,68 +33,70 @@ public class UserFacadeImpl implements UserFacade {
 	}
 
 	@Override
-    public Long addUser(UserCreateDTO user) {
-        User mappedUser = beanMappingService.mapTo(user, User.class);
-        userService.addUser(mappedUser);
-        return mappedUser.getId();
-    }
+	public Long addUser(UserCreateDTO user) {
+		User mappedUser = beanMappingService.mapTo(user, User.class);
+		userService.addUser(mappedUser);
+		return mappedUser.getId();
+	}
 
-    @Override
-    public void updateUser(UserDTO user) {
-        User mappedUser = beanMappingService.mapTo(user, User.class);
-        userService.updateUser(mappedUser);
-    }
+	@Override
+	public void updateUser(UserDTO user) {
+		User mappedUser = beanMappingService.mapTo(user, User.class);
+		userService.updateUser(mappedUser);
+	}
 
-    @Override
-    public void deleteUser(UserDTO user) {
-        User mappedUser = beanMappingService.mapTo(user, User.class);
-        userService.deleteUser(mappedUser);
-    }
+	@Override
+	public void deleteUser(UserDTO user) {
+		User mappedUser = beanMappingService.mapTo(user, User.class);
+		userService.deleteUser(mappedUser);
+	}
 
-    @Override
-    public List<UserDTO> findAllUsers() {
-        return beanMappingService.mapTo(userService.findAllUsers(), UserDTO.class);
-    }
+	@Override
+	public List<UserDTO> findAllUsers() {
+		return beanMappingService.mapTo(userService.findAllUsers(), UserDTO.class);
+	}
 
-    @Override
-    public List<UserDTO> findAllAstronauts() {
-        return beanMappingService.mapTo(userService.findAllAstronauts(), UserDTO.class);
-    }
+	@Override
+	public List<UserDTO> findAllAstronauts() {
+		return beanMappingService.mapTo(userService.findAllAstronauts(), UserDTO.class);
+	}
 
-    @Override
-    public UserDTO findUserById(Long id) {
-        return beanMappingService.mapTo(userService.findUserById(id), UserDTO.class);
-    }
+	@Override
+	public UserDTO findUserById(Long id) {
+		User user = userService.findUserById(id);
+		return user == null ? null : beanMappingService.mapTo(user, UserDTO.class);
+	}
 
-    @Override
-    public List<UserDTO> findAllAvailableAstronauts() {
-        return beanMappingService.mapTo(userService.findAllAvailableAstronauts(), UserDTO.class);
-    }
+	@Override
+	public List<UserDTO> findAllAvailableAstronauts() {
+		return beanMappingService.mapTo(userService.findAllAvailableAstronauts(), UserDTO.class);
+	}
 
-    @Override
-    public UserDTO findUserByEmail(String email) {
-        return beanMappingService.mapTo(userService.findUserByEmail(email), UserDTO.class);
-    }
+	@Override
+	public UserDTO findUserByEmail(String email) {
+		User user = userService.findUserByEmail(email);
+		return user == null ? null : beanMappingService.mapTo(user, UserDTO.class);
+	}
 
-    @Override
-    public boolean authenticate(String email, String unencryptedPassword) {
-        User user = userService.findUserByEmail(email);
-        return user != null && userService.authenticate(user, unencryptedPassword);
-    }
+	@Override
+	public boolean authenticate(String email, String unencryptedPassword) {
+		User user = userService.findUserByEmail(email);
+		return user != null && userService.authenticate(user, unencryptedPassword);
+	}
 
-    @Override
-    public UserDTO updatePassword(UserUpdatePwdDTO user) {
-        User userEntity = beanMappingService.mapTo(findUserById(user.getId()), User.class);
+	@Override
+	public UserDTO updatePassword(UserUpdatePwdDTO user) {
+		User userEntity = beanMappingService.mapTo(findUserById(user.getId()), User.class);
 
-        if(!userService.updatePassword(userEntity, user.getCurrentPassword(), user.getNewPassword())){
-            throw new IllegalArgumentException("Invalid password");
-        }
+		if (!userService.updatePassword(userEntity, user.getCurrentPassword(), user.getNewPassword())) {
+			throw new IllegalArgumentException("Invalid password");
+		}
 
-        return findUserById(user.getId());
-    }
+		return findUserById(user.getId());
+	}
 
-    @Override
-    public boolean isManager(UserDTO user) {
-        return userService.isManager(beanMappingService.mapTo(user, User.class));
-    }
+	@Override
+	public boolean isManager(UserDTO user) {
+		return userService.isManager(beanMappingService.mapTo(user, User.class));
+	}
 }

@@ -32,6 +32,7 @@ public class User {
     private String email;
 
     @NotNull
+    @Column(length = 60)
     private String password;
 
     private boolean isManager;

@@ -20,8 +20,16 @@
             <td>{{mission.id}}</td>
             <td>{{mission.name}}</td>
             <td>{{mission.active ? 'Yes' : 'No'}}</td>
-            <td>{{mission.astronauts.length}}</td>
-            <td>{{mission.spacecrafts.length}}</td>
+            <td>
+                <div ng-repeat="a in mission.astronauts track by $index">
+                    {{a.name}}
+                </div>
+            </td>
+            <td>
+                <div ng-repeat="s in mission.spacecrafts track by $index">
+                    {{s.name}}
+                </div>
+            </td>
             <td>{{mission.destination}}</td>
             <td>{{mission.eta}}</td>
             <td>{{mission.missionDescription}}</td>
@@ -93,8 +101,10 @@
         <div class="form-group">
             <label for="astronauts" class="col-sm-2 control-label">Astronauts</label>
             <div class="col-sm-10">
-                <select id="astronauts" multiple="multiple">
-                    <option ng-repeat="astronaut in astronauts" value="{{astronaut.id}}">{{astronaut.name}}</option>
+                <select multiple id="astronauts" name="astronauts" class="form-control"
+                        ng-min=1 ng-model="editedMission.astronauts"
+                        ng-options="astronaut.name for astronaut in selectedAstronauts">
+                    <option ng-repeat="astronaut in selectedAstronauts" value="{{astronaut}}">{{astronaut.name}}</option>
                 </select>
             </div>
         </div>
@@ -102,9 +112,13 @@
         <div class="form-group">
             <label for="spacecrafts" class="col-sm-2 control-label">Spacecrafts</label>
             <div class="col-sm-10">
-                <select id="spacecrafts" multiple="multiple">
-                    <option ng-repeat="spacecraft in spacecrafts" value="{{spacecraft.id}}">{{spacecraft.name}}</option>
+                <select multiple id="spacecrafts" name="spacecrafts" class="form-control"
+                        ng-min=1 ng-model="editedMission.spacecrafts"
+                        ng-options="spacecraft.name for spacecraft in selectedSpacecrafts"
+                        required="editedMission.spacecrafts > 0">
+                    <option ng-repeat="spacecraft in selectedSpacecrafts" value="{{spacecraft}}">{{spacecraft}}</option>
                 </select>
+                <p class="help-block" ng-show="form.spacecrafts.$error.required">At least 1 spacecraft has to be selected</p>
             </div>
         </div>
 
@@ -115,5 +129,3 @@
         </button>
         <button class="btn btn-danger" type="button" ng-click="cancelEdit()">Cancel
         </button>
-    </form>
-</div>

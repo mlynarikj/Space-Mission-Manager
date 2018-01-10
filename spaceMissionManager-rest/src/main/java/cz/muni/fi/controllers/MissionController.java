@@ -56,7 +56,8 @@ public class MissionController {
     public MissionDTO createMission(@RequestBody MissionCreateDTO missionCreateDTO) {
         logger.log(Level.INFO, "[REST] Creating new mission...");
         try {
-            return missionFacade.findMissionById(missionFacade.createMission(missionCreateDTO));
+            Long id = missionFacade.createMission(missionCreateDTO);
+            return missionFacade.findMissionById(id);
         } catch (Exception e){
             logger.log(Level.WARNING, e.getMessage());
             throw new ResourceAlreadyExistsException();

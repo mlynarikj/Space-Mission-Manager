@@ -90,10 +90,9 @@ public class Spacecraft {
 
 	@Override
 	public String toString() {
-		return "Spacecraft{" +
-				"type='" + type + '\'' +
-				", name='" + name + '\'' +
-				", components=" + components +
-				'}';
+		return "Spacecraft:\n" +
+				"Name " + name + '\n' +
+				"Type " + type + '\n' +
+				"Components: \n" + components+'\n';
 	}
 }

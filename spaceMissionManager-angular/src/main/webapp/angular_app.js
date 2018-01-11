@@ -31,7 +31,7 @@ spaceMissionApp.config(['$routeProvider',
 /*
  * alert closing functions defined in root scope to be available in every template
  */
-spaceMissionApp.run(function ($rootScope, AuthenticationService, $spaceHttp) {
+spaceMissionApp.run(function ($rootScope, AuthenticationService, $spaceHttp, $location) {
     var storedUserInfo = localStorage.getItem('user');
     if(storedUserInfo){
         var user = JSON.parse(storedUserInfo);
@@ -40,7 +40,7 @@ spaceMissionApp.run(function ($rootScope, AuthenticationService, $spaceHttp) {
             function (response) {
                 $rootScope.user = response.data;
                 var user = response.data;
-                user.rawPassowrd = $scope.credentials.password;
+                //user.rawPassowrd = $scope.credentials.password;
                 localStorage.setItem('user', JSON.stringify(user));
             },
             function (error) {
@@ -77,5 +77,11 @@ spaceMissionApp.run(function ($rootScope, AuthenticationService, $spaceHttp) {
             console.log(error);
         });
     }
+
+    $rootScope.logout = function(){
+        AuthenticationService.ClearCredentials();
+        $location.path('login');
+    };
+
 });
 

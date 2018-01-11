@@ -81,6 +81,10 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
         return $http.put(API_URL+MISSIONS_PATH, data);
     };
 
+    service.archiveMission = function (id) {
+	    return $http.post(API_URL+MISSIONS_PATH+'/'+id+'/archive');
+    };
+
     //Spacecrafts
     service.loadSpacecrafts = function () {
         return $http.get(API_URL+SPACECRAFTS_PATH);

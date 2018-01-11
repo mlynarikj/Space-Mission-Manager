@@ -85,10 +85,7 @@ public class CraftComponent {
 
 	@Override
 	public String toString() {
-		return "CraftComponent{" +
-				", readyToUse=" + readyToUse +
-				", name='" + name + '\'' +
-				", readyDate=" + readyDate +
-				'}';
+		return '\n' + "CraftComponent:" +
+				"Name-" + name;
 	}
 }

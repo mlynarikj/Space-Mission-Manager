@@ -150,11 +150,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                ", name='" + name + '\'' +
-                ", birthDate=" + birthDate +
-                ", email='" + email + '\'' +
-                ", experienceLevel=" + experienceLevel +
-                '}';
+        return "User:\n" +
+                "Name " + name + '\n' +
+                "Birth date " + birthDate + '\n'+
+                "Email " + email + '\n' +
+                "Experience level " + experienceLevel + '\n';
     }
 }

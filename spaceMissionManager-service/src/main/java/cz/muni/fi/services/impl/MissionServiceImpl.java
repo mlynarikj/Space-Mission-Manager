@@ -36,17 +36,23 @@ public class MissionServiceImpl implements MissionService {
 		}
 		mission.setEndDate(endDate);
 		mission.setActive(false);
+		mission.getAstronauts().forEach(p->{
+			if(!p.getAcceptedMission()){
+				mission.removeAstronaut(p);
+			}
+		});
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Mission{astronauts=");
-		mission.getAstronauts().forEach(p -> stringBuilder.append(p.toString()));
-		mission.getSpacecrafts().forEach(p -> stringBuilder.append(p.toString()));
 		stringBuilder
-				.append(", name='").append(mission.getName()).append('\'')
-				.append(", destination='").append(mission.getDestination()).append('\'')
-				.append(", eta=").append(mission.getEta())
-				.append(", missionDescription='").append(mission.getMissionDescription()).append('\'')
-				.append(", endDate=").append(mission.getEndDate())
-				.append('}');
+				.append("Name of mission: ").append(mission.getName())
+				.append("\nDestination: ").append(mission.getDestination())
+				.append("\nEta: ").append(mission.getEta())
+				.append("\nMission description: ").append(mission.getMissionDescription())
+				.append("\nEnd date: ").append(mission.getEndDate()).append('\n');
+		mission.getAstronauts().forEach(p -> {
+			stringBuilder.append(p.toString());
+			mission.removeAstronaut(p);
+		});
+		mission.getSpacecrafts().forEach(p -> stringBuilder.append(p.toString()));
 		mission.setResult(stringBuilder.toString());
 		try {
 			missionDao.updateMission(mission);

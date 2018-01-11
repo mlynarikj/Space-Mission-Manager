@@ -49,9 +49,16 @@
                 <li><a href="#!/components">Craft components</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-
-                <li ng-if="globals.currentUser"><a href="#"><span class="glyphicon glyphicon-user"></span>
-                    {{globals.currentUser.email}}</a></li>
+                <li class="dropdown" ng-if="globals.currentUser">
+                        <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu1"
+                                data-toggle="dropdown">
+                            {{globals.currentUser.email}}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#" ng-click="logout()">Logout</a></li>
+                        </ul>
+                </li>
 
                 <li ng-if="!globals.currentUser"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
@@ -96,7 +103,8 @@
                 <form>
                     <div class="form-group">
                         <label for="explanation">Message</label>
-                        <input type="text" minlength="10" class="form-control" id="explanation" ng-model="decline.message" placeholder="Enter message">
+                        <input type="text" minlength="10" class="form-control" id="explanation"
+                               ng-model="decline.message" placeholder="Enter message">
                     </div>
                     <button type="submit" class="btn btn-success" ng-click="declineMission()">Send declinaion</button>
                     <button type="submit" ng-click="decline.declined = false" class="btn btn-danger">Cancel</button>

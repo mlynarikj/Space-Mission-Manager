@@ -1,4 +1,4 @@
-controllers.controller('LoginCtrl', function ($scope, $spaceHttp, AuthenticationService) {
+controllers.controller('LoginCtrl', function ($scope, $spaceHttp, $rootScope, AuthenticationService) {
 
 
 	$rootScope.errorAlert = '';

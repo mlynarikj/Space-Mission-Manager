@@ -50,7 +50,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" ng-if="globals.currentUser">
-                        <a class="dropdown-toggle" type="button" id="dropdownMenu1"
+                        <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu1"
                                 data-toggle="dropdown">
                             {{globals.currentUser.email}}
                             <span class="caret"></span>

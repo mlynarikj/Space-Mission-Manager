@@ -14,6 +14,7 @@ controllers.controller('LoginCtrl', function ($scope, $spaceHttp, $rootScope, Au
                 var user = response.data;
                 user.rawPassowrd = $scope.credentials.password;
                 localStorage.setItem('user', JSON.stringify(response.data));
+                $rootScope.user = user;
                 $scope.badCredentials = false;
             },
             function (error) {

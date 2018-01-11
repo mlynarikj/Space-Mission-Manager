@@ -1,7 +1,7 @@
 controllers.controller('ComponentsCtrl', function ($scope, $spaceHttp, $rootScope, $location, $route) {
 	console.log('calling  /components');
 
-	if (typeof $rootScope.globals === 'undefined' || typeof $rootScope.globals.currentUser === 'undefined') {
+	if (typeof $rootScope.globals === 'undefined' || typeof $rootScope.globals.currentUser === 'undefined' || !$rootScope.user.manager) {
 		$location.path('login');
 		return;
 	}

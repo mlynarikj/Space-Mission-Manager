@@ -1,6 +1,11 @@
 <h1>Users</h1>
 <div ng-if="!edit && !create">
+
+    <button class="btn btn-primary" ng-click="createUser()" style="margin-bottom: 2.5rem"><span class="glyphicon glyphicon-plus"></span>
+        New user
+    </button>
     <table class="table table-striped">
+        <thead>
         <tr>
             <th>Name</th>
             <th>Email</th>
@@ -11,6 +16,7 @@
             <th></th>
 
         </tr>
+        </thead>
         <tr ng-repeat="user in users">
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
@@ -34,8 +40,6 @@
         </tr>
     </table>
 
-    <button class="btn btn-primary" ng-click="createUser()"><span class="glyphicon glyphicon-plus"></span>
-    </button>
 </div>
 
 <div ng-if="edit || create">

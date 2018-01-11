@@ -1,6 +1,9 @@
 controllers.controller('LoginCtrl', function ($scope, $spaceHttp, AuthenticationService) {
 
 
+	$rootScope.errorAlert = '';
+	$rootScope.successAlert = '';
+	$rootScope.warningAlert ='';
     $scope.credentials = {};
 
     $scope.login = function () {

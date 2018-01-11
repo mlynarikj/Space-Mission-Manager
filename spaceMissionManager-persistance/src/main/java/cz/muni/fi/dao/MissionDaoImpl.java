@@ -127,7 +127,25 @@ public class MissionDaoImpl implements MissionDao {
 		if (mission.getSpacecrafts().size() < 1){
 			throw new IllegalArgumentException("at least 1 spacecraft is required");
 		}
+		Mission found = findMissionById(mission.getId());
+		found.getSpacecrafts().forEach(spacecraft -> {
+			spacecraft.setMission(null);
+			entityManager.merge(spacecraft);
+		});
+		found.getAstronauts().forEach(user -> {
+			user.setMission(null);
+			entityManager.merge(user);
+		});
+
 		entityManager.merge(mission);
+		mission.getSpacecrafts().forEach(spacecraft -> {
+			spacecraft.setMission(mission);
+			entityManager.merge(spacecraft);
+		});
+		mission.getAstronauts().forEach(user -> {
+			user.setMission(mission);
+			entityManager.merge(user);
+		});
 		entityManager.flush();
 		return mission;
 	}

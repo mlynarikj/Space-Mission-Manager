@@ -6,6 +6,12 @@ controllers.controller('SpacecraftsCtrl', function ($scope, $spaceHttp, $rootSco
         return;
     }
 
+	$rootScope.errorAlert = '';
+	$rootScope.successAlert = '';
+	$rootScope.warningAlert ='';
+
+
+
     console.log('calling /spacecrafts');
     $spaceHttp.getAllSpacecrafts().then(function (response) {
         $scope.spacecrafts = response.data;
@@ -17,8 +23,12 @@ controllers.controller('SpacecraftsCtrl', function ($scope, $spaceHttp, $rootSco
         $spaceHttp.deleteSpacecraft(id).then(function (response) {
             $scope.spacecrafts = response.data;
             $rootScope.successAlert = 'Removing was successful'
+	        $rootScope.errorAlert = '';
+
         }, function (error) {
             console.error(error);
+	        $rootScope.errorAlert = 'Cannot delete spacecraft!';
+	        $rootScope.successAlert = '';
         })
     };
 
@@ -43,10 +53,12 @@ controllers.controller('SpacecraftsCtrl', function ($scope, $spaceHttp, $rootSco
             }, function (error) {
                 console.error(error);
             });
-            $rootScope.successAlert = 'A new spacecraft "' + data.name +'" was created'
+            $rootScope.successAlert = 'A new spacecraft "' + data.name +'" was created';
+	        $rootScope.errorAlert = '';
         }, function (error) {
             console.error(error);
-            $rootScope.errorAlert = 'Cannot update spacecraft!';
+	        $rootScope.successAlert = '';
+	        $rootScope.errorAlert = 'Cannot update spacecraft!';
 
         })
     };
@@ -69,15 +81,20 @@ controllers.controller('SpacecraftsCtrl', function ($scope, $spaceHttp, $rootSco
                 console.error(error);
             });
             $rootScope.successAlert = 'A new spacecraft "' + data.name +'" was created'
+	        $rootScope.errorAlert = '';
         }, function (error) {
             console.error(error);
             $rootScope.errorAlert = 'Cannot create spacecraft!';
+	        $rootScope.successAlert = '';
+
         })
     };
 
     $scope.cancelEdit = function () {
         $scope.create = false;
         $scope.edit = false;
+	    $rootScope.errorAlert = '';
+	    $rootScope.successAlert = '';
     }
 
 });

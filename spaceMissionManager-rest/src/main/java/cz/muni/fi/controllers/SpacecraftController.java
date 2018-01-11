@@ -118,6 +118,7 @@ public class SpacecraftController {
         logger.debug("[REST] updateSpacecraft()");
 
         try {
+            spacecraft.setMission(spacecraftFacade.findSpacecraftById(spacecraft.getId()).getMission());
             spacecraftFacade.updateSpacecraft(spacecraft);
             return spacecraft;
         } catch (Exception e) {

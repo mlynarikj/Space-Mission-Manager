@@ -2,12 +2,12 @@
 <!-- button for adding a new category -->
 <div ng-if="!edit && !create">
 
-    <button ngDisabled="!manager" ng-click="createCC()" class="btn btn-primary">
+    <button ng-click="createCC()" class="btn btn-primary" style="margin-bottom: 2.5rem;">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         New component
     </button>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>Id</th>

@@ -24,6 +24,7 @@ controllers.controller('SpacecraftsCtrl', function ($scope, $spaceHttp, $rootSco
             $scope.spacecrafts = response.data;
             $rootScope.successAlert = 'Removing was successful'
 	        $rootScope.errorAlert = '';
+	        $scope.selectedSpacecraft = null;
 
         }, function (error) {
             console.error(error);
@@ -55,6 +56,8 @@ controllers.controller('SpacecraftsCtrl', function ($scope, $spaceHttp, $rootSco
             });
             $rootScope.successAlert = 'A new spacecraft "' + data.name +'" was created';
 	        $rootScope.errorAlert = '';
+	        $scope.selectedSpacecraft = null;
+
         }, function (error) {
             console.error(error);
 	        $rootScope.successAlert = '';
@@ -82,6 +85,8 @@ controllers.controller('SpacecraftsCtrl', function ($scope, $spaceHttp, $rootSco
             });
             $rootScope.successAlert = 'A new spacecraft "' + data.name +'" was created'
 	        $rootScope.errorAlert = '';
+	        $scope.selectedSpacecraft = null;
+
         }, function (error) {
             console.error(error);
             $rootScope.errorAlert = 'Cannot create spacecraft!';
@@ -95,6 +100,16 @@ controllers.controller('SpacecraftsCtrl', function ($scope, $spaceHttp, $rootSco
         $scope.edit = false;
 	    $rootScope.errorAlert = '';
 	    $rootScope.successAlert = '';
-    }
+    };
 
+	$scope.selectedSpacecraft = null;
+	$scope.setSelected = function (id) {
+		$spaceHttp.getSpacecraft(id).then(function (response) {
+			$scope.selectedSpacecraft = response.data;
+		}, function (error) {
+			console.error(error);
+			$rootScope.errorAlert = 'Unable to select spacecraft';
+			$rootScope.successAlert = '';
+		})
+	}
 });

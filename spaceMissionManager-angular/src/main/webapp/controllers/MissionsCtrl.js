@@ -36,7 +36,9 @@ controllers.controller('MissionsCtrl', function ($scope, $spaceHttp, $rootScope,
             }, function (error) {
                 console.error(error);
             });
-            $rootScope.successAlert = 'A new mission "' + data.name +'" was created'
+            $rootScope.successAlert = 'A new mission "' + data.name +'" was created';
+	        $scope.selectedSpacecraft = null;
+	        $scope.selectedMission = null;
         }, function (error) {
             console.error(error);
             $rootScope.errorAlert = 'Cannot create mission!';
@@ -47,7 +49,9 @@ controllers.controller('MissionsCtrl', function ($scope, $spaceHttp, $rootScope,
         $spaceHttp.deleteMission(id).then(function (response) {
             $scope.missions = response.data;
 	        $rootScope.errorAlert = '';
-	        $rootScope.successAlert = 'Removing was successful'
+	        $rootScope.successAlert = 'Removing was successful';
+	        $scope.selectedSpacecraft = null;
+	        $scope.selectedMission = null;
         }, function (error) {
             console.error(error);
 	        $rootScope.errorAlert = 'Cannot delete mission!';
@@ -86,10 +90,37 @@ controllers.controller('MissionsCtrl', function ($scope, $spaceHttp, $rootScope,
             }, function (error) {
                 console.error(error);
             });
-            $rootScope.successAlert = 'The "' + data.name +'" mission was successfully edited'
+            $rootScope.successAlert = 'The "' + data.name +'" mission was successfully edited';
+	        $scope.selectedSpacecraft = null;
+	        $scope.selectedMission = null;
         }, function (error) {
             console.error(error);
             $rootScope.errorAlert = 'Cannot update mission!';
         })
     };
+
+
+
+    $scope.selectedMission = null;
+    $scope.setSelected = function (id) {
+        $spaceHttp.getMission(id).then(function (response) {
+            $scope.selectedMission = response.data;
+	        $scope.selectedSpacecraft = null;
+        }, function (error) {
+	        console.error(error);
+	        $rootScope.errorAlert = 'Unable to select mission';
+	        $rootScope.successAlert = '';
+        })
+    }
+
+	$scope.selectedSpacecraft = null;
+	$scope.setSelectedS = function (id) {
+		$spaceHttp.getSpacecraft(id).then(function (response) {
+			$scope.selectedSpacecraft = response.data;
+		}, function (error) {
+			console.error(error);
+			$rootScope.errorAlert = 'Unable to select spacecraft';
+			$rootScope.successAlert = '';
+		})
+	}
 });

@@ -35,6 +35,7 @@ spaceMissionApp.factory('AuthenticationService',
                 $rootScope.globals = {};
                 $cookieStore.remove('globals');
                 $rootScope.globals.currentUser = null;
+                $rootScope.user = null;
                 $http.defaults.headers.common.Authorization = 'Basic ';
                 localStorage.removeItem('user');
             };

@@ -1,8 +1,8 @@
-'use strict';
+    'use strict';
 
 /* Defines application and its dependencies */
 
-var spaceMissionApp = angular.module('spaceMissionApp', ['ngRoute', 'controllers']);
+var spaceMissionApp = angular.module('spaceMissionApp', ['ngRoute', 'controllers', 'ngCookies']);
 var controllers = angular.module('controllers', []);
 
 /* Configures URL fragment routing, e.g. #/product/1  */
@@ -31,7 +31,24 @@ spaceMissionApp.config(['$routeProvider',
 /*
  * alert closing functions defined in root scope to be available in every template
  */
-spaceMissionApp.run(function ($rootScope) {
+spaceMissionApp.run(function ($rootScope, AuthenticationService, $spaceHttp) {
+    var storedUserInfo = localStorage.getItem('user');
+    if(storedUserInfo){
+        var user = JSON.parse(storedUserInfo);
+        AuthenticationService.SetCredentials(user.email, user.rawPassowrd);
+        AuthenticationService.Login(user.email, user.rawPassowrd).then(
+            function (response) {
+                $rootScope.user = response.data;
+                var user = response.data;
+                user.rawPassowrd = $scope.credentials.password;
+                localStorage.setItem('user', JSON.stringify(user));
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    }
+
     $rootScope.hideSuccessAlert = function () {
         $rootScope.successAlert = undefined;
     };
@@ -41,5 +58,24 @@ spaceMissionApp.run(function ($rootScope) {
     $rootScope.hideErrorAlert = function () {
         $rootScope.errorAlert = undefined;
     };
+
+    $rootScope.decline = {};
+
+    $rootScope.acceptMission = function(){
+        $spaceHttp.acceptMission($rootScope.user.id).then(function (response) {
+            $rootScope.successAlert = 'Missin accepted!';
+            $rootScope.user = response.data;
+        }, function (error) {
+            console.log(error);
+        });
+    }
+    $rootScope.declineMission = function(){
+        $spaceHttp.declineMission($rootScope.user.id, $rootScope.decline.message).then(function (response) {
+            $rootScope.successAlert = 'Missin declined!';
+            $rootScope.user = response.data;
+        }, function (error) {
+            console.log(error);
+        });
+    }
 });
 

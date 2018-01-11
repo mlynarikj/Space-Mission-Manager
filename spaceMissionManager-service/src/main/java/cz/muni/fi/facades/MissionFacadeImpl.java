@@ -53,7 +53,8 @@ public class MissionFacadeImpl implements MissionFacade {
 
     @Override
     public MissionDTO findMissionById(Long id) {
-        return beanMappingService.mapTo(missionService.findMissionById(id), MissionDTO.class);
+	    Mission mission = missionService.findMissionById(id);
+        return mission == null ? null : beanMappingService.mapTo(mission, MissionDTO.class);
     }
 
     @Override

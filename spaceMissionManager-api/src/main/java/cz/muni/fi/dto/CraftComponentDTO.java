@@ -1,10 +1,14 @@
 package cz.muni.fi.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import cz.muni.fi.config.ZonedDateTimeDeserializer;
 import cz.muni.fi.config.ZonedDateTimeSerializer;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
 public class CraftComponentDTO {
@@ -12,12 +16,17 @@ public class CraftComponentDTO {
 
 	private boolean readyToUse;
 
+	@NotNull
+	@Size(min = 3, max = 50)
 	private String name;
 
+	@JsonBackReference
 	private SpacecraftDTO spacecraft;
 
 	@JsonDeserialize(using = ZonedDateTimeDeserializer.class)
 	@JsonSerialize(using = ZonedDateTimeSerializer.class)
+	@Future
+	@NotNull
 	private ZonedDateTime readyDate;
 
 

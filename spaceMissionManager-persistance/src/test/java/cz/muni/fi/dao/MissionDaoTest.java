@@ -102,10 +102,10 @@ public class MissionDaoTest extends AbstractTestNGSpringContextTests {
         missionWithOutUser.addSpacecraft(spacecraft4);
 
 
-        missionDao.createMission(mission2);
-        userDao.addUser(user2);
-        spacecraftDao.addSpacecraft(spacecraft2);
         craftComponentDao.addComponent(craftComponent2);
+        spacecraftDao.addSpacecraft(spacecraft2);
+        userDao.addUser(user2);
+        missionDao.createMission(mission2);
 
         assertThat(missionDao.findAllMissions())
                 .contains(mission2);
@@ -240,10 +240,10 @@ public class MissionDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void deleteMission() {
-        missionDao.createMission(mission1);
-        missionDao.cancelMission(mission1);
+//        missionDao.createMission(mission1);
+        missionDao.cancelMission(mission2);
 
-        assertThat(missionDao.findMissionById(mission1.getId()))
+        assertThat(missionDao.findMissionById(mission2.getId()))
                 .isNull();
     }
 

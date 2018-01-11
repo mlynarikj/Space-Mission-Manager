@@ -32,6 +32,7 @@ public class User {
     private String email;
 
     @NotNull
+    @Column(length = 60)
     private String password;
 
     private boolean isManager;
@@ -44,6 +45,7 @@ public class User {
     private String explanation;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mission_id")
     private Mission mission;
 
     public Long getId() {
@@ -123,9 +125,7 @@ public class User {
     }
 
     public void setMission(Mission mission) {
-        if(this.mission != null && this.mission.equals(mission)) return;
         this.mission = mission;
-        if (mission != null) mission.addAstronaut(this);
     }
 
     public boolean missionStatusPending(){

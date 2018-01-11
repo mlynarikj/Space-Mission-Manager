@@ -1,13 +1,12 @@
 package cz.muni.fi.dao;
 
+import cz.muni.fi.entity.Spacecraft;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Repository;
-import cz.muni.fi.entity.Spacecraft;
-
 import java.util.List;
 
 /**
@@ -35,6 +34,11 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
             throw new IllegalArgumentException("Spacecraft name must not be null");
         }
         em.persist(spacecraft);
+	    spacecraft.getComponents().forEach(p->{
+	    	p.setSpacecraft(spacecraft);
+	    	em.merge(p);
+	    });
+
         return spacecraft;
     }
 
@@ -46,7 +50,15 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
         if (spacecraft.getId() == null){
             throw new IllegalArgumentException("Spacecraft id must not be null");
         }
-        em.remove(findSpacecraftById((spacecraft.getId())));
+        Spacecraft del = findSpacecraftById(spacecraft.getId());
+        if (del == null){
+	        throw new IllegalArgumentException("Spacecraft does not exist");
+        }
+        if (del.getMission() != null && del.getMission().getSpacecrafts().size() == 1){
+            throw new IllegalArgumentException("Can't remove only spacecraft in mission");
+        }
+        del.getComponents().forEach(p->del.removeComponent(p));
+        em.remove(del);
         return spacecraft;
     }
 
@@ -84,7 +96,16 @@ public class SpacecraftDaoImpl implements SpacecraftDao {
         if(spacecraft.getName() == null){
             throw new IllegalArgumentException("Spacecraft name must not be null");
         }
+        findSpacecraftById(spacecraft.getId()).getComponents().forEach(p->{
+            p.setSpacecraft(null);
+            em.merge(p);
+        });
         em.merge(spacecraft);
+
+        spacecraft.getComponents().forEach(p->{
+            p.setSpacecraft(spacecraft);
+            em.merge(p);
+        });
         em.flush();
         return spacecraft;
     }

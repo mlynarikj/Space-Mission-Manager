@@ -5,37 +5,30 @@ controllers.controller('MissionsCtrl', function ($scope, $spaceHttp, $rootScope,
         return;
     }
 
+	$rootScope.errorAlert = '';
+	$rootScope.successAlert = '';
+	$rootScope.warningAlert ='';
+    $scope.date = new Date().toISOString().substring(0,16);
     console.log('calling  /missions');
     $spaceHttp.loadMissions().then(function (response) {
         console.log(response);
         $scope.missions = response.data;
     });
-    $spaceHttp.loadAstronauts().then(function (response) {
-        console.log(response);
-        $scope.astronauts = response.data;
-    });
-    $spaceHttp.loadSpacecrafts().then(function (response) {
-        console.log(response);
-        $scope.spacecrafts = response.data;
-    });
 
     $scope.createNewMission = function () {
-        $scope.editedMission =  {
-            'active': true,
-            'astronauts': [],
-            'spacecrafts': []
-        };
+        $scope.editedMission =  {};
         $scope.create = true;
-        $spaceHttp.loadAstronauts().then(function (value) {
+        $spaceHttp.loadAvailableAstronauts().then(function (value) {
             $scope.selectedAstronauts = value.data
         });
-        $spaceHttp.loadSpacecrafts().then(function (value) {
+        $spaceHttp.loadAvailableSpacecrafts().then(function (value) {
             $scope.selectedSpacecrafts = value.data
         })
     };
 
     $scope.submitCreate = function () {
         var data = angular.copy($scope.editedMission);
+        data.active = true;
         $spaceHttp.createMission(data).then(function (res) {
             $spaceHttp.loadMissions().then(function (response) {
                 $scope.missions = response.data;
@@ -53,19 +46,22 @@ controllers.controller('MissionsCtrl', function ($scope, $spaceHttp, $rootScope,
     $scope.deleteMission = function (id) {
         $spaceHttp.deleteMission(id).then(function (response) {
             $scope.missions = response.data;
-            $rootScope.successAlert = 'Removing was successful'
+	        $rootScope.errorAlert = '';
+	        $rootScope.successAlert = 'Removing was successful'
         }, function (error) {
             console.error(error);
+	        $rootScope.errorAlert = 'Cannot delete mission!';
+	        $rootScope.successAlert = '';
         })
     };
 
     $scope.editMission = function (id) {
         $spaceHttp.getMission(id).then(function (response) {
             $scope.editedMission = response.data;
-            $spaceHttp.loadAstronauts().then(function (value) {
+            $spaceHttp.loadAvailableAstronauts().then(function (value) {
                 $scope.selectedAstronauts = value.data.concat(response.data.astronauts);
             });
-            $spaceHttp.loadSpacecrafts().then(function (value) {
+            $spaceHttp.loadAvailableSpacecrafts().then(function (value) {
                 $scope.selectedSpacecrafts = value.data.concat(response.data.spacecrafts);
             });
             $scope.editedMission.eta = $scope.editedMission.eta === null || $scope.editedMission.eta === undefined

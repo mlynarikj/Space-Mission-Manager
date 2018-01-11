@@ -159,6 +159,7 @@ public class UsersController {
         logger.debug("[REST] updateUser()");
 
         try {
+            user.setMission(userFacade.findUserById(user.getId()).getMission());
             user.setPassword(encoder.encode(user.getPassword()));
             userFacade.updateUser(user);
             return user;

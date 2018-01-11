@@ -133,10 +133,6 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
         return $http.put(API_URL+SPACECRAFTS_PATH,data);
     };
 
-    service.getAllAvailableSpacecrafts = function () {
-        return $http.get(API_URL+SPACECRAFTS_PATH+'/available')
-    };
-
     service.getAllAvailableCraftComponents = function () {
         return $http.get(API_URL+CC_PATH+'/available')
     };

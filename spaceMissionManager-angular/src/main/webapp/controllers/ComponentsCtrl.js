@@ -1,20 +1,15 @@
 controllers.controller('ComponentsCtrl', function ($scope, $spaceHttp, $rootScope, $location, $route) {
 	console.log('calling  /components');
-	console.log($rootScope);
-	console.log(localStorage.getItem('user'));
-	console.log($rootScope.user);
+
 	if (typeof $rootScope.globals === 'undefined' || typeof $rootScope.globals.currentUser === 'undefined') {
 		$location.path('login');
 		return;
 	}
-	var storedUserInfo = localStorage.getItem('user');
-	if(storedUserInfo) {
-		var user = JSON.parse(storedUserInfo);
-		$scope.manager = user.manager;
-	}
 
+	$rootScope.errorAlert = '';
+	$rootScope.successAlert = '';
+	$rootScope.warningAlert ='';
 	$scope.date = new Date().toISOString().substring(0,16);
-	console.log($scope.date);
 
 	$spaceHttp.loadComponents().then(function (response) {
 		console.log(response);
@@ -23,17 +18,17 @@ controllers.controller('ComponentsCtrl', function ($scope, $spaceHttp, $rootScop
 
 	$scope.delete = function (id) {
 		$spaceHttp.deleteComponent(id).then(function success(response) {
+			console.log(response);
 			//display confirmation alert
 			$rootScope.successAlert = 'Component ' + id + ' was deleted';
 			$rootScope.errorAlert = '';
-			//$location.path("/components");
-			$route.reload();
+			$scope.craftComponents = response.data;
 		}, function error(response) {
 			//display error
 			console.log(response);
 			$rootScope.errorAlert = 'Cannot delete component!';
 			$rootScope.successAlert = '';
-			$route.reload();
+			// $route.reload();
 
 		})
 	};
@@ -76,9 +71,14 @@ controllers.controller('ComponentsCtrl', function ($scope, $spaceHttp, $rootScop
 				}, function (error) {
 					console.error(error);
 				});
+
+				$rootScope.errorAlert = '';
+				$rootScope.successAlert = 'Component created!';
+
 			}, function (error) {
 				console.error(error);
 				$rootScope.errorAlert = 'Cannot create component!';
+				$rootScope.successAlert = '';
 
 			})
 		} else {
@@ -90,9 +90,13 @@ controllers.controller('ComponentsCtrl', function ($scope, $spaceHttp, $rootScop
 				}, function (error) {
 					console.error(error);
 				});
+
+				$rootScope.errorAlert = '';
+				$rootScope.successAlert = 'Component updated';
 			}, function (error) {
 				console.error(error);
 				$rootScope.errorAlert = 'Cannot update component!';
+				$rootScope.successAlert = '';
 
 			})
 
@@ -102,36 +106,10 @@ controllers.controller('ComponentsCtrl', function ($scope, $spaceHttp, $rootScop
 	$scope.cancel = function () {
 		$scope.create = false;
 		$scope.edit = false;
+
+		$rootScope.errorAlert = '';
+		$rootScope.successAlert = '';
 	}
 
 
 });
-/*
-
-controllers.controller('NewComponentCtrl', function ($scope, $spaceHttp, $rootScope, $location) {
-	console.log('calling  /newComponent');
-	if (typeof $rootScope.globals === 'undefined' || typeof $rootScope.globals.currentUser === 'undefined') {
-		$location.path('login');
-		return;
-	}
-
-	$scope.cc = {
-		'name': '',
-		'readyToUse': false,
-		'readyDate': null
-	};
-
-	$scope.create = function (cc) {
-		console.log("TEST");
-		$spaceHttp.createComponent(cc).then(function success(response) {
-			console.log('created component');
-			var createdCC = response.data;
-			//display confirmation alert
-			$rootScope.successAlert = 'A new component "' + createdCC.name + '" was created';
-			$location.path("/components");
-		}, function error(response) {
-			//display error
-			$scope.errorAlert = 'Cannot create component!';
-		});
-	}
-});*/

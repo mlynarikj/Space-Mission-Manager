@@ -4,6 +4,7 @@ package cz.muni.fi.controllers;
 import cz.muni.fi.ApiUris;
 import cz.muni.fi.dto.CraftComponentCreateDTO;
 import cz.muni.fi.dto.CraftComponentDTO;
+import cz.muni.fi.dto.SpacecraftDTO;
 import cz.muni.fi.exceptions.ResourceAlreadyExistsException;
 import cz.muni.fi.exceptions.ResourceNotFoundException;
 import cz.muni.fi.facade.CraftComponentFacade;
@@ -76,6 +77,8 @@ public class CraftComponentController {
 			throw new ResourceNotFoundException();
 		}
 		try {
+			SpacecraftDTO s = craftComponentFacade.findComponentById(componentDTO.getId()).getSpacecraft();
+			craftComponentDTO.setSpacecraft(s);
 			craftComponentFacade.updateComponent(craftComponentDTO);
 			return craftComponentFacade.findComponentById(componentDTO.getId());
 		} catch (Exception e) {

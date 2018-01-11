@@ -4,6 +4,10 @@ controllers.controller('UsersCtrl', function ($scope, $spaceHttp, $rootScope, $l
         $location.path('login');
         return;
     }
+
+	$rootScope.errorAlert = '';
+	$rootScope.successAlert = '';
+	$rootScope.warningAlert ='';
     var myDate = new Date();
     var date = new Date(myDate);
     date.setYear(myDate.getFullYear()-18);
@@ -19,8 +23,12 @@ controllers.controller('UsersCtrl', function ($scope, $spaceHttp, $rootScope, $l
     $scope.deleteUser = function (id) {
         $spaceHttp.deleteUser(id).then(function (response) {
             $scope.users = response.data;
+	        $rootScope.errorAlert = '';
+	        $rootScope.successAlert = 'User deleted!';
         }, function (error) {
             console.error(error);
+	        $rootScope.errorAlert = 'User cannot be deleted!';
+	        $rootScope.successAlert = '';
         });
     }
 
@@ -46,8 +54,12 @@ controllers.controller('UsersCtrl', function ($scope, $spaceHttp, $rootScope, $l
             }, function (error) {
                 console.error(error);
             });
+	        $rootScope.errorAlert = '';
+	        $rootScope.successAlert = 'User edited!';
         }, function (error) {
             console.error(error);
+	        $rootScope.errorAlert = 'User cannot be deleted!';
+	        $rootScope.successAlert = '';
         })
     };
 
@@ -67,8 +79,12 @@ controllers.controller('UsersCtrl', function ($scope, $spaceHttp, $rootScope, $l
             }, function (error) {
                 console.error(error);
             });
+	        $rootScope.errorAlert = '';
+	        $rootScope.successAlert = 'User created';
         }, function (error) {
             console.error(error);
+	        $rootScope.errorAlert = 'User cannot be created!';
+	        $rootScope.successAlert = '';
         })
     };
 

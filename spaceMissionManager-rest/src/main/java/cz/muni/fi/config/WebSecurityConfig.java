@@ -1,7 +1,6 @@
 package cz.muni.fi.config;
 
 import cz.muni.fi.ApplicationContext;
-import cz.muni.fi.facade.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,12 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 @Import({ServiceConfiguration.class, ApplicationContext.class})
-//@ComponentScan(basePackages = {"cz.muni.fi.controllers"})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-	@Autowired
-	private UserFacade userFacade;
 
 	@Autowired
 	private MyUserDetailsService userDetailsService;
@@ -42,34 +37,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.authorizeRequests()
 				.anyRequest()
-				.fullyAuthenticated()
-		.and();
-		//.exceptionHandling().accessDeniedPage("/AccessDenied");
+				.fullyAuthenticated();
 		http.httpBasic();
 		http.csrf().disable();
-//				.antMatchers("/", "/home").permitAll()
-//				.antMatchers("/**").hasRole("MANAGER");
-//				.antMatchers("/user/**").hasRole("USER")
-//				.and()
-//				.formLogin()
-//				.loginPage("/login")
-//				.permitAll()
-//				.and()
-//				.logout()
-//				.permitAll();
 	}
 
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("MANAGER");
-		auth.authenticationProvider(authenticationProvider());/*
-		for (UserDTO p : userFacade.findAllUsers()) {
-			auth.inMemoryAuthentication()
-					.withUser(p.getEmail())
-					.password(p.getPassword())
-					.roles(p.isManager() ? "MANAGER" : "USER");
-		}*/
+		auth.authenticationProvider(authenticationProvider());
 	}
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {

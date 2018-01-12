@@ -53,6 +53,7 @@ public class AuthController {
 		logger.debug("[REST] authenticate()");
 		if (user == null) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			return null;
 		}
 		user.setPassword(((MyUserPrincipal) authentication.getPrincipal()).getPassword());
 		try {

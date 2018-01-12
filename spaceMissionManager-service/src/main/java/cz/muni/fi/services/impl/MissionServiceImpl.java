@@ -3,10 +3,10 @@ package cz.muni.fi.services.impl;
 import cz.muni.fi.dao.MissionDao;
 import cz.muni.fi.entity.Mission;
 import cz.muni.fi.services.MissionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Service
 public class MissionServiceImpl implements MissionService {
-	@Inject
+	@Autowired
 	private MissionDao missionDao;
 
 	@Override

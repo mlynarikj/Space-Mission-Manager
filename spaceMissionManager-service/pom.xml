@@ -56,6 +56,11 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>4.1.1.RELEASE</version>
+        </dependency>
         <!--MAPPING-->
         <dependency>
             <groupId>net.sf.dozer</groupId>

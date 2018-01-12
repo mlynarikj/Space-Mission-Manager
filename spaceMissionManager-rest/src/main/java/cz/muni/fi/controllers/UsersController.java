@@ -2,6 +2,7 @@ package cz.muni.fi.controllers;
 
 
 import cz.muni.fi.ApiUris;
+import cz.muni.fi.dto.MissionDTO;
 import cz.muni.fi.dto.UserCreateDTO;
 import cz.muni.fi.dto.UserDTO;
 import cz.muni.fi.exceptions.ResourceAlreadyExistsException;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -170,6 +172,41 @@ public class UsersController {
     }
 
     /**
+     * Updates and returns user
+     *
+     * @param user UserDTO
+     * @return UserDTO
+     */
+
+    @RolesAllowed({"MANAGER", "USER"})
+    @RequestMapping(value = "/profile", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO updateUserSelf(@RequestBody UserDTO user, Authentication authentication) {
+        logger.debug("[REST] updateUserSelf()");
+        logger.debug(authentication.getName());
+
+        try {
+            UserDTO storedUser = userFacade.findUserByEmail(authentication.getName());
+
+
+
+            logger.debug("[REST] password length: "+user.getPassword().length());
+
+            if (user.getPassword().length() >= 3 && user.getPassword().length() <= 150) {
+                storedUser.setPassword(encoder.encode(user.getPassword()));
+            }
+
+            storedUser.setEmail(user.getEmail());
+            storedUser.setName(user.getName());
+            userFacade.updateUser(storedUser);
+            return user;
+        } catch (Exception e) {
+            logger.warn(e.getMessage());
+            throw new ResourceAlreadyExistsException();
+        }
+    }
+
+
+    /**
      * Accepts mission for user
      *
      * @param id id of user
@@ -217,6 +254,7 @@ public class UsersController {
 
     /**
      * Returns if user is manager
+     *
      * @param user user
      * @return true if successful, false otherwise
      */
@@ -234,20 +272,32 @@ public class UsersController {
 
     /**
      * Finds user by email
+     *
      * @param email email
      * @return userDTO
      */
 
     @RolesAllowed({"MANAGER", "USER"})
     @RequestMapping(value = "/email", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDTO findByEmail(@RequestBody String email){
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDTO findByEmail(@RequestBody String email) {
         logger.debug("[REST] find by email");
         UserDTO user = userFacade.findUserByEmail(email);
-        if(user == null){
+        if (user == null) {
             throw new ResourceNotFoundException();
         }
         return user;
     }
 
+    @RolesAllowed({"MANAGER", "USER"})
+    @RequestMapping(value = "/mission/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public MissionDTO getMissionForUser(@PathVariable Long id) {
+        logger.debug("[REST] getMission");
+
+        UserDTO user = userFacade.findUserById(id);
+        if (user == null) {
+            throw new ResourceNotFoundException();
+        }
+        return user.getMission();
+    }
 }

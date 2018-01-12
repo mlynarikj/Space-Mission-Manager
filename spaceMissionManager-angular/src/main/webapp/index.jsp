@@ -50,14 +50,16 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown" ng-if="globals.currentUser">
-                        <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu1"
-                                data-toggle="dropdown">
-                            {{globals.currentUser.email}}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#" ng-click="logout()">Logout</a></li>
-                        </ul>
+                    <a class="dropdown-toggle" type="button" id="dropdownMenu1"
+                       data-toggle="dropdown">
+                        {{globals.currentUser.email}}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#" ng-click="logout()">Logout</a></li>
+                        <li><a href="#!/profile">My profile</a></li>
+                    </ul>
+
                 </li>
 
                 <li ng-if="!globals.currentUser"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
@@ -89,17 +91,22 @@
         </div>
 
 
-        <div ng-if="user.mission && !user.acceptedMission" class="alert alert-success" role="alert">
-            <strong>New Mission!</strong> <span>You have new mission request! Do you want to accept it?
-            <br>Name: {{user.mission.name}}
-            <br>Destination: {{user.mission.destination}}
-            <br>Description: {{user.mission.missionDescription}}
-        </span><br><br>
-            <div ng-if="!decline.declined">
+        <div ng-if="user.mission" class="alert alert-success" role="alert">
+
+            <strong ng-if="user.acceptedMission">Accepted mission:</strong>
+            <div ng-if="!user.acceptedMission"><strong>New Mission!</strong> <span>You have new mission request! Do you want to accept it?</span>
+            </div>
+            <span>
+                <br>Name: {{user.mission.name}}
+                <br>Destination: {{user.mission.destination}}
+                <br>Description: {{user.mission.missionDescription}}
+            </span>
+            <br><br>
+            <div ng-if="!decline.declined && !user.acceptedMission">
                 <button class="btn btn-success" ng-click="acceptMission()">Accept</button>
                 <button class="btn btn-danger" ng-click="decline.declined = true">Decline</button>
             </div>
-            <div ng-if="decline.declined">
+            <div ng-if="decline.declined && !user.acceptedMission">
                 <form>
                     <div class="form-group">
                         <label for="explanation">Message</label>

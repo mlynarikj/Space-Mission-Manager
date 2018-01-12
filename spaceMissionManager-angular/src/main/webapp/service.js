@@ -32,6 +32,9 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
         return $http.put(API_URL+USERS_PATH, data);
     };
 
+    service.updateProfile = function (data){
+        return $http.put(API_URL+USERS_PATH+"/profile", data);
+    };
 
     service.createUser = function (data){
         return $http.post(API_URL+USERS_PATH, data);

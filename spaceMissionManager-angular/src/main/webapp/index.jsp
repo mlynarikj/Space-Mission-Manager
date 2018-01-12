@@ -57,6 +57,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="#" ng-click="logout()">Logout</a></li>
+                            <li><a href="#!/profile">My profile</a></li>
                         </ul>
                 </li>
 

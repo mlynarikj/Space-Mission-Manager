@@ -7,24 +7,32 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import cz.muni.fi.config.LocalDateDeserializer;
 import cz.muni.fi.config.LocalDateSerializer;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class UserDTO {
 
 	private Long id;
 
+	@NotNull
 	private String name;
 
+	@NotNull
+	@Past
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate birthDate;
 
+	@NotNull
+	@Pattern(regexp = ".+@.+\\....?")
+	@Size(min = 3, max = 150)
 	private String email;
 
 	private String password;
 
 	private boolean isManager;
 
+	@Min(0)
 	private int experienceLevel;
 
 

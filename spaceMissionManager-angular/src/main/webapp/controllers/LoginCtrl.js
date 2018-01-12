@@ -13,7 +13,7 @@ controllers.controller('LoginCtrl', function ($scope, $spaceHttp, $rootScope, Au
                 AuthenticationService.SetCredentials($scope.credentials.name, $scope.credentials.password);
                 var user = response.data;
                 user.rawPassowrd = $scope.credentials.password;
-                localStorage.setItem('user', JSON.stringify(response.data));
+                localStorage.setItem('user', JSON.stringify(user));
                 $rootScope.user = user;
                 $scope.badCredentials = false;
             },

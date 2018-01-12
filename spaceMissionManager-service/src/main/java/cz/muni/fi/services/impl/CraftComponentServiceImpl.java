@@ -3,10 +3,10 @@ package cz.muni.fi.services.impl;
 import cz.muni.fi.dao.CraftComponentDao;
 import cz.muni.fi.entity.CraftComponent;
 import cz.muni.fi.services.CraftComponentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Service
 public class CraftComponentServiceImpl implements CraftComponentService {
-    @Inject
+    @Autowired
     private CraftComponentDao craftComponentDao;
 
     @Override

@@ -59,6 +59,7 @@
                         <li><a href="#" ng-click="logout()">Logout</a></li>
                         <li><a href="#!/profile">My profile</a></li>
                     </ul>
+
                 </li>
 
                 <li ng-if="!globals.currentUser"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>

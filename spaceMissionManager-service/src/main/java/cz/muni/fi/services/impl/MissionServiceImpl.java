@@ -3,10 +3,10 @@ package cz.muni.fi.services.impl;
 import cz.muni.fi.dao.MissionDao;
 import cz.muni.fi.entity.Mission;
 import cz.muni.fi.services.MissionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Service
 public class MissionServiceImpl implements MissionService {
-	@Inject
+	@Autowired
 	private MissionDao missionDao;
 
 	@Override
@@ -36,17 +36,23 @@ public class MissionServiceImpl implements MissionService {
 		}
 		mission.setEndDate(endDate);
 		mission.setActive(false);
+		mission.getAstronauts().forEach(p->{
+			if(!p.getAcceptedMission()){
+				mission.removeAstronaut(p);
+			}
+		});
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Mission{astronauts=");
-		mission.getAstronauts().forEach(p -> stringBuilder.append(p.toString()));
-		mission.getSpacecrafts().forEach(p -> stringBuilder.append(p.toString()));
 		stringBuilder
-				.append(", name='").append(mission.getName()).append('\'')
-				.append(", destination='").append(mission.getDestination()).append('\'')
-				.append(", eta=").append(mission.getEta())
-				.append(", missionDescription='").append(mission.getMissionDescription()).append('\'')
-				.append(", endDate=").append(mission.getEndDate())
-				.append('}');
+				.append("Name of mission: ").append(mission.getName())
+				.append("\nDestination: ").append(mission.getDestination())
+				.append("\nEta: ").append(mission.getEta())
+				.append("\nMission description: ").append(mission.getMissionDescription())
+				.append("\nEnd date: ").append(mission.getEndDate()).append('\n');
+		mission.getAstronauts().forEach(p -> {
+			stringBuilder.append(p.toString());
+			mission.removeAstronaut(p);
+		});
+		mission.getSpacecrafts().forEach(p -> stringBuilder.append(p.toString()));
 		mission.setResult(stringBuilder.toString());
 		try {
 			missionDao.updateMission(mission);

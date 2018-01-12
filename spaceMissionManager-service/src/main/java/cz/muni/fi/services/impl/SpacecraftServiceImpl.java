@@ -3,10 +3,10 @@ package cz.muni.fi.services.impl;
 import cz.muni.fi.dao.SpacecraftDao;
 import cz.muni.fi.entity.Spacecraft;
 import cz.muni.fi.services.SpacecraftService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Service
 public class SpacecraftServiceImpl implements SpacecraftService {
-    @Inject
+    @Autowired
     private SpacecraftDao spacecraftDao;
 
     @Override

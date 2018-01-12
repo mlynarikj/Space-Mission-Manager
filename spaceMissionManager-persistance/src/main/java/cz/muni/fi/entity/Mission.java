@@ -154,10 +154,10 @@ public class Mission {
 		return "Mission{" +
 				", astronauts=" + astronauts +
 				", spacecrafts=" + spacecrafts +
-				", name='" + name + '\'' +
+				", name " + name + '\'' +
 				", destination='" + destination + '\'' +
 				", eta=" + eta +
-				", missionDescription='" + missionDescription + '\'' +
+				", mission description='" + missionDescription + '\'' +
 				", active=" + active +
 				", endDate=" + endDate +
 				'}';

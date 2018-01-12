@@ -60,10 +60,8 @@ public class AuthController {
 				return userFacade.findUserByEmail(user.getEmail());
 			}
 		} catch (ServiceDataAccessException e) {
-			System.out.println("zde");
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		}
-		System.out.println("zde2");
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		return null;
 	}

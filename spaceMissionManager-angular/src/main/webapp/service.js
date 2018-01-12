@@ -40,6 +40,11 @@ spaceMissionApp.factory('$spaceHttp', ['$http', function ($http) {
         return $http.post(API_URL+USERS_PATH, data);
     };
 
+    service.getUserMission = function (id){
+        return $http.get(API_URL+USERS_PATH+"/mission/"+id);
+    };
+
+
     service.loadAstronauts = function () {
         return $http.get(API_URL+ASTRONAUTS_PATH);
     };

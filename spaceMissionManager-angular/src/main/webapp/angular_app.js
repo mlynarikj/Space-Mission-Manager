@@ -30,11 +30,14 @@ spaceMissionApp.run(function ($rootScope, AuthenticationService, $spaceHttp, $lo
         AuthenticationService.SetCredentials(user.email, user.rawPassowrd);
         AuthenticationService.Login(user.email, user.rawPassowrd).then(
             function (response) {
-                $rootScope.user = response.data;
                 var rp = $rootScope.user.rawPassowrd;
+                $rootScope.user = response.data;
                 var user = response.data;
                 user.rawPassowrd = rp;
                 localStorage.setItem('user', JSON.stringify(user));
+                $spaceHttp.getUserMission(user.id).then(function (res) {
+                     $rootScope.user.mission = res.data;
+                });
             },
             function (error) {
                 console.log(error);

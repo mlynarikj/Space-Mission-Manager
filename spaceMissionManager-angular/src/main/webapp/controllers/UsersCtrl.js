@@ -1,4 +1,4 @@
-controllers.controller('UsersCtrl', function ($scope, $spaceHttp, $rootScope, $location) {
+controllers.controller('UsersCtrl', function ($scope, $spaceHttp, $rootScope, $location, AuthenticationService) {
 
     $scope.isProfileEdit = $location.path() === "/profile";
 
@@ -59,6 +59,29 @@ controllers.controller('UsersCtrl', function ($scope, $spaceHttp, $rootScope, $l
         }
 
         update.then(function (res) {
+            console.log('update');
+            console.log(res.data.id);
+            console.log($rootScope.user.id);
+            if(res.data.id === $rootScope.user.id){
+                console.log('same ids');
+                var rawPassowrd = $rootScope.user.rawPassowrd;
+                if(data.password.length >= 3 && data.password.length <= 150){
+                    rawPassowrd = data.password;
+                }
+
+                AuthenticationService.SetCredentials(res.data.email, rawPassowrd);
+                AuthenticationService.Login(res.data.email, rawPassowrd).then(
+                    function (response) {
+                        $rootScope.user = response.data;
+                        var user = response.data;
+                        user.rawPassowrd = rawPassowrd;
+                        localStorage.setItem('user', JSON.stringify(user));
+                    },
+                    function (error) {
+                        console.log(error);
+                    }
+                );
+            }
 
             $spaceHttp.getAllUsers().then(function (response) {
                 $scope.users = response.data;

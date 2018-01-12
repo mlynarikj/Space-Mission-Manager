@@ -59,16 +59,20 @@ spaceMissionApp.run(function ($rootScope, AuthenticationService, $spaceHttp, $lo
 
     $rootScope.acceptMission = function(){
         $spaceHttp.acceptMission($rootScope.user.id).then(function (response) {
-            $rootScope.successAlert = 'Missin accepted!';
+            $rootScope.successAlert = 'Mission accepted!';
+            var mission = $rootScope.user.mission;
             $rootScope.user = response.data;
+            $rootScope.user.mission = mission;
         }, function (error) {
             console.log(error);
         });
     }
     $rootScope.declineMission = function(){
-        $spaceHttp.declineMission($rootScope.user.id, $rootScope.decline.message).then(function (response) {
-            $rootScope.successAlert = 'Missin declined!';
+        $spaceHttp.declineMission($rootScope.user.id, JSON.stringify($rootScope.decline.message)).then(function (response) {
+            $rootScope.successAlert = 'Mission declined!';
+            var mission = $rootScope.user.mission;
             $rootScope.user = response.data;
+            $rootScope.user.mission = mission;
         }, function (error) {
             console.log(error);
         });

@@ -200,6 +200,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User u = findUserById(user.getId());
+        //return encoder.matches(password, u.getPassword());
         return u.getPassword().equals(password);
 //        return validatePassword(password, u.getPassword());
     }
